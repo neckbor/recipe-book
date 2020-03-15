@@ -30,9 +30,9 @@
 Почта для связи:  mymailvrn98@gmail.com
 ***
 
-### Допольнительные ресурсы ###
+### Дополнительные ресурсы ###
 
 * ##### Trello 
 [trello/yummyummy](https://trello.com/b/Ql54ikNJ/yummyummy)
 * ##### Miro
-[miro/yummyummy]
+[miro/yummyummy](https://miro.com/app/board/o9J_kul6-84=/)
