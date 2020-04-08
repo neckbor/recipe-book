@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Web;
 using System.Web.Mvc;
 using Backend.Models;
+using System.Net.Http;
 
 namespace Backend.Controllers
 {
@@ -17,13 +18,18 @@ namespace Backend.Controllers
 
         }
 
-        public string SearchRecipe(string name, string mainIngridient, string nationality)
+        public HttpResponseMessage SearchRecipe(string name, string mainIngridient, string nationality)
         {
             List<GetRecipeBySearch_Result> resultSearch = GetRecipeBySearch(name, mainIngridient, nationality);
 
             string resultJson = JsonConvert.SerializeObject(resultSearch);
 
-            return resultJson;
+            HttpResponseMessage response = new HttpResponseMessage();
+
+            response.StatusCode = System.Net.HttpStatusCode.OK;
+            response.Content = new StringContent(resultJson);
+
+            return response;
         }
 
         private List<GetRecipeBySearch_Result> GetRecipeBySearch(string name, string mainIngridient, string nationality)
