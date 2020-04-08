@@ -11,6 +11,7 @@ import {FormsModule} from '@angular/forms';
 import {RecipeService} from './services/recipeService';
 import {ShareService} from './services/shareService';
 import {HttpClientModule} from '@angular/common/http';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent}
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [RecipeService,
   ShareService],

@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     this.http.getRecipes(this.listFilters).subscribe(data => {
         this.shareRecipes.recipes = data;
         console.log('Recipes: ' + this.shareRecipes.recipes);
-        this.listFilters = null;
+        this.listFilters = [];
       },
       error => console.log('Error http request on HomePage'));
   }
