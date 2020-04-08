@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c63c593a961e4f14adcc8aff841df12d" Name="Diagram1">
+        <EntityTypeShape EntityType="YummYummYModel.Action" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="YummYummYModel.Ingredient" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="YummYummYModel.Recipe" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="YummYummYModel.Step" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="YummYummYModel.FK_Step_Action" ManuallyRouted="false" />
+        <AssociationConnector Association="YummYummYModel.FK_Recipe_Ingredient" ManuallyRouted="false" />
+        <AssociationConnector Association="YummYummYModel.FK_Step_Ingredient" ManuallyRouted="false" />
+        <AssociationConnector Association="YummYummYModel.FK_Step_Recipe" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

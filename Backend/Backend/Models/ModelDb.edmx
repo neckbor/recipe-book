@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище YummYummYModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Action">
+          <Key>
+            <PropertyRef Name="IDAction" />
+          </Key>
+          <Property Name="IDAction" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="IDIngredient" />
+          </Key>
+          <Property Name="IDIngredient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="IDRecipe" />
+          </Key>
+          <Property Name="IDRecipe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDIngredient" Type="int" Nullable="false" />
+          <Property Name="Nationality" Type="nvarchar" MaxLength="20" />
+          <Property Name="Author" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Step">
+          <Key>
+            <PropertyRef Name="IDStep" />
+          </Key>
+          <Property Name="IDStep" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDRecipe" Type="int" Nullable="false" />
+          <Property Name="IDIngredient" Type="int" Nullable="false" />
+          <Property Name="IDAction" Type="int" Nullable="false" />
+          <Property Name="Time" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Recipe_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="IDIngredient" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="IDIngredient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Step_Action">
+          <End Role="Action" Type="Self.Action" Multiplicity="1" />
+          <End Role="Step" Type="Self.Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Action">
+              <PropertyRef Name="IDAction" />
+            </Principal>
+            <Dependent Role="Step">
+              <PropertyRef Name="IDAction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Step_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Step" Type="Self.Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="IDIngredient" />
+            </Principal>
+            <Dependent Role="Step">
+              <PropertyRef Name="IDIngredient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Step_Recipe">
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="1" />
+          <End Role="Step" Type="Self.Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="IDRecipe" />
+            </Principal>
+            <Dependent Role="Step">
+              <PropertyRef Name="IDRecipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetRecipeBySearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="p_MainIngridient" Type="nvarchar" Mode="In" />
+          <Parameter Name="p_Nationality" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище YummYummYModelContainer">
+          <EntitySet Name="Action" EntityType="Self.Action" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Step" EntityType="Self.Step" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Recipe_Ingredient" Association="Self.FK_Recipe_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Step_Action" Association="Self.FK_Step_Action">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="Step" EntitySet="Step" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Step_Ingredient" Association="Self.FK_Step_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="Step" EntitySet="Step" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Step_Recipe" Association="Self.FK_Step_Recipe">
+            <End Role="Recipe" EntitySet="Recipe" />
+            <End Role="Step" EntitySet="Step" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="YummYummYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Action">
+          <Key>
+            <PropertyRef Name="IDAction" />
+          </Key>
+          <Property Name="IDAction" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Steps" Relationship="Self.FK_Step_Action" FromRole="Action" ToRole="Step" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="IDIngredient" />
+          </Key>
+          <Property Name="IDIngredient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Recipes" Relationship="Self.FK_Recipe_Ingredient" FromRole="Ingredient" ToRole="Recipe" />
+          <NavigationProperty Name="Steps" Relationship="Self.FK_Step_Ingredient" FromRole="Ingredient" ToRole="Step" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="IDRecipe" />
+          </Key>
+          <Property Name="IDRecipe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IDIngredient" Type="Int32" Nullable="false" />
+          <Property Name="Nationality" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.FK_Recipe_Ingredient" FromRole="Recipe" ToRole="Ingredient" />
+          <NavigationProperty Name="Steps" Relationship="Self.FK_Step_Recipe" FromRole="Recipe" ToRole="Step" />
+        </EntityType>
+        <EntityType Name="Step">
+          <Key>
+            <PropertyRef Name="IDStep" />
+          </Key>
+          <Property Name="IDStep" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDRecipe" Type="Int32" Nullable="false" />
+          <Property Name="IDIngredient" Type="Int32" Nullable="false" />
+          <Property Name="IDAction" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Action" Relationship="Self.FK_Step_Action" FromRole="Step" ToRole="Action" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.FK_Step_Ingredient" FromRole="Step" ToRole="Ingredient" />
+          <NavigationProperty Name="Recipe" Relationship="Self.FK_Step_Recipe" FromRole="Step" ToRole="Recipe" />
+        </EntityType>
+        <Association Name="FK_Step_Action">
+          <End Role="Action" Type="Self.Action" Multiplicity="1" />
+          <End Role="Step" Type="Self.Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Action">
+              <PropertyRef Name="IDAction" />
+            </Principal>
+            <Dependent Role="Step">
+              <PropertyRef Name="IDAction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recipe_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="IDIngredient" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="IDIngredient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Step_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Step" Type="Self.Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="IDIngredient" />
+            </Principal>
+            <Dependent Role="Step">
+              <PropertyRef Name="IDIngredient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Step_Recipe">
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="1" />
+          <End Role="Step" Type="Self.Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="IDRecipe" />
+            </Principal>
+            <Dependent Role="Step">
+              <PropertyRef Name="IDRecipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="YummYummYEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Actions" EntityType="Self.Action" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <EntitySet Name="Recipes" EntityType="Self.Recipe" />
+          <EntitySet Name="Steps" EntityType="Self.Step" />
+          <AssociationSet Name="FK_Step_Action" Association="Self.FK_Step_Action">
+            <End Role="Action" EntitySet="Actions" />
+            <End Role="Step" EntitySet="Steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recipe_Ingredient" Association="Self.FK_Recipe_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="Recipe" EntitySet="Recipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Step_Ingredient" Association="Self.FK_Step_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="Step" EntitySet="Steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Step_Recipe" Association="Self.FK_Step_Recipe">
+            <End Role="Recipe" EntitySet="Recipes" />
+            <End Role="Step" EntitySet="Steps" />
+          </AssociationSet>
+          <FunctionImport Name="GetRecipeBySearch" ReturnType="Collection(YummYummYModel.GetRecipeBySearch_Result)">
+            <Parameter Name="p_Name" Mode="In" Type="String" />
+            <Parameter Name="p_MainIngridient" Mode="In" Type="String" />
+            <Parameter Name="p_Nationality" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetRecipeBySearch_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MainIngridient" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Nationality" Nullable="true" MaxLength="20" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище YummYummYModelContainer" CdmEntityContainer="YummYummYEntities">
+          <EntitySetMapping Name="Actions">
+            <EntityTypeMapping TypeName="YummYummYModel.Action">
+              <MappingFragment StoreEntitySet="Action">
+                <ScalarProperty Name="IDAction" ColumnName="IDAction" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="YummYummYModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="IDIngredient" ColumnName="IDIngredient" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipes">
+            <EntityTypeMapping TypeName="YummYummYModel.Recipe">
+              <MappingFragment StoreEntitySet="Recipe">
+                <ScalarProperty Name="IDRecipe" ColumnName="IDRecipe" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IDIngredient" ColumnName="IDIngredient" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Steps">
+            <EntityTypeMapping TypeName="YummYummYModel.Step">
+              <MappingFragment StoreEntitySet="Step">
+                <ScalarProperty Name="IDStep" ColumnName="IDStep" />
+                <ScalarProperty Name="IDRecipe" ColumnName="IDRecipe" />
+                <ScalarProperty Name="IDIngredient" ColumnName="IDIngredient" />
+                <ScalarProperty Name="IDAction" ColumnName="IDAction" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetRecipeBySearch" FunctionName="Хранилище YummYummYModel.GetRecipeBySearch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="YummYummYModel.GetRecipeBySearch_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MainIngridient" ColumnName="MainIngridient" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
