@@ -7,6 +7,10 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {RouterModule, Routes} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {RecipeService} from './services/recipeService';
+import {ShareService} from './services/shareService';
+import {HttpClientModule} from '@angular/common/http';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent}
@@ -22,9 +26,12 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [RecipeService,
+  ShareService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
