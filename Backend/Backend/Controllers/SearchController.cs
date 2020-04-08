@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using System.Web;
 using System.Web.Mvc;
 using Backend.Models;
@@ -16,12 +17,13 @@ namespace Backend.Controllers
 
         }
 
-
-        public List<GetRecipeBySearch_Result> SearchRecipe(string name, string mainIngridient, string nationality)
+        public string SearchRecipe(string name, string mainIngridient, string nationality)
         {
             List<GetRecipeBySearch_Result> resultSearch = GetRecipeBySearch(name, mainIngridient, nationality);
 
-            return resultSearch;
+            string resultJson = JsonConvert.SerializeObject(resultSearch);
+
+            return resultJson;
         }
 
         private List<GetRecipeBySearch_Result> GetRecipeBySearch(string name, string mainIngridient, string nationality)
