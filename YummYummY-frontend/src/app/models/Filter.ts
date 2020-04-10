@@ -1,10 +1,15 @@
 export class Filter {
-  key: string;
-  operation: string;
-  value;
-  constructor(key: string, operation: string, value) {
-    this.key = key;
-    this.operation = operation;
-    this.value = value;
+  Name: any = '';
+  MainIngredient: any = '';
+  Nationality: any = '';
+  constructor(name: any, mainIngredient: any, nationality: any) {
+    this.Name = name;
+    this.MainIngredient = mainIngredient;
+    this.Nationality = nationality;
   }
 }
+[{
+  name: 'asdasd',
+  mainIngredient: 'asdasd',
+  nationality: 'asdasd'
+}]

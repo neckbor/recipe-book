@@ -12,9 +12,11 @@ import {RecipeService} from './services/recipeService';
 import {ShareService} from './services/shareService';
 import {HttpClientModule} from '@angular/common/http';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { AllRecipesComponent } from './all-recipes/all-recipes.component';
 
 const appRoutes: Routes = [
-  {path: '', component: HomeComponent}
+  {path: '', component: HomeComponent},
+  {path: 'all-recipes', component: AllRecipesComponent}
 ];
 
 @NgModule({
@@ -22,7 +24,8 @@ const appRoutes: Routes = [
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AllRecipesComponent
   ],
   imports: [
     BrowserModule,
