@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   constructor(private http: RecipeService, private shareRecipes: ShareService, private router: Router) {
   }
 
+  name: string;
   ingredient: string;
   origin: string;
   author: string;
@@ -27,8 +28,8 @@ export class HomeComponent implements OnInit {
   }
 
   private searchRecipe() {
-    if (this.ingredient || this.origin || this.author) {
-      this.listFilters.push(new Filter( this.ingredient, this.origin, this.author));
+    if (this.ingredient || this.origin || this.author || this.name) {
+      this.listFilters.push(new Filter( this.name, this.ingredient, this.origin, this.author));
     }
     this.http.getRecipes(this.listFilters).subscribe(data => {
         this.shareRecipes.recipes = data;

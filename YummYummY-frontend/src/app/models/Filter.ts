@@ -1,15 +1,12 @@
 export class Filter {
-  Name: any = '';
-  MainIngredient: any = '';
-  Nationality: any = '';
-  constructor(name: any, mainIngredient: any, nationality: any) {
-    this.Name = name;
-    this.MainIngredient = mainIngredient;
-    this.Nationality = nationality;
+  name: any = '';
+  mainIngredient: any = '';
+  nationality: any = '';
+  author: any;
+  constructor(name: any, mainIngredient: any, nationality: any, author: any) {
+    this.name = name;
+    this.mainIngredient = mainIngredient;
+    this.nationality = nationality;
+    this.author = author;
   }
 }
-[{
-  name: 'asdasd',
-  mainIngredient: 'asdasd',
-  nationality: 'asdasd'
-}]
