@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище YummYummYModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище YummYummYModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Action">
           <Key>
             <PropertyRef Name="IDAction" />
@@ -87,10 +87,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetRecipeBySearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetRecipesBySearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="p_Name" Type="nvarchar" Mode="In" />
-          <Parameter Name="p_MainIngridient" Type="nvarchar" Mode="In" />
+          <Parameter Name="p_MainIngredient" Type="nvarchar" Mode="In" />
           <Parameter Name="p_Nationality" Type="nvarchar" Mode="In" />
+          <Parameter Name="p_Author" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="Хранилище YummYummYModelContainer">
           <EntitySet Name="Action" EntityType="Self.Action" Schema="dbo" store:Type="Tables" />
@@ -114,8 +115,7 @@
             <End Role="Step" EntitySet="Step" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="YummYummYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -235,11 +235,24 @@
             <Parameter Name="p_MainIngridient" Mode="In" Type="String" />
             <Parameter Name="p_Nationality" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetRecipesBySearch" ReturnType="Collection(YummYummYModel.GetRecipesBySearch_Result)">
+            <Parameter Name="p_Name" Mode="In" Type="String" />
+            <Parameter Name="p_MainIngredient" Mode="In" Type="String" />
+            <Parameter Name="p_Nationality" Mode="In" Type="String" />
+            <Parameter Name="p_Author" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetRecipeBySearch_Result">
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="MainIngridient" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="Nationality" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="GetRecipesBySearch_Result">
+          <Property Type="Int32" Name="IDRecipe" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MainIngredient" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Nationality" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Author" Nullable="true" MaxLength="15" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -285,12 +298,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetRecipeBySearch" FunctionName="Хранилище YummYummYModel.GetRecipeBySearch">
+          <FunctionImportMapping FunctionImportName="GetRecipesBySearch" FunctionName="Хранилище YummYummYModel.GetRecipesBySearch">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="YummYummYModel.GetRecipeBySearch_Result">
+              <ComplexTypeMapping TypeName="YummYummYModel.GetRecipesBySearch_Result">
+                <ScalarProperty Name="IDRecipe" ColumnName="IDRecipe" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="MainIngridient" ColumnName="MainIngridient" />
+                <ScalarProperty Name="MainIngredient" ColumnName="MainIngredient" />
                 <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

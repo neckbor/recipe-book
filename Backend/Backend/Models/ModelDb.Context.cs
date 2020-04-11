@@ -15,10 +15,10 @@ namespace Backend.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class ModelDb : DbContext
+    public partial class YummYummYEntities : DbContext
     {
-        public ModelDb()
-            : base("name=ModelDb")
+        public YummYummYEntities()
+            : base("name=YummYummYEntities")
         {
         }
     
@@ -47,6 +47,27 @@ namespace Backend.Models
                 new ObjectParameter("p_Nationality", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetRecipeBySearch_Result>("GetRecipeBySearch", p_NameParameter, p_MainIngridientParameter, p_NationalityParameter);
+        }
+    
+        public virtual ObjectResult<GetRecipesBySearch_Result> GetRecipesBySearch(string p_Name, string p_MainIngredient, string p_Nationality, string p_Author)
+        {
+            var p_NameParameter = p_Name != null ?
+                new ObjectParameter("p_Name", p_Name) :
+                new ObjectParameter("p_Name", typeof(string));
+    
+            var p_MainIngredientParameter = p_MainIngredient != null ?
+                new ObjectParameter("p_MainIngredient", p_MainIngredient) :
+                new ObjectParameter("p_MainIngredient", typeof(string));
+    
+            var p_NationalityParameter = p_Nationality != null ?
+                new ObjectParameter("p_Nationality", p_Nationality) :
+                new ObjectParameter("p_Nationality", typeof(string));
+    
+            var p_AuthorParameter = p_Author != null ?
+                new ObjectParameter("p_Author", p_Author) :
+                new ObjectParameter("p_Author", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetRecipesBySearch_Result>("GetRecipesBySearch", p_NameParameter, p_MainIngredientParameter, p_NationalityParameter, p_AuthorParameter);
         }
     }
 }

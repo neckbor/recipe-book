@@ -254,6 +254,9 @@
     <Compile Include="Models\GetRecipeBySearch_Result.cs">
       <DependentUpon>ModelDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetRecipesBySearch_Result.cs">
+      <DependentUpon>ModelDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Ingredient.cs">
       <DependentUpon>ModelDb.tt</DependentUpon>

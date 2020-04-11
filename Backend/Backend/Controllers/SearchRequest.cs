@@ -7,8 +7,9 @@ namespace Backend.Controllers
 {
     public class SearchRequest
     {
-        public string Name { get; set; }
-        public string MainIngredient { get; set; }
-        public string Nationality { get; set; }
+        public string name { get; set; }
+        public string mainIngredient { get; set; }
+        public string nationality { get; set; }
+        public string author { get; set; }
     }
 }

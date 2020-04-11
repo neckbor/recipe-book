@@ -12,7 +12,7 @@ namespace Backend.Controllers
 {
     public class SearchController : ApiController
     {
-        private ModelDb db = new ModelDb();
+        private YummYummYEntities db = new YummYummYEntities();
 
         public SearchController()
         {
@@ -23,7 +23,7 @@ namespace Backend.Controllers
         [ActionName("Search")]
         public HttpResponseMessage SearchRecipe([FromBody]SearchRequest sr)
         {
-            List<GetRecipeBySearch_Result> resultSearch = GetRecipeBySearch(sr.Name, sr.MainIngredient, sr.Nationality);
+            List<GetRecipesBySearch_Result> resultSearch = GetRecipeBySearch(sr.name, sr.mainIngredient, sr.nationality, sr.author);
 
             string resultJson = JsonConvert.SerializeObject(resultSearch);
 
@@ -34,9 +34,9 @@ namespace Backend.Controllers
             return response;
         }
 
-        private List<GetRecipeBySearch_Result> GetRecipeBySearch(string name, string mainIngridient, string nationality)
+        private List<GetRecipesBySearch_Result> GetRecipeBySearch(string name, string mainIngridient, string nationality, string author)
         {
-            List<GetRecipeBySearch_Result> resultlist = null;
+            List<GetRecipesBySearch_Result> resultlist = null;
 
             var prmName = new System.Data.SqlClient.SqlParameter("@p_Name", System.Data.SqlDbType.NVarChar);
             prmName.Value = name;
@@ -47,9 +47,12 @@ namespace Backend.Controllers
             var prmNationality = new System.Data.SqlClient.SqlParameter("@p_Nationality", System.Data.SqlDbType.NVarChar);
             prmNationality.Value = nationality;
 
-            var result = db.Database.SqlQuery<GetRecipeBySearch_Result>
-                ("GetRecipeBySearch @p_Name, @p_MainIngridient, @p_Nationality ",
-                prmName, prmMainIngridient, prmNationality).ToList();
+            var prmAuthor = new System.Data.SqlClient.SqlParameter("@p_Author", System.Data.SqlDbType.NVarChar);
+            prmAuthor.Value = author;
+
+            var result = db.Database.SqlQuery<GetRecipesBySearch_Result>
+                ("GetRecipesBySearch @p_Name, @p_MainIngridient, @p_Nationality, @p_Author ",
+                prmName, prmMainIngridient, prmNationality, prmAuthor).ToList();
 
             resultlist = result;
 
