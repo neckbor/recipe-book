@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {RecipeService} from '../services/recipeService';
-import {Filter} from '../models/Filter';
 import {ShareService} from '../services/shareService';
 import {Router} from '@angular/router';
 
@@ -18,25 +17,24 @@ export class HomeComponent implements OnInit {
   ingredient: string;
   origin: string;
   author: string;
-  listFilters: Filter[];
 
   ngOnInit() {
     this.ingredient = null;
     this.origin = null;
     this.author = null;
-    this.listFilters = [];
+    this.shareRecipes.filter.reset();
   }
 
   private searchRecipe() {
     if (this.ingredient || this.origin || this.author || this.name) {
-      this.listFilters.push(new Filter( this.name, this.ingredient, this.origin, this.author));
+      this.shareRecipes.filter.setValues(this.name, this.ingredient, this.origin, this.author);
+      this.http.getRecipes(this.shareRecipes.filter).subscribe(data => {
+          this.shareRecipes.recipes = data;
+          console.log('Recipes: ' + this.shareRecipes.recipes);
+          this.shareRecipes.filter.reset();
+          this.router.navigate(['all-recipes']).then(nav => console.log(nav), err => console.log(err));
+        },
+        error => console.log('Error http request on HomePage' + error));
     }
-    this.http.getRecipes(this.listFilters).subscribe(data => {
-        this.shareRecipes.recipes = data;
-        console.log('Recipes: ' + this.shareRecipes.recipes);
-        this.listFilters = [];
-        this.router.navigate(['all-recipes']).then(nav => console.log(nav), err => console.log(err));
-      },
-      error => console.log('Error http request on HomePage' + error));
   }
 }

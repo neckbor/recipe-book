@@ -8,11 +8,10 @@ import {Filter} from '../models/Filter';
   providedIn: 'root'
 })
 export class RecipeService {
-  // private baseUrl = 'http://localhost:8089/recipes';
-  private baseUrl = 'https://ptsv2.com/t/0szvs-1586612145';
+  private baseUrl = 'http://localhost:55984/api/search/search';
   constructor(private http: HttpClient) {
   }
-  getRecipes(filters: Filter[]): Observable<Recipe[]> {
+  getRecipes(filters: Filter): Observable<Recipe[]> {
     return this.http.post<Recipe[]>(this.baseUrl, filters, {
       headers: new HttpHeaders({'Content-Type': 'application/json'
       })
