@@ -37,6 +37,6 @@ export class HomeComponent implements OnInit {
         this.listFilters = [];
         this.router.navigate(['all-recipes']).then(nav => console.log(nav), err => console.log(err));
       },
-      error => console.log('Error http request on HomePage'));
+      error => console.log('Error http request on HomePage' + error));
   }
 }
