@@ -1,0 +1,100 @@
+@import "src/colors/colors";
+header{
+  background: $blue;
+  position: relative;
+  max-width: 1200px;
+  margin: 20px auto;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+  .faBars{
+    display: none;
+    color: white;
+  }
+  .faTimes{
+    display: none;
+    color: white;
+  }
+}
+.logo{
+  color: white;
+  font-size: 24px;
+  line-height: 64px;
+  padding: 0 20px;
+  text-align: center;
+  box-sizing: border-box;
+  float: left;
+  font-weight: 500;
+  text-decoration: none;
+}
+nav{
+  float: right;
+  ul{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    li{
+      list-style: none;
+      a{
+        display: block;
+        margin: 10px 0;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+      }
+    }
+  }
+}
+.clearfix{
+  clear: both;
+}
+@media (max-width: 1200px) {
+  header{
+    margin: 20px;
+  }
+}
+@media (max-width: 768px) {
+  #menu-toggle{
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    float: right;
+    cursor: pointer;
+    text-align: center;
+    font-size: 30px;
+    .faBars{
+      display: inline;
+    }
+    .faTimes{
+      display: none;
+    }
+  }
+  #menu-toggle.active{
+    .faBars{
+      display: none;
+    }
+    .faTimes{
+      display: inline;
+    }
+  }
+  #menu-toggle:before{
+    content: '';
+  }
+  nav{
+    display: none;
+  }
+  nav.active{
+    transition: .5s ease-in-out;
+    display: block;
+    width: 100%;
+    ul{
+      display: block;
+      li{
+        a{
+          margin: 0;
+        }
+      }
+    }
+  }
+}
