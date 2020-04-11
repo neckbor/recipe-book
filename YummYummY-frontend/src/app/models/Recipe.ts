@@ -1,12 +1,14 @@
 export class Recipe {
-  id: number;
-  name: string;
-  idIngredient: number;
-  nationality: string;
-  constructor(id: number, name: string, idIngredient: number, nationality: string) {
-    this.id = id;
-    this.name = name;
-    this.idIngredient = idIngredient;
-    this.nationality = nationality;
+  IDRecipe: number;
+  Name: string;
+  MainIngredient: string;
+  Nationality: string;
+  Author: string;
+  constructor(id: number, name: string, mainIngredient: string, nationality: string, author: string) {
+    this.IDRecipe = id;
+    this.Name = name;
+    this.MainIngredient = mainIngredient;
+    this.Nationality = nationality;
+    this.Author = author;
   }
 }

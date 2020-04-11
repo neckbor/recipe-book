@@ -19,9 +19,10 @@ export class HomeComponent implements OnInit {
   author: string;
 
   ngOnInit() {
-    this.ingredient = null;
-    this.origin = null;
-    this.author = null;
+    this.name = '';
+    this.ingredient = '';
+    this.origin = '';
+    this.author = '';
     this.shareRecipes.filter.reset();
   }
 
