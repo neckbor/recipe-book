@@ -19,10 +19,10 @@
     <div class="col-lg-7 col-md-7 m-auto text-center">
       <h3 class="h3-home-find-recipe">Найди подходящий тебе рецепт</h3>
       <form>
-        <input type="text" name="name" class="my-input" placeholder="Название" [(ngModel)]="name">
-        <input type="text" name="ingredient" class="my-input" placeholder="Основной ингридиент" [(ngModel)]="ingredient">
-        <input type="text" name="origin" class="my-input" placeholder="Национальное происхождение" [(ngModel)]="origin">
-        <input type="text" name="author" class="my-input" placeholder="Автор" [(ngModel)]="author">
+        <input type="text" name="name" class="my-input" placeholder="Название" [(ngModel)]="shareRecipes.filter.name">
+        <input type="text" name="ingredient" class="my-input" placeholder="Основной ингридиент" [(ngModel)]="shareRecipes.filter.mainIngredient">
+        <input type="text" name="origin" class="my-input" placeholder="Национальное происхождение" [(ngModel)]="shareRecipes.filter.nationality">
+        <input type="text" name="author" class="my-input" placeholder="Автор" [(ngModel)]="shareRecipes.filter.author">
         <button class="my-btn" (click)="searchRecipe()">Найти</button>
       </form>
     </div>
