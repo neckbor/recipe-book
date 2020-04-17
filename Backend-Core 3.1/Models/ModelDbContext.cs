@@ -32,8 +32,6 @@ namespace Backend_Core_3._1.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<GetRcipesBySearch_Result>().HasNoKey();
-
             modelBuilder.Entity<Ingredient>(entity =>
             {
                 entity.HasKey(e => e.Idingredient);
