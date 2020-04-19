@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Backend_Core_3._1.Models;
+using Backend_Core_3._1.Models.BindingModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -19,36 +20,30 @@ namespace Backend_Core_3._1.Controllers
         ModelDbContext _model = new ModelDbContext();
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(SearchConditionBindigModel conditions)
         {
-            IEnumerable<GetRcipesBySearch_Result> list = GetRecipes();
+            IEnumerable<GetRcipesBySearch_Result> list = GetRecipes(conditions);
             return Ok(list);
         }
-        private IEnumerable<GetRcipesBySearch_Result> GetRecipes()//(string recipeName, string ingredent, string nationality, string author)
+
+        private IEnumerable<GetRcipesBySearch_Result> GetRecipes(SearchConditionBindigModel conditions)
         {
-            //var parName = new SqlParameter("@p_Name", System.Data.SqlDbType.NVarChar);
-            //parName.Value = recipeName;
-
-            //var parIngredient = new SqlParameter("@p_Ingredient", System.Data.SqlDbType.NVarChar);
-            //parIngredient.Value = ingredent;
-
-            //var parNationality = new SqlParameter("@p_Nationality", System.Data.SqlDbType.NVarChar);
-            //parNationality.Value = nationality;
-
-            //var parAuthor = new SqlParameter("@p_Author", System.Data.SqlDbType.NVarChar);
-            //parAuthor.Value = author;
             IEnumerable<GetRcipesBySearch_Result> result;
             using (ModelDbContext model = new ModelDbContext())
             {
-                result = model.Recipe.Select(r => new GetRcipesBySearch_Result
-                {
-                    IDRecipe = r.Idrecipe,
-                    Name = r.Name,
-                    Author = r.Author,
-                    Duration = r.Duration,
-                    Ingredient = r.IdingredientNavigation.Name,
-                    Nationality = r.IdnationalityNavigation.Name
-                }).ToList(); 
+                result = model.Recipe.Where(r => EF.Functions.Like(r.Name.ToLower(), conditions.RecipeName.ToLower()))
+                    .Where(r => r.Idnationality == conditions.IDNationality
+                        && r.Idingredient == conditions.IDIngredient
+                        && EF.Functions.Like(r.Author.ToLower(), conditions.Author.ToLower()))
+                    .Select(r => new GetRcipesBySearch_Result
+                    {
+                        IDRecipe = r.Idrecipe,
+                        Name = r.Name,
+                        Author = r.Author,
+                        Duration = r.Duration,
+                        Ingredient = r.IdingredientNavigation.Name,
+                        Nationality = r.IdnationalityNavigation.Name
+                    }).ToList(); 
             }
             return result;
         }
