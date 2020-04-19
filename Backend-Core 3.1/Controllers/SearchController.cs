@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -22,8 +23,23 @@ namespace Backend_Core_3._1.Controllers
         [HttpGet]
         public IActionResult Get(SearchConditionBindigModel conditions)
         {
-            IEnumerable<GetRcipesBySearch_Result> list = GetRecipes(conditions);
-            return Ok(list);
+            try
+            {
+                if (conditions == null)
+                    return BadRequest();
+
+                IEnumerable<GetRcipesBySearch_Result> result = GetRecipes(conditions);
+                if (result == null)
+                    return NoContent();
+
+                return Ok(result);
+            }
+            catch(Exception e)
+            {
+                Response.StatusCode = 500;
+                return StatusCode(500);
+            }
+            
         }
 
         private IEnumerable<GetRcipesBySearch_Result> GetRecipes(SearchConditionBindigModel conditions)
