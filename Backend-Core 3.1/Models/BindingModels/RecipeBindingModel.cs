@@ -11,5 +11,6 @@ namespace Backend_Core_3._1.Models.BindingModels
         public string Name { get; set; }
         public string Nationality { get; set; }
         public string FirstStep { get; set; }
+        public int StepsCount { get; set; }
     }
 }

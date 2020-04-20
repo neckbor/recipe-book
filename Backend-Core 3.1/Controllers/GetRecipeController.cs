@@ -45,7 +45,8 @@ namespace Backend_Core_3._1.Controllers
                         IDRecipe = r.Idrecipe,
                         Name = r.Name,
                         Nationality = r.IdnationalityNavigation.Name,
-                        FirstStep = model.Step.Where(s => s.Idrecipe == r.Idrecipe && s.OrderIndex == 1).FirstOrDefault().Description
+                        FirstStep = model.Step.Where(s => s.Idrecipe == r.Idrecipe && s.OrderIndex == 1).FirstOrDefault().Description,
+                        StepsCount = model.Step.Count(s => s.Idrecipe == r.Idrecipe)
                     }).FirstOrDefault();
             }
             return result;
