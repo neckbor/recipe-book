@@ -6,14 +6,15 @@ using Backend_Core_3._1.Models;
 using Backend_Core_3._1.Models.BindingModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Backend_Core_3._1.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     [ApiController]
     public class GetRecipeController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("api/[controller]/")]
         public IActionResult Get(int idRecipe)
         {
             try
@@ -52,16 +53,56 @@ namespace Backend_Core_3._1.Controllers
             return result;
         }
 
-        [HttpPost]
-        public IActionResult NextStep()
+        [HttpGet("api/[controller]/nextstep")]
+        public IActionResult NextStep(int idRecipe, int currentStep)
         {
-            return Ok();
+            try
+            {
+                if (idRecipe < 1 || currentStep < 1)
+                    return BadRequest();
+
+                var step = GetStep(idRecipe, currentStep + 1);
+
+                if (step.Count() == 0)
+                    return NoContent();
+
+                return Ok(step);
+            }
+            catch(Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
-        [HttpPost]
-        public IActionResult PreviousStep()
+        [HttpGet("api/[controller]/previousstep")]
+        public IActionResult PreviousStep(int idRecipe, int currentStep)
         {
-            return Ok();
+            try
+            {
+                if (idRecipe < 1 || currentStep < 1)
+                    return BadRequest();
+
+                var step = GetStep(idRecipe, currentStep - 1);
+
+                if (step.Count() == 0)
+                    return NoContent();
+
+                return Ok(step);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private string GetStep(int idRecipe, int stepOrderIndex)
+        {
+            string result = String.Empty;
+            using(ModelDbContext model = new ModelDbContext())
+            {
+                result = model.Step.Where(s => s.Idrecipe == idRecipe && s.OrderIndex == stepOrderIndex).FirstOrDefault().Description;
+            }
+            return result;
         }
     }
 }
