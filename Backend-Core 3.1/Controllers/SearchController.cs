@@ -36,8 +36,7 @@ namespace Backend_Core_3._1.Controllers
             }
             catch(Exception e)
             {
-                Response.StatusCode = 500;
-                return StatusCode(500);
+                return StatusCode(500, e.Message);
             }
             
         }
