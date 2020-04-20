@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Backend_Core_3._1.Models
+namespace Backend.Models.BindingModels
 {
-    public class GetRcipesBySearch_Result
+    public class RecipeBindingModel
     {
         public int IDRecipe { get; set; }
         public string Name { get; set; }
-        public string Author { get; set; }
-        public TimeSpan? Duration { get; set; }
-        public string Ingredient { get; set; }
         public string Nationality { get; set; }
-
+        public string FirstStep { get; set; }
+        public int StepsCount { get; set; }
     }
 }
