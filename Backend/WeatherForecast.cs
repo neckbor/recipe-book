@@ -1,6 +1,6 @@
 using System;
 
-namespace Backend_Core_3._1
+namespace Backend
 {
     public class WeatherForecast
     {

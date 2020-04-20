@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Backend_Core_3._1.Models
+namespace Backend.Models
 {
     public partial class Nationality
     {

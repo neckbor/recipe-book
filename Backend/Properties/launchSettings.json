@@ -11,13 +11,13 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "weatherforecast",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Backend_Core_3._1": {
+    "Backend": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
