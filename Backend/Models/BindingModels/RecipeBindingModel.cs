@@ -7,10 +7,10 @@ namespace Backend.Models.BindingModels
 {
     public class RecipeBindingModel
     {
-        public int IDRecipe { get; set; }
-        public string Name { get; set; }
-        public string Nationality { get; set; }
-        public string FirstStep { get; set; }
-        public int StepsCount { get; set; }
+        public int idRecipe { get; set; }
+        public string name { get; set; }
+        public string nationality { get; set; }
+        public string firstStep { get; set; }
+        public int stepsCount { get; set; }
     }
 }

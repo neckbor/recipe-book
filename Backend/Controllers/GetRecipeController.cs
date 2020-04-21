@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Backend.Controllers
 {
-    //[Route("api/[controller]")]
     [ApiController]
     public class GetRecipeController : ControllerBase
     {
@@ -43,11 +42,11 @@ namespace Backend.Controllers
                 result = (RecipeBindingModel)model.Recipe.Where(r => r.Idrecipe == idRecipe)
                     .Select(r => new RecipeBindingModel
                     {
-                        IDRecipe = r.Idrecipe,
-                        Name = r.Name,
-                        Nationality = r.IdnationalityNavigation.Name,
-                        FirstStep = model.Step.Where(s => s.Idrecipe == r.Idrecipe && s.OrderIndex == 1).FirstOrDefault().Description,
-                        StepsCount = model.Step.Count(s => s.Idrecipe == r.Idrecipe)
+                        idRecipe = r.Idrecipe,
+                        name = r.Name,
+                        nationality = r.IdnationalityNavigation.Name,
+                        firstStep = model.Step.Where(s => s.Idrecipe == r.Idrecipe && s.OrderIndex == 1).FirstOrDefault().Description,
+                        stepsCount = model.Step.Count(s => s.Idrecipe == r.Idrecipe)
                     }).FirstOrDefault();
             }
             return result;

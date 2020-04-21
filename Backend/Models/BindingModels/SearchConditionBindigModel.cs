@@ -7,9 +7,9 @@ namespace Backend.Models.BindingModels
 {
     public class SearchConditionBindigModel
     {
-        public string RecipeName { get; set; }
-        public int IDNationality { get; set; }
-        public int IDIngredient { get; set; }
-        public string Author { get; set; }
+        public string recipeName { get; set; }
+        public int idNationality { get; set; }
+        public int idIngredient { get; set; }
+        public string author { get; set; }
     }
 }
