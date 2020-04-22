@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
+using Backend.Models;
 
 namespace Backend
 {
@@ -41,6 +43,12 @@ namespace Backend
                     Description = "Первое подключение swagger"
                 });
             });
+
+            services.AddDbContext<ModelDbContext>(options =>
+            {
+                options.UseSqlServer("server=.\\SQLEXPRESS;database=YummYummY;trusted_connection=true;");
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
