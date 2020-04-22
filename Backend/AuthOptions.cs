@@ -9,8 +9,8 @@ namespace Backend
 {
     public class AuthOptions
     {
-        public const string ISSUER = "MyAuthServer"; // издатель токена
-        public const string AUDIENCE = "MyAuthClient"; // потребитель токена
+        public const string ISSUER = "YummYummY-Backend"; // издатель токена
+        public const string AUDIENCE = "YummYummY-User"; // потребитель токена
         const string KEY = "no1body_can_hack_YummYummY.Backend-matherf88ckers";   // ключ для шифрации
         public const int LIFETIME = 30; // время жизни токена - 1 минута
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
