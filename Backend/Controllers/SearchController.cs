@@ -18,7 +18,6 @@ namespace Backend.Controllers
     [ApiController]
     public class SearchController : ControllerBase
     {
-        [Authorize(Roles = "open")]
         [HttpPost("api/[controller]")]
         public IActionResult Post(SearchConditionBindigModel conditions)
         {
