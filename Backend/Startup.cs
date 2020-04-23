@@ -35,15 +35,15 @@ namespace Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
-                        {
-                            options.AddPolicy(name: MyAllowSpecificOrigins,
-                            builder =>
-                            {
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                builder =>
+                {
                                 // хосты фронта у Санька
                                 builder.WithOrigins("http://localhost:4200",
-                                                    "https://localhost:4200");
-                            });
-                        });
+                                        "https://localhost:4200");
+                });
+            });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
