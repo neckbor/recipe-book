@@ -7,12 +7,12 @@ namespace Backend.Models
 {
     public class GetRcipesBySearch_Result
     {
-        public int IDRecipe { get; set; }
-        public string Name { get; set; }
-        public string Author { get; set; }
-        public TimeSpan? Duration { get; set; }
-        public string Ingredient { get; set; }
-        public string Nationality { get; set; }
+        public int idRecipe { get; set; }
+        public string name { get; set; }
+        public string author { get; set; }
+        public TimeSpan? duration { get; set; }
+        public string ingredient { get; set; }
+        public string nationality { get; set; }
 
     }
 }

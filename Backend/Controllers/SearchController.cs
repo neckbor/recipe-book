@@ -14,14 +14,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class SearchController : ControllerBase
     {
-        ModelDbContext _model = new ModelDbContext();
-
         [HttpPost("api/[controller]")]
-        public IActionResult Get(SearchConditionBindigModel conditions)
+        public IActionResult Post(SearchConditionBindigModel conditions)
+
         {
             try
             {
@@ -45,18 +43,18 @@ namespace Backend.Controllers
             IEnumerable<GetRcipesBySearch_Result> result;
             using (ModelDbContext model = new ModelDbContext())
             {
-                result = model.Recipe.Where(r => EF.Functions.Like(r.Name.ToLower(), conditions.RecipeName.ToLower()))
-                    .Where(r => r.Idnationality == conditions.IDNationality
-                        && r.Idingredient == conditions.IDIngredient
-                        && EF.Functions.Like(r.Author.ToLower(), conditions.Author.ToLower()))
+                result = model.Recipe.Where(r => EF.Functions.Like(r.Name.ToLower(), conditions.recipeName.ToLower()))
+                    .Where(r => r.Idnationality == conditions.idNationality
+                        && r.Idingredient == conditions.idIngredient
+                        && EF.Functions.Like(r.Author.ToLower(), conditions.author.ToLower()))
                     .Select(r => new GetRcipesBySearch_Result
                     {
-                        IDRecipe = r.Idrecipe,
-                        Name = r.Name,
-                        Author = r.Author,
-                        Duration = r.Duration,
-                        Ingredient = r.IdingredientNavigation.Name,
-                        Nationality = r.IdnationalityNavigation.Name
+                        idRecipe = r.Idrecipe,
+                        name = r.Name,
+                        author = r.Author,
+                        duration = r.Duration,
+                        ingredient = r.IdingredientNavigation.Name,
+                        nationality = r.IdnationalityNavigation.Name
                     }).ToList(); 
             }
             return result;
