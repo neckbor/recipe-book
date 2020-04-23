@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Models;
 
@@ -11,6 +9,43 @@ namespace Backend.Controllers
     [ApiController]
     public class ReferenceDataManagerController : ControllerBase
     {
+        [HttpPost("api/[controller]/searchIngredients")]
+        public IActionResult Get(Ingredient ingredient)
+        {
+            try
+            {
+                if (ingredient == null)
+                    return BadRequest();
+
+                IEnumerable<Ingredient> result = GetIngredients(ingredient);
+                if (result == null)
+                    return NoContent();
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private IEnumerable<Ingredient> GetIngredients(Ingredient ingredient)
+        {
+            IEnumerable<Ingredient> result;
+            using (ModelDbContext _model = new ModelDbContext())
+            {
+                if(ingredient.Name == "")
+                {
+                    result = _model.Ingredient.ToList();
+                }
+                else
+                {
+                    result = _model.Ingredient.ToList().FindAll(i => i.Name.ToLower().Contains(ingredient.Name.ToLower()));
+                }
+            }
+            return result;
+        }
+
         [HttpPost("api/[controller]/addIngredient")]
         public IActionResult AddIngredient(Ingredient ingredient)
         {
@@ -146,7 +181,6 @@ namespace Backend.Controllers
                 {
                     return StatusCode(500, "Ошибка! " + response);
                 }
-            }
             }
             catch (Exception e)
             {
