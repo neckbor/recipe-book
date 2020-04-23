@@ -19,7 +19,10 @@ namespace Backend.Models
         public virtual DbSet<IngredientList> IngredientList { get; set; }
         public virtual DbSet<Nationality> Nationality { get; set; }
         public virtual DbSet<Recipe> Recipe { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Step> Step { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserRole> UserRole { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -115,6 +118,17 @@ namespace Backend.Models
                     .HasConstraintName("FK_Recipe_Nationality");
             });
 
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.HasKey(e => e.Idrole);
+
+                entity.Property(e => e.Idrole).HasColumnName("IDRole");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<Step>(entity =>
             {
                 entity.HasKey(e => e.Idstep);
@@ -132,6 +146,46 @@ namespace Backend.Models
                     .HasForeignKey(d => d.Idrecipe)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Step_Recipe");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.Iduser);
+
+                entity.Property(e => e.Iduser).HasColumnName("IDUser");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Login)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PassworgHash)
+                    .IsRequired()
+                    .HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                entity.HasKey(e => e.IduserRole);
+
+                entity.Property(e => e.IduserRole).HasColumnName("IDUserRole");
+
+                entity.Property(e => e.Idrole).HasColumnName("IDRole");
+
+                entity.Property(e => e.Iduser).HasColumnName("IDUser");
+
+                entity.HasOne(d => d.IdroleNavigation)
+                    .WithMany(p => p.UserRole)
+                    .HasForeignKey(d => d.Idrole)
+                    .HasConstraintName("FK_UserRole_Role");
+
+                entity.HasOne(d => d.IduserNavigation)
+                    .WithMany(p => p.UserRole)
+                    .HasForeignKey(d => d.Iduser)
+                    .HasConstraintName("FK_UserRole_User");
             });
 
             OnModelCreatingPartial(modelBuilder);

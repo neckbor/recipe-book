@@ -15,6 +15,8 @@ using System.Reflection;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Backend
 {
@@ -33,15 +35,40 @@ namespace Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                builder =>
-                {
-                    // хосты фронта у —анька
-                    builder.WithOrigins("http://localhost:4200",
-                                        "https://localhost:4200");
-                });
-            });
+                        {
+                            options.AddPolicy(name: MyAllowSpecificOrigins,
+                            builder =>
+                            {
+                                // хосты фронта у —анька
+                                builder.WithOrigins("http://localhost:4200",
+                                                    "https://localhost:4200");
+                            });
+                        });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            // укзывает, будет ли валидироватьс€ издатель при валидации токена
+                            ValidateIssuer = true,
+                            // строка, представл€юща€ издател€
+                            ValidIssuer = AuthOptions.ISSUER,
+
+                            // будет ли валидироватьс€ потребитель токена
+                            ValidateAudience = true,
+                            // установка потребител€ токена
+                            ValidAudience = AuthOptions.AUDIENCE,
+                            // будет ли валидироватьс€ врем€ существовани€
+                            ValidateLifetime = true,
+
+                            // установка ключа безопасности
+                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            // валидаци€ ключа безопасности
+                            ValidateIssuerSigningKey = true,
+                        };
+                    });
 
             services.AddControllers();
 
@@ -87,7 +114,9 @@ namespace Backend
 
             app.UseRouting();
 
-            app.UseCors(MyAllowSpecificOrigins);
+			app.UseCors(MyAllowSpecificOrigins);
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
