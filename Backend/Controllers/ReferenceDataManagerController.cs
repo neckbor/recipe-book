@@ -14,9 +14,6 @@ namespace Backend.Controllers
         {
             try
             {
-                if (ingredient == null)
-                    return BadRequest();
-
                 IEnumerable<Ingredient> result = GetIngredients(ingredient);
                 if (result == null)
                     return NoContent();
@@ -29,21 +26,21 @@ namespace Backend.Controllers
             }
         }
 
-        private IEnumerable<Ingredient> GetIngredients(Ingredient ingredient)
+        [HttpPost("api/[controller]/searchNationalities")]
+        public IActionResult Get(Nationality nationality)
         {
-            IEnumerable<Ingredient> result;
-            using (ModelDbContext _model = new ModelDbContext())
+            try
             {
-                if(ingredient.Name == "")
-                {
-                    result = _model.Ingredient.ToList();
-                }
-                else
-                {
-                    result = _model.Ingredient.ToList().FindAll(i => i.Name.ToLower().Contains(ingredient.Name.ToLower()));
-                }
+                IEnumerable<Nationality> result = GetNationalities(nationality);
+                if (result == null)
+                    return NoContent();
+
+                return Ok(result);
             }
-            return result;
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         [HttpPost("api/[controller]/addIngredient")]
@@ -186,6 +183,40 @@ namespace Backend.Controllers
             {
                 return StatusCode(500, e.Message);
             }
+        }
+
+        private IEnumerable<Ingredient> GetIngredients(Ingredient ingredient)
+        {
+            IEnumerable<Ingredient> result;
+            using (ModelDbContext _model = new ModelDbContext())
+            {
+                if (ingredient.Name == "")
+                {
+                    result = _model.Ingredient.ToList();
+                }
+                else
+                {
+                    result = _model.Ingredient.ToList().FindAll(i => i.Name.ToLower().Contains(ingredient.Name.ToLower()));
+                }
+            }
+            return result;
+        }
+
+        private IEnumerable<Nationality> GetNationalities(Nationality nationality)
+        {
+            IEnumerable<Nationality> result;
+            using (ModelDbContext _model = new ModelDbContext())
+            {
+                if (nationality.Name == "")
+                {
+                    result = _model.Nationality.ToList();
+                }
+                else
+                {
+                    result = _model.Nationality.ToList().FindAll(i => i.Name.ToLower().Contains(nationality.Name.ToLower()));
+                }
+            }
+            return result;
         }
 
         private bool AddIntoDB(Ingredient ingredient)
