@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Backend.Models;
+using Backend.Models.BindingModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -16,9 +17,12 @@ namespace Backend.Controllers
     public class AccountController : ControllerBase
     {
         [HttpPost("/token")]
-        public IActionResult Token(string username, string password)
+        public IActionResult Token(LoginBindingModel model)
         {
-            var identity = GetIdentity(username, password);
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var identity = GetIdentity(model);
             if (identity == null)
             {
                 return BadRequest(new { errorText = "Invalid username or password." });
@@ -44,18 +48,20 @@ namespace Backend.Controllers
             return Ok(response);
         }
 
-        private ClaimsIdentity GetIdentity(string username, string password)
+        private ClaimsIdentity GetIdentity(LoginBindingModel login)
         {
             using ModelDbContext model = new ModelDbContext();
             
-            User user = model.User.FirstOrDefault(u => u.Login == username && u.PassworgHash == password);
+            User user = model.User.FirstOrDefault(u => u.Login == login.login && u.PassworgHash == login.password);
             if (user != null)
             {
-                var claims = new List<Claim>
-                        {
-                            new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
-                            new Claim(ClaimsIdentity.DefaultRoleClaimType, model.Role.Find(user.UserRole.FirstOrDefault().IduserRole).Name)
-                        };
+                var claims = new List<Claim>();
+                Claim c1 =  new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login);
+                string role = model.Role.Find(model.UserRole.Where(ur => ur.Iduser == 2).FirstOrDefault().Idrole).Name;
+                Claim c2 = new Claim(ClaimsIdentity.DefaultRoleClaimType, role);
+
+                claims.Add(c1);
+                claims.Add(c2);
                 ClaimsIdentity claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                     ClaimsIdentity.DefaultRoleClaimType);
