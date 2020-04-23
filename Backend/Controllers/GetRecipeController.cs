@@ -13,7 +13,7 @@ namespace Backend.Controllers
     [ApiController]
     public class GetRecipeController : ControllerBase
     {
-        [HttpGet("api/[controller]/")]
+        [HttpGet("api/[controller]")]
         public IActionResult Get(int idRecipe)
         {
             try
@@ -37,16 +37,18 @@ namespace Backend.Controllers
         private RecipeBindingModel GetRecipe(int idRecipe)
         {
             RecipeBindingModel result;
-            using (ModelDbContext model = new ModelDbContext())
+
+            using (ModelDbContext _model = new ModelDbContext())
             {
-                result = (RecipeBindingModel)model.Recipe.Where(r => r.Idrecipe == idRecipe)
+                result = (RecipeBindingModel)_model.Recipe.Where(r => r.Idrecipe == idRecipe)
                     .Select(r => new RecipeBindingModel
                     {
                         idRecipe = r.Idrecipe,
                         name = r.Name,
+                        mainIngredient = r.IdingredientNavigation.Name,
                         nationality = r.IdnationalityNavigation.Name,
-                        firstStep = model.Step.Where(s => s.Idrecipe == r.Idrecipe && s.OrderIndex == 1).FirstOrDefault().Description,
-                        stepsCount = model.Step.Count(s => s.Idrecipe == r.Idrecipe)
+                        steps = r.Step.ToList(),
+                        ingredients = r.IngredientList.ToList(),
                     }).FirstOrDefault();
             }
             return result;
