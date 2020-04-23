@@ -11,7 +11,7 @@ namespace Backend.Models
             Step = new HashSet<Step>();
         }
 
-        public int Idrecipe { get; set; }
+        public int Idrecipe { get; set; }   
         public string Name { get; set; }
         public int Idingredient { get; set; }
         public int? Idnationality { get; set; }

@@ -37,7 +37,7 @@ namespace Backend
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                 builder =>
                 {
-                    // хосты фронта у Санька
+                    // ГµГ®Г±ГІГ» ГґГ°Г®Г­ГІГ  Гі Г‘Г Г­ГјГЄГ 
                     builder.WithOrigins("http://localhost:4200",
                                         "https://localhost:4200");
                 });
@@ -53,7 +53,7 @@ namespace Backend
                 {
                     Version = "v1",
                     Title = "YummYummY_Backend",
-                    Description = "Первое подключение swagger"
+                    Description = "ГЏГҐГ°ГўГ®ГҐ ГЇГ®Г¤ГЄГ«ГѕГ·ГҐГ­ГЁГҐ swagger"
                 });
             });
 

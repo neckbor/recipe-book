@@ -19,6 +19,7 @@ namespace Backend.Controllers
     {
         [HttpPost("api/[controller]")]
         public IActionResult Post(SearchConditionBindigModel conditions)
+
         {
             try
             {
@@ -34,8 +35,7 @@ namespace Backend.Controllers
             catch(Exception e)
             {
                 return StatusCode(500, e.Message);
-            }
-            
+            }            
         }
 
         private IEnumerable<GetRcipesBySearch_Result> GetRecipes(SearchConditionBindigModel conditions)
