@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Models;
+using Backend.Models.BindingModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers
 {
@@ -10,11 +12,11 @@ namespace Backend.Controllers
     public class ReferenceDataManagerController : ControllerBase
     {
         [HttpPost("api/[controller]/searchIngredients")]
-        public IActionResult Get(Ingredient ingredient)
+        public IActionResult Get(IngredientBindingModel ingredient)
         {
             try
             {
-                IEnumerable<Ingredient> result = GetIngredients(ingredient);
+                IEnumerable<IngredientBindingModel> result = GetIngredients(ingredient);
                 if (result == null)
                     return NoContent();
 
@@ -27,11 +29,11 @@ namespace Backend.Controllers
         }
 
         [HttpPost("api/[controller]/searchNationalities")]
-        public IActionResult Get(Nationality nationality)
+        public IActionResult Get(NationalityBindingModel nationality)
         {
             try
             {
-                IEnumerable<Nationality> result = GetNationalities(nationality);
+                IEnumerable<NationalityBindingModel> result = GetNationalities(nationality);
                 if (result == null)
                     return NoContent();
 
@@ -44,11 +46,11 @@ namespace Backend.Controllers
         }
 
         [HttpPost("api/[controller]/addIngredient")]
-        public IActionResult AddIngredient(Ingredient ingredient)
+        public IActionResult AddIngredient(IngredientBindingModel ingredient)
         {
             try
             {
-                if (ingredient.Name == null)
+                if (ingredient.name == null)
                     return BadRequest();
 
                 if (AddIntoDB(ingredient))
@@ -67,11 +69,11 @@ namespace Backend.Controllers
         }
 
         [HttpPost("api/[controller]/updateIngredient")]
-        public IActionResult UpdateIngredient(Ingredient ingredient)
+        public IActionResult UpdateIngredient(IngredientBindingModel ingredient)
         {
             try
             {
-                if (ingredient.Idingredient == 0)
+                if (ingredient.idIngredient == 0)
                     return BadRequest();
 
                 if (UpdateInDB(ingredient))
@@ -115,11 +117,11 @@ namespace Backend.Controllers
         }
 
         [HttpPost("api/[controller]/addNationality")]
-        public IActionResult AddNationality(Nationality nationality)
+        public IActionResult AddNationality(NationalityBindingModel nationality)
         {
             try
             {
-                if (nationality.Name == null)
+                if (nationality.name == null)
                     return BadRequest();
 
                 if (AddIntoDB(nationality))
@@ -138,11 +140,11 @@ namespace Backend.Controllers
         }
 
         [HttpPost("api/[controller]/updateNationality")]
-        public IActionResult UpdateNationality(Nationality nationality)
+        public IActionResult UpdateNationality(NationalityBindingModel nationality)
         {
             try
             {
-                if (nationality.Idnationality == 0)
+                if (nationality.idNationality == 0)
                     return BadRequest();
 
                 if (UpdateInDB(nationality))
@@ -185,41 +187,37 @@ namespace Backend.Controllers
             }
         }
 
-        private IEnumerable<Ingredient> GetIngredients(Ingredient ingredient)
+        private IEnumerable<IngredientBindingModel> GetIngredients(IngredientBindingModel ingredient)
         {
-            IEnumerable<Ingredient> result;
+            IEnumerable<IngredientBindingModel> result;
             using (ModelDbContext _model = new ModelDbContext())
             {
-                if (ingredient.Name == "")
-                {
-                    result = _model.Ingredient.ToList();
-                }
-                else
-                {
-                    result = _model.Ingredient.ToList().FindAll(i => i.Name.ToLower().Contains(ingredient.Name.ToLower()));
-                }
+                result = _model.Ingredient.Where(i => EF.Functions.Like(i.Name.ToLower(), '%' + ingredient.name.ToLower() + '%'))
+                        .Select(i => new IngredientBindingModel
+                        {
+                            idIngredient = i.Idingredient,
+                            name = i.Name
+                        }).ToList();
             }
             return result;
         }
 
-        private IEnumerable<Nationality> GetNationalities(Nationality nationality)
+        private IEnumerable<NationalityBindingModel> GetNationalities(NationalityBindingModel nationality)
         {
-            IEnumerable<Nationality> result;
+            IEnumerable<NationalityBindingModel> result;
             using (ModelDbContext _model = new ModelDbContext())
             {
-                if (nationality.Name == "")
-                {
-                    result = _model.Nationality.ToList();
-                }
-                else
-                {
-                    result = _model.Nationality.ToList().FindAll(i => i.Name.ToLower().Contains(nationality.Name.ToLower()));
-                }
+                result = _model.Nationality.Where(n => EF.Functions.Like(n.Name.ToLower(), '%' + nationality.name.ToLower() + '%'))
+                        .Select(n => new NationalityBindingModel
+                        {
+                            idNationality = n.Idnationality,
+                            name = n.Name
+                        }).ToList();
             }
             return result;
         }
 
-        private bool AddIntoDB(Ingredient ingredient)
+        private bool AddIntoDB(IngredientBindingModel ingredient)
         {
             using (ModelDbContext _model = new ModelDbContext())
             {
@@ -228,7 +226,7 @@ namespace Backend.Controllers
                     try
                     {
                         Ingredient i = new Ingredient();
-                        i.Name = ingredient.Name;
+                        i.Name = ingredient.name;
 
                         _model.Ingredient.Add(i);
 
@@ -246,7 +244,7 @@ namespace Backend.Controllers
             }
         }
 
-        private bool UpdateInDB(Ingredient ingredient)
+        private bool UpdateInDB(IngredientBindingModel ingredient)
         {
             using (ModelDbContext _model = new ModelDbContext())
             {
@@ -254,14 +252,18 @@ namespace Backend.Controllers
                 {
                     try
                     {
-                        Ingredient i = _model.Ingredient.ToList().Find(i => i.Idingredient == ingredient.Idingredient);
+                        Ingredient i = _model.Ingredient.ToList().Find(i => i.Idingredient == ingredient.idIngredient);
 
-                        if (ingredient.Name != null)
-                            i.Name = ingredient.Name;
+                        if (ingredient.name != null && i != null)
+                        {
+                            i.Name = ingredient.name;
+                            _model.SaveChanges();
+                            transaction.Commit();
 
-                        _model.SaveChanges();
-                        transaction.Commit();
-                        return true;
+                            return true;
+                        }
+
+                        return false;
                     }
                     catch (Exception e)
                     {
@@ -300,7 +302,7 @@ namespace Backend.Controllers
             }
         }
 
-        private bool AddIntoDB(Nationality nationality)
+        private bool AddIntoDB(NationalityBindingModel nationality)
         {
             using (ModelDbContext _model = new ModelDbContext())
             {
@@ -309,7 +311,7 @@ namespace Backend.Controllers
                     try
                     {
                         Nationality n = new Nationality();
-                        n.Name = nationality.Name;
+                        n.Name = nationality.name;
 
                         _model.Nationality.Add(n);
 
@@ -327,7 +329,7 @@ namespace Backend.Controllers
             }
         }
 
-        private bool UpdateInDB(Nationality nationality)
+        private bool UpdateInDB(NationalityBindingModel nationality)
         {
             using (ModelDbContext _model = new ModelDbContext())
             {
@@ -335,14 +337,17 @@ namespace Backend.Controllers
                 {
                     try
                     {
-                        Nationality n = _model.Nationality.ToList().Find(n => n.Idnationality == nationality.Idnationality);
+                        Nationality n = _model.Nationality.ToList().Find(n => n.Idnationality == nationality.idNationality);
 
-                        if (nationality.Name != null)
-                            n.Name = nationality.Name;
+                        if (nationality.name != null && n != null)
+                        {
+                            n.Name = nationality.name;
+                            _model.SaveChanges();
+                            transaction.Commit();
+                            return true;
+                        }
 
-                        _model.SaveChanges();
-                        transaction.Commit();
-                        return true;
+                        return false;
                     }
                     catch (Exception e)
                     {

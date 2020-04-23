@@ -8,8 +8,8 @@ namespace Backend.Models.BindingModels
     public class SearchConditionBindigModel
     {
         public string recipeName { get; set; }
-        public int idNationality { get; set; }
-        public int idIngredient { get; set; }
+        public string nationality { get; set; }
+        public string ingredient { get; set; }
         public string author { get; set; }
     }
 }

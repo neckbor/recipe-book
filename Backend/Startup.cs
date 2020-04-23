@@ -15,6 +15,8 @@ using System.Reflection;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Backend
 {
@@ -37,11 +39,34 @@ namespace Backend
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                 builder =>
                 {
-                    // õîñòû ôðîíòà ó Ñàíüêà
-                    builder.WithOrigins("http://localhost:4200",
-                                        "https://localhost:4200");
+                    builder.WithOrigins("http://localhost:4200",                                        "https://localhost:4200");
                 });
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            // укзывает, будет ли валидироваться издатель при валидации токена
+                            ValidateIssuer = true,
+                            // строка, представляющая издателя
+                            ValidIssuer = AuthOptions.ISSUER,
+
+                            // будет ли валидироваться потребитель токена
+                            ValidateAudience = true,
+                            // установка потребителя токена
+                            ValidAudience = AuthOptions.AUDIENCE,
+                            // будет ли валидироваться время существования
+                            ValidateLifetime = true,
+
+                            // установка ключа безопасности
+                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            // валидация ключа безопасности
+                            ValidateIssuerSigningKey = true,
+                        };
+                    });
 
             services.AddControllers();
 
@@ -53,7 +78,7 @@ namespace Backend
                 {
                     Version = "v1",
                     Title = "YummYummY_Backend",
-                    Description = "Ïåðâîå ïîäêëþ÷åíèå swagger"
+                    Description = "Первое подключение swagger"
                 });
             });
 
@@ -87,7 +112,9 @@ namespace Backend
 
             app.UseRouting();
 
-            app.UseCors(MyAllowSpecificOrigins);
+			app.UseCors(MyAllowSpecificOrigins);
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
