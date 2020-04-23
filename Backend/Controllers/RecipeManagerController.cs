@@ -46,7 +46,7 @@ namespace Backend.Controllers
                         Recipe r = new Recipe();
                         r.Name = recipe.name;
                         r.Idingredient = recipe.idIngredient;
-                        r.Idnationality = recipe.idnationality;
+                        r.Idnationality = recipe.idNationality;
                         r.Author = recipe.author;
                         r.DtimeCreate = DateTime.Now;
                         if (recipe.duration != null)
@@ -121,8 +121,8 @@ namespace Backend.Controllers
                         if (recipe.idIngredient != 0)
                             r.Idingredient = recipe.idIngredient;
 
-                        if (recipe.idnationality != 0)
-                            r.Idnationality = recipe.idnationality;
+                        if (recipe.idNationality != 0)
+                            r.Idnationality = recipe.idNationality;
 
                         if (recipe.duration != null)
                             r.Duration = TimeSpan.Parse(recipe.duration);
