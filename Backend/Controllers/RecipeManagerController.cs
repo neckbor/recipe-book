@@ -59,15 +59,21 @@ namespace Backend.Controllers
 
                         foreach (var ingredient in recipe.ingredientList)
                         {
-                            ingredient.Idrecipe = curidrecipe;
+                            IngredientList i = new IngredientList();
+                            i.Idrecipe = curidrecipe;
+                            i.Idingredient = ingredient.idIngredient;
+                            i.Amount = ingredient.amount;
+                            _model.IngredientList.Add(i);
                         }
-                        _model.IngredientList.AddRange(recipe.ingredientList);
-
+                        
                         foreach (var step in recipe.steps)
                         {
-                            step.Idrecipe = curidrecipe;
+                            Step s = new Step();
+                            s.Idrecipe = curidrecipe;
+                            s.OrderIndex = step.orderIndex;
+                            s.Description = step.description;
+                            _model.Step.Add(s);
                         }
-                        _model.Step.AddRange(recipe.steps);
 
                         _model.SaveChanges();
                         transaction.Commit();
@@ -131,10 +137,10 @@ namespace Backend.Controllers
                         {
                             foreach (var step in recipe.steps)
                             {
-                                Step s = _model.Step.ToList().Find(s => s.Idrecipe == recipe.idRecipe && s.OrderIndex == step.OrderIndex);
-                                if(step.Description!=null)
+                                Step s = _model.Step.ToList().Find(s => s.Idrecipe == recipe.idRecipe && s.OrderIndex == step.orderIndex);
+                                if(step.description!=null)
                                 {
-                                    s.Description = step.Description;
+                                    s.Description = step.description;
                                 }
                             }
                         }
@@ -143,16 +149,16 @@ namespace Backend.Controllers
                         {
                             foreach (var ingredient in recipe.ingredientList)
                             {
-                                IngredientList i = _model.IngredientList.ToList().Find(i => i.Idrecipe == recipe.idRecipe && i.IdingredientList == ingredient.IdingredientList);
+                                IngredientList i = _model.IngredientList.ToList().Find(i => i.Idrecipe == recipe.idRecipe && i.IdingredientList == ingredient.idIngredientList);
                                 
-                                if (ingredient.Idingredient != 0)
+                                if (ingredient.idIngredient != 0)
                                 {
-                                    i.Idingredient = ingredient.Idingredient;
+                                    i.Idingredient = ingredient.idIngredient;
                                 }
 
-                                if (ingredient.Amount != null)
+                                if (ingredient.amount != null)
                                 {
-                                    i.Amount = ingredient.Amount;
+                                    i.Amount = ingredient.amount;
                                 }
                             }
                         }

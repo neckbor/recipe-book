@@ -13,13 +13,26 @@ namespace Backend.Models.BindingModels
         public int idNationality { get; set; }
         public string author { get; set; }
         public string duration { get; set; }
-        public List<Step> steps { get; set; }
-        public List<IngredientList> ingredientList { get; set; }
+        public List<StepBindingModel> steps { get; set; }
+        public List<IngredientListBindingModel> ingredientList { get; set; }
 
         public FullInfoRecipeBindingModel()
         {
-            steps = new List<Step>();
-            ingredientList = new List<IngredientList>();
+            steps = new List<StepBindingModel>();
+            ingredientList = new List<IngredientListBindingModel>();
         }
+    }
+
+    public class StepBindingModel
+    {
+        public string description { get; set; }
+        public int orderIndex { get; set; }
+    }
+
+    public class IngredientListBindingModel
+    {
+        public int idIngredientList { get; set; }
+        public int idIngredient { get; set; }
+        public string amount { get; set; }
     }
 }
