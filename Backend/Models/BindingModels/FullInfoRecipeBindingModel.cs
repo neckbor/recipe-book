@@ -25,6 +25,7 @@ namespace Backend.Models.BindingModels
 
     public class StepBindingModel
     {
+        public int idStep { get; set; }
         public string description { get; set; }
         public int orderIndex { get; set; }
     }
@@ -32,7 +33,7 @@ namespace Backend.Models.BindingModels
     public class IngredientListBindingModel
     {
         public int idIngredientList { get; set; }
-        public int idIngredient { get; set; }
+        public string ingredient { get; set; }
         public string amount { get; set; }
     }
 }

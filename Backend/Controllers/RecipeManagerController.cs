@@ -61,7 +61,7 @@ namespace Backend.Controllers
                         {
                             IngredientList i = new IngredientList();
                             i.Idrecipe = curidrecipe;
-                            i.Idingredient = ingredient.idIngredient;
+                            //i.Idingredient = ingredient.ingredient;
                             i.Amount = ingredient.amount;
                             _model.IngredientList.Add(i);
                         }
@@ -151,10 +151,10 @@ namespace Backend.Controllers
                             {
                                 IngredientList i = _model.IngredientList.ToList().Find(i => i.Idrecipe == recipe.idRecipe && i.IdingredientList == ingredient.idIngredientList);
                                 
-                                if (ingredient.idIngredient != 0)
-                                {
-                                    i.Idingredient = ingredient.idIngredient;
-                                }
+                                //if (ingredient.ingredient != 0)
+                                //{
+                                //    i.Idingredient = ingredient.ingredient;
+                                //}
 
                                 if (ingredient.amount != null)
                                 {

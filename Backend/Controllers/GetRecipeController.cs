@@ -47,8 +47,18 @@ namespace Backend.Controllers
                         name = r.Name,
                         mainIngredient = r.IdingredientNavigation.Name,
                         nationality = r.IdnationalityNavigation.Name,
-                        steps = r.Step.ToList(),
-                        ingredients = r.IngredientList.ToList(),
+                        steps = r.Step.Select(s => new StepBindingModel
+                        {
+                            idStep = s.Idstep,
+                            description = s.Description,
+                            orderIndex = s.OrderIndex
+                        }).ToList(),
+                        ingredients = r.IngredientList.Select(il => new IngredientListBindingModel
+                        {
+                            idIngredientList = il.IdingredientList,
+                            ingredient = il.IdingredientNavigation.Name,
+                            amount = il.Amount
+                        }).ToList(),
                     }).FirstOrDefault();
             }
             return result;
