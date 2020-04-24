@@ -27,13 +27,14 @@
         <div class="col-lg-4 col-md-4">
         <div class="card">
           <div class="card-body">
-            <span class="author">Автор: {{tempRecipe.Author}}</span>
-            <h5 class="card-title">{{tempRecipe.Name}}</h5>
+            <span class="author">Автор: {{tempRecipe.author}}</span>
+            <h5 class="card-title">{{tempRecipe.name}}</h5>
             <p class="card-text">
-              <span>Главный ингридиент: {{tempRecipe.MainIngredient}}</span>
+              <span>Главный ингридиент: {{tempRecipe.ingredient}}</span>
               <br />
-              <span>Национальность: {{tempRecipe.Nationality}}</span>
+              <span>Национальность: {{tempRecipe.nationality}}</span>
             </p>
+            <p class="duration">{{tempRecipe.duration}} минут</p>
             <a href="#" class="btn btn-primary btn-go">Просмотр</a>
           </div>
         </div>
@@ -41,12 +42,12 @@
         <div *ngIf="i + 1 < shareRecipes.recipes.length" class="col-lg-4 col-md-4">
           <div class="card">
           <div class="card-body">
-            <span class="author">Автор: {{shareRecipes.recipes[i + 1].Author}}</span>
-            <h5 class="card-title">{{shareRecipes.recipes[i + 1].Name}}</h5>
+            <span class="author">Автор: {{shareRecipes.recipes[i + 1].author}}</span>
+            <h5 class="card-title">{{shareRecipes.recipes[i + 1].name}}</h5>
             <p class="card-text">
-              <span>Главный ингридиент: {{shareRecipes.recipes[i + 1].MainIngredient}}</span>
+              <span>Главный ингридиент: {{shareRecipes.recipes[i + 1].ingredient}}</span>
               <br />
-              <span>Национальность: {{shareRecipes.recipes[i + 1].Nationality}}</span>
+              <span>Национальность: {{shareRecipes.recipes[i + 1].nationality}}</span>
             </p>
             <a href="#" class="btn btn-primary btn-go">Просмотр</a>
           </div>
@@ -55,12 +56,12 @@
         <div *ngIf="i + 2 < shareRecipes.recipes.length" class="col-lg-4 col-md-4">
           <div class="card">
           <div class="card-body">
-            <span class="author">Автор: {{shareRecipes.recipes[i + 2].Author}}</span>
-            <h5 class="card-title">{{shareRecipes.recipes[i + 2].Name}}</h5>
+            <span class="author">Автор: {{shareRecipes.recipes[i + 2].author}}</span>
+            <h5 class="card-title">{{shareRecipes.recipes[i + 2].name}}</h5>
             <p class="card-text">
-              <span>Главный ингридиент: {{shareRecipes.recipes[i + 2].MainIngredient}}</span>
+              <span>Главный ингридиент: {{shareRecipes.recipes[i + 2].ingredient}}</span>
               <br />
-              <span>Национальность: {{shareRecipes.recipes[i + 2].Nationality}}</span>
+              <span>Национальность: {{shareRecipes.recipes[i + 2].nationality}}</span>
             </p>
             <a href="#" class="btn btn-primary btn-go">Просмотр</a>
           </div>
