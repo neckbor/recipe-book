@@ -1,0 +1,22 @@
+@import "src/colors/colors";
+.pan-img{
+  max-width: 300px;
+}
+.btn-wrapper{
+  max-width: 300px;
+}
+.btn-go{
+  background-color: $blue;
+}
+.author{
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  color: grey;
+}
+.recipes-wrapper{
+  margin-top: 50px;
+}
+.row-class{
+  margin-top: 15px;
+}
