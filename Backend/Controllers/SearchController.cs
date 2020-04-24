@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Backend.Models;
 using Backend.Models.BindingModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -43,10 +44,10 @@ namespace Backend.Controllers
             IEnumerable<GetRcipesBySearch_Result> result;
             using (ModelDbContext model = new ModelDbContext())
             {
-                result = model.Recipe.Where(r => EF.Functions.Like(r.Name.ToLower(), conditions.recipeName.ToLower()))
-                    .Where(r => r.Idnationality == conditions.idNationality
-                        && r.Idingredient == conditions.idIngredient
-                        && EF.Functions.Like(r.Author.ToLower(), conditions.author.ToLower()))
+                result = model.Recipe.Where(r => EF.Functions.Like(r.Name.ToLower(), '%' + conditions.recipeName.ToLower() + '%'))
+                    .Where(r => EF.Functions.Like(r.IdnationalityNavigation.Name.ToLower(), '%' + conditions.nationality.ToLower() + '%')
+                        && EF.Functions.Like(r.IdingredientNavigation.Name.ToLower(), '%' + conditions.ingredient.ToLower() + '%')
+                        && EF.Functions.Like(r.Author.ToLower(), '%' + conditions.author.ToLower() + '%'))
                     .Select(r => new GetRcipesBySearch_Result
                     {
                         idRecipe = r.Idrecipe,
