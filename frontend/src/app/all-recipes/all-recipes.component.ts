@@ -16,10 +16,10 @@ export class AllRecipesComponent implements OnInit {
   }
 
   private searchRecipe() {
-    if (this.shareRecipes.filter.mainIngredient ||
+    if (this.shareRecipes.filter.ingredient ||
       this.shareRecipes.filter.nationality ||
       this.shareRecipes.filter.author ||
-      this.shareRecipes.filter.name) {
+      this.shareRecipes.filter.recipeName) {
       this.http.getRecipes(this.shareRecipes.filter).subscribe(data => {
           this.shareRecipes.recipes = data;
           console.log('Recipes: ' + this.shareRecipes.recipes);

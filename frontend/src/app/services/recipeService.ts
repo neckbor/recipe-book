@@ -8,7 +8,7 @@ import {Filter} from '../models/Filter';
   providedIn: 'root'
 })
 export class RecipeService {
-  private baseUrl = 'http://localhost:55984/api/search/search';
+  private baseUrl = 'https://localhost:44383/api/search';
   constructor(private http: HttpClient) {
   }
   getRecipes(filters: Filter): Observable<Recipe[]> {
