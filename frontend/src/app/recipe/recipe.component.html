@@ -20,32 +20,17 @@
     </div>
   </div>
 
-  <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-  </button>
-  <mat-vertical-stepper [linear]="isLinear" #stepper>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done3.</p>
+  <mat-vertical-stepper linear #stepper>
+    <ng-template matStepperIcon="edit">
+      <mat-icon>done</mat-icon>
+    </ng-template>
+    <mat-step *ngFor="let item of recipe.steps; let i = index;">
+      <ng-template matStepLabel>Шаг {{item.orderIndex}}</ng-template>
+      <p>{{item.description}}</p>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.2</p>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button matStepperPrevious>Назад</button>
+        <button mat-button matStepperNext *ngIf="i != recipe.steps.length - 1">Вперед</button>
+        <button mat-button *ngIf="i === recipe.steps.length - 1" (click)="done()">Завершить</button>
       </div>
     </mat-step>
   </mat-vertical-stepper>

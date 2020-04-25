@@ -16,21 +16,25 @@ export class RecipeComponent implements OnInit {
 
   recipe: Recipe;
   id: number;
-  isLinear = false;
+  completed = false;
+  state: string;
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
-    // this.http.getRecipeById(this.id).subscribe(
-    //   data => {
-    //     this.recipe = data;
-    //     console.log('Получение рецепта прошло успешно');
-    //   },
-    //   err => console.log('Произошла ошибка при получении рецепта', err)
-    // );
-    this.recipe = new Recipe(1, 'яйцо', 'масло', 'Россия', 'alex', 30,
-      [new Ingredient(1, 'масло', '2'), new Ingredient(1, 'Яйцо', '3')],
-      [new Step(1, 1, 'поджарить'), new Step(2, 3, 'убрать'),
-        new Step(3, 2, 'полить маслом')]);
-    console.log(this.recipe.ingredients[0].amount);
+    this.http.getRecipeById(this.id).subscribe(
+      data => {
+        this.recipe = data;
+        console.log('Получение рецепта прошло успешно');
+      },
+      err => console.log('Произошла ошибка при получении рецепта', err)
+    );
+    // this.recipe = new Recipe(1, 'яйцо', 'масло', 'Россия', 'alex', 30,
+    //   [new Ingredient(1, 'масло', '2'), new Ingredient(1, 'Яйцо', '3')],
+    //   [new Step(1, 1, 'поджарить'), new Step(2, 3, 'убрать'),
+    //     new Step(3, 2, 'полить маслом')]);
+    // console.log(this.recipe.ingredients[0].amount);
+  }
+  done() {
+    console.log('рецепт завершен');
   }
 
 }

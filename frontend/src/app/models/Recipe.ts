@@ -19,6 +19,9 @@ export class Recipe {
     this.author = author;
     this.duration = duration;
     this.ingredients = ingredients;
-    this.steps = steps;
+    this.steps = steps.sort(this.sortSteps);
+  }
+  private sortSteps(a, b) {
+    return a.orderIndex - b.orderIndex;
   }
 }
