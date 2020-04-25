@@ -11,13 +11,25 @@ namespace Backend.Controllers
     [ApiController]
     public class ReferenceDataManagerController : ControllerBase
     {
+        /// <summary>
+        /// Поиск ингредиентов по названию
+        /// </summary>
+        /// <param name="ingredient">Название ингредиента</param>
+        /// <returns>Список ингредиентов</returns>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="204">Не найдено ни одного игредиента</response>
+        /// <response code="200">Найдены ингредиенты</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/searchIngredients")]
         public IActionResult Get(IngredientBindingModel ingredient)
         {
             try
             {
+                if (ingredient.name == null || ingredient.name.Count() < 1)
+                    return BadRequest();
+
                 IEnumerable<IngredientBindingModel> result = GetIngredients(ingredient);
-                if (result == null)
+                if (result.Count() < 1)
                     return NoContent();
 
                 return Ok(result);
@@ -28,13 +40,25 @@ namespace Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Поиск национальностей по названию
+        /// </summary>
+        /// <param name="nationality">Название национальности</param>
+        /// <returns>Список национальностей</returns>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="204">Не найдено ни одной национальности</response>
+        /// <response code="200">Найдены национальности</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/searchNationalities")]
         public IActionResult Get(NationalityBindingModel nationality)
         {
             try
             {
+                if (nationality.name == null || nationality.name.Count() < 1)
+                    return BadRequest();
+
                 IEnumerable<NationalityBindingModel> result = GetNationalities(nationality);
-                if (result == null)
+                if (result.Count() < 1)
                     return NoContent();
 
                 return Ok(result);
@@ -45,12 +69,21 @@ namespace Backend.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Добавить новый ингредиент
+        /// </summary>
+        /// <param name="ingredient">Название ингредиента</param>
+        /// <returns>Результат, добавлен ингредиент или нет</returns>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="200">Ингредиент добавлен</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/addIngredient")]
         public IActionResult AddIngredient(IngredientBindingModel ingredient)
         {
             try
             {
-                if (ingredient.name == null)
+                if (ingredient == null || ingredient.name.Count() < 1)
                     return BadRequest();
 
                 if (AddIntoDB(ingredient))
@@ -68,12 +101,20 @@ namespace Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Измененить ингредиент
+        /// </summary>
+        /// <param name="ingredient">Данные ингредиента</param>
+        /// <returns>Результат, изменены данные или нет</returns>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="200">Ингредиент изменён</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/updateIngredient")]
         public IActionResult UpdateIngredient(IngredientBindingModel ingredient)
         {
             try
             {
-                if (ingredient.idIngredient == 0)
+                if (ingredient == null || ingredient.idIngredient < 1 || ingredient.name.Count() < 1)
                     return BadRequest();
 
                 if (UpdateInDB(ingredient))
@@ -91,6 +132,14 @@ namespace Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Удалить ингредиент
+        /// </summary>
+        /// <param name="idIngredient">id ингредиента</param>
+        /// <returns>Результат, удалён ингредиент или нет</returns>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="200">Ингредиент удалён</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpDelete("api/[controller]/deleteIngredient")]
         public IActionResult DeleteIngredient(int idIngredient)
         {
@@ -116,6 +165,14 @@ namespace Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Добавить новую национальность
+        /// </summary>
+        /// <param name="nationality">Название национальности</param>
+        /// <returns>Результат, добавлена национальность или нет</returns>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="200">Национальность добавлена</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/addNationality")]
         public IActionResult AddNationality(NationalityBindingModel nationality)
         {
@@ -139,12 +196,20 @@ namespace Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Измененить национальность
+        /// </summary>
+        /// <param name="nationality">Данные национальности</param>
+        /// <returns>Результат, изменены данные или нет</returns>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="200">Национальность изменена</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/updateNationality")]
         public IActionResult UpdateNationality(NationalityBindingModel nationality)
         {
             try
             {
-                if (nationality.idNationality == 0)
+                if (nationality == null || nationality.idNationality < 1 || nationality.name.Count() < 1)
                     return BadRequest();
 
                 if (UpdateInDB(nationality))
@@ -162,6 +227,14 @@ namespace Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Удалить национальность
+        /// </summary>
+        /// <param name="idNationality">id Национальности</param>
+        /// <returns>Результат, удалена национальность или нет</returns>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="200">Национальность удалена</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpDelete("api/[controller]/deleteNationality")]
         public IActionResult DeleteNationality(int idNationality)
         {

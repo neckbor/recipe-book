@@ -18,6 +18,15 @@ namespace Backend.Controllers
     [ApiController]
     public class SearchController : ControllerBase
     {
+        /// <summary>
+        /// Поиск рецептов по заданным параметрам
+        /// </summary>
+        /// <param name="conditions">Параметры поиска</param>
+        /// <returns>Список найденный рецептов</returns>
+        /// <response code="204">Не найдено ни одного рецепта</response>
+        /// <response code="400">Некорректные значения</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="200">Рецепты найдены</response>
         [HttpPost("api/[controller]")]
         public IActionResult Post(SearchConditionBindigModel conditions)
 
@@ -28,7 +37,7 @@ namespace Backend.Controllers
                     return BadRequest();
 
                 IEnumerable<GetRcipesBySearch_Result> result = GetRecipes(conditions);
-                if (result == null)
+                if (result.Count() < 1)
                     return NoContent();
 
                 return Ok(result);
@@ -44,8 +53,8 @@ namespace Backend.Controllers
             IEnumerable<GetRcipesBySearch_Result> result;
             using (ModelDbContext model = new ModelDbContext())
             {
-                result = model.Recipe.Where(r => EF.Functions.Like(r.Name.ToLower(), '%' + conditions.recipeName.ToLower() + '%'))
-                    .Where(r => EF.Functions.Like(r.IdnationalityNavigation.Name.ToLower(), '%' + conditions.nationality.ToLower() + '%')
+                result = model.Recipe.Where(r => EF.Functions.Like(r.Name.ToLower(), '%' + conditions.recipeName.ToLower() + '%')
+                        && EF.Functions.Like(r.IdnationalityNavigation.Name.ToLower(), '%' + conditions.nationality.ToLower() + '%')
                         && EF.Functions.Like(r.IdingredientNavigation.Name.ToLower(), '%' + conditions.ingredient.ToLower() + '%')
                         && EF.Functions.Like(r.Author.ToLower(), '%' + conditions.author.ToLower() + '%'))
                     .Select(r => new GetRcipesBySearch_Result

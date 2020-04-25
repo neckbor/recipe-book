@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Backend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Backend
 {
@@ -39,7 +40,8 @@ namespace Backend
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200",                                        "https://localhost:4200");
+                    builder.WithOrigins("http://localhost:4200",
+                                        "https://localhost:4200");
                 });
             });
 
@@ -73,13 +75,19 @@ namespace Backend
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                //c.SwaggerDoc("v1", new OpenApiInfo { Title = "YummYummY_Backend", Version = "v1" });
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "YummYummY_Backend",
                     Description = "Первое подключение swagger"
                 });
+
+                //Determine base path for the application.
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+
+                //Set the comments path for the swagger json and ui.
+                var xmlPath = Path.Combine(basePath, "Backend.xml");
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddDbContext<ModelDbContext>(options =>
