@@ -35,7 +35,7 @@
               <span>Национальность: {{tempRecipe.nationality}}</span>
             </p>
             <p class="duration">{{tempRecipe.duration}} минут</p>
-            <button class="btn btn-primary btn-go">Просмотр</button>
+            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
               <br />
               <span>Национальность: {{shareRecipes.recipes[i + 1].nationality}}</span>
             </p>
-            <a href="#" class="btn btn-primary btn-go">Просмотр</a>
+            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
         </div>
         </div>
@@ -63,7 +63,7 @@
               <br />
               <span>Национальность: {{shareRecipes.recipes[i + 2].nationality}}</span>
             </p>
-            <a href="#" class="btn btn-primary btn-go">Просмотр</a>
+            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
         </div>
         </div>

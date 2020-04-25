@@ -41,4 +41,8 @@ export class AllRecipesComponent implements OnInit {
       error => console.log('Error http request on allRecipesPage' + error));
   }
 
+  private seeRecipe(id: number) {
+    this.router.navigate(['recipe', id]);
+  }
+
 }
