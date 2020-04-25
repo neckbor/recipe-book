@@ -53,8 +53,8 @@ namespace Backend.Controllers
             IEnumerable<GetRcipesBySearch_Result> result;
             using (ModelDbContext model = new ModelDbContext())
             {
-                result = model.Recipe.Where(r => EF.Functions.Like(r.Name.ToLower(), '%' + conditions.recipeName.ToLower() + '%'))
-                    .Where(r => EF.Functions.Like(r.IdnationalityNavigation.Name.ToLower(), '%' + conditions.nationality.ToLower() + '%')
+                result = model.Recipe.Where(r => EF.Functions.Like(r.Name.ToLower(), '%' + conditions.recipeName.ToLower() + '%')
+                        && EF.Functions.Like(r.IdnationalityNavigation.Name.ToLower(), '%' + conditions.nationality.ToLower() + '%')
                         && EF.Functions.Like(r.IdingredientNavigation.Name.ToLower(), '%' + conditions.ingredient.ToLower() + '%')
                         && EF.Functions.Like(r.Author.ToLower(), '%' + conditions.author.ToLower() + '%'))
                     .Select(r => new GetRcipesBySearch_Result
