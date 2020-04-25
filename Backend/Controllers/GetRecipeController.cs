@@ -19,7 +19,7 @@ namespace Backend.Controllers
         /// <param name="idRecipe">id Рецепта</param>
         /// <returns>Данные рецепта</returns>
         /// <response code="200">ОК, рецепт найден</response>
-        /// <response code="400">idRecipe некоректное значение</response>
+        /// <response code="400">Некорректные значения</response>
         /// <response code="204">Рецепт не найден</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpGet("api/[controller]")]
@@ -80,7 +80,7 @@ namespace Backend.Controllers
         /// <param name="currentStep">Номер нынешнего шага</param>
         /// <returns>Описание следующего шага</returns>
         /// <response code="200">ОК, шаг найден</response>
-        /// <response code="400">idRecipe или currentStep некоректное значение</response>
+        /// <response code="400">Некорректные значения</response>
         /// <response code="204">Шаг не найден</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpGet("api/[controller]/nextstep")]
@@ -111,7 +111,7 @@ namespace Backend.Controllers
         /// <param name="currentStep">Номер нынешнего шага</param>
         /// <returns>Описание предыдущего шага</returns>
         /// <response code="200">ОК, шаг найден</response>
-        /// <response code="400">idRecipe или currentStep некоректное значение</response>
+        /// <response code="400">Некорректные значения</response>
         /// <response code="204">Шаг не найден</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpGet("api/[controller]/previousstep")]

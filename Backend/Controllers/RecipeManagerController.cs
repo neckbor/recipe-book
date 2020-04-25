@@ -12,12 +12,20 @@ namespace Backend.Controllers
     [ApiController]
     public class RecipeManagerController : ControllerBase
     {
+        /// <summary>
+        /// Добавить новый рецепт
+        /// </summary>
+        /// <param name="recipe">Данные рецепта</param>
+        /// <returns>Результат, получилось добавить или нет</returns>
+        /// <response code="200">Рецепт добавлен</response>
+        /// <response code="400">Некорректные значения</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/add")]
         public IActionResult Post(FullInfoRecipeBindingModel recipe)
         {
             try
             {
-                if (recipe.name == null)
+                if (recipe == null)
                     return BadRequest();
 
                 if(AddIntoDB(recipe))
@@ -88,12 +96,20 @@ namespace Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Изменить данные рецепта
+        /// </summary>
+        /// <param name="recipe">Данные рецепта</param>
+        /// <returns>Результат, получилось изменить или нет</returns>
+        /// <response code="400">Некорректные значения</response>
+        /// <response code="200">Данные рецепта изменены</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/update")]
         public IActionResult Update(FullInfoRecipeBindingModel recipe)
         {
             try
             {
-                if (recipe.name == null)
+                if (recipe == null)
                     return BadRequest();
 
                 if (UpdateInDB(recipe))
@@ -176,6 +192,14 @@ namespace Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Удалить рецепт
+        /// </summary>
+        /// <param name="idRecipe">id Рецепта</param>
+        /// <returns>Результат, удалён рецепт или нет</returns>
+        /// <response code="400">Некорректные значения</response>
+        /// <response code="200">Рецепт удалён</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpDelete("api/[controller]/delete")]
         public IActionResult Delete(int idRecipe)
         {

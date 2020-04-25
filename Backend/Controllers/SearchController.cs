@@ -24,7 +24,7 @@ namespace Backend.Controllers
         /// <param name="conditions">Параметры поиска</param>
         /// <returns>Список найденный рецептов</returns>
         /// <response code="204">Не найдено ни одного рецепта</response>
-        /// <response code="400">Параметры поиска == null</response>
+        /// <response code="400">Некорректные значения</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         /// <response code="200">Рецепты найдены</response>
         [HttpPost("api/[controller]")]
