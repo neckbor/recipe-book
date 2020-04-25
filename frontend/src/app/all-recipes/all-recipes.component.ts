@@ -13,6 +13,11 @@ export class AllRecipesComponent implements OnInit {
   constructor(private shareRecipes: ShareService, private http: RecipeService, private router: Router) {}
 
   ngOnInit() {
+    this.http.getRecipes(this.shareRecipes.filter).subscribe(data => {
+        this.shareRecipes.recipes = data;
+        console.log('Recipes: ' + this.shareRecipes.recipes);
+      },
+      error => console.log('Error http request on allRecipesPage' + error));
   }
 
   private searchRecipe() {
@@ -29,6 +34,11 @@ export class AllRecipesComponent implements OnInit {
   }
   private reset() {
     this.shareRecipes.filter.reset();
+    this.http.getRecipes(this.shareRecipes.filter).subscribe(data => {
+        this.shareRecipes.recipes = data;
+        console.log('Recipes: ' + this.shareRecipes.recipes);
+      },
+      error => console.log('Error http request on allRecipesPage' + error));
   }
 
 }

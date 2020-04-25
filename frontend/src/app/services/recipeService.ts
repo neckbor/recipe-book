@@ -8,13 +8,18 @@ import {Filter} from '../models/Filter';
   providedIn: 'root'
 })
 export class RecipeService {
-  private baseUrl = 'https://localhost:44383/api/search';
+  private baseUrl = 'https://localhost:44383/api';
   constructor(private http: HttpClient) {
   }
   getRecipes(filters: Filter): Observable<Recipe[]> {
-    return this.http.post<Recipe[]>(this.baseUrl, filters, {
+    const url = this.baseUrl + '/search'
+    return this.http.post<Recipe[]>(url, filters, {
       headers: new HttpHeaders({'Content-Type': 'application/json'
       })
     });
+  }
+  getRecipeById(id: number): Observable<Recipe> {
+    const url = this.baseUrl + '/GetRecipe?idRecipe=' + id;
+    return this.http.get<Recipe>(url);
   }
 }

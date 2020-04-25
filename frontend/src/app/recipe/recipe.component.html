@@ -1,0 +1,52 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 col-md-4">
+      <img src="../../assets/recipe-img/burger.jpg" alt="Бургер" class="img-fluid m-auto burger-img">
+    </div>
+    <div class="col-lg-4 col-md-4 m-auto">
+      <div>
+      <h3>Основные ингридиенты</h3>
+      <p><span *ngFor="let item of recipe.ingredients">{{item.ingredient}} x{{item.amount}}<br /></span></p>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 m-auto">
+      <div class="m-auto text-center wrapper-duration">
+        <h4>Время приготовления
+        <br />
+          <small>(приблизительно)</small></h4>
+        <p>{{recipe.duration}} минут</p>
+      </div>
+    </div>
+  </div>
+
+  <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+  </button>
+  <mat-vertical-stepper [linear]="isLinear" #stepper>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done3.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.2</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>

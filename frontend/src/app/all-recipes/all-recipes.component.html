@@ -9,8 +9,8 @@
     <div class="col-lg-6 col-md-6 m-auto text-center">
       <h4>Фильтры</h4>
       <form>
-        <input type="text" name="name" class="my-input" placeholder="Название" [(ngModel)]="shareRecipes.filter.name">
-        <input type="text" name="ingredient" class="my-input" placeholder="Основной ингридиент" [(ngModel)]="shareRecipes.filter.mainIngredient">
+        <input type="text" name="name" class="my-input" placeholder="Название" [(ngModel)]="shareRecipes.filter.recipeName">
+        <input type="text" name="ingredient" class="my-input" placeholder="Основной ингридиент" [(ngModel)]="shareRecipes.filter.ingredient">
         <input type="text" name="origin" class="my-input" placeholder="Национальное происхождение" [(ngModel)]="shareRecipes.filter.nationality">
         <input type="text" name="author" class="my-input" placeholder="Автор" [(ngModel)]="shareRecipes.filter.author">
         <div class="m-auto btn-wrapper d-flex flex-wrap justify-content-between">
@@ -35,7 +35,7 @@
               <span>Национальность: {{tempRecipe.nationality}}</span>
             </p>
             <p class="duration">{{tempRecipe.duration}} минут</p>
-            <a href="#" class="btn btn-primary btn-go">Просмотр</a>
+            <button class="btn btn-primary btn-go">Просмотр</button>
           </div>
         </div>
       </div>

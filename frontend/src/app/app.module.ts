@@ -14,10 +14,14 @@ import {HttpClientModule} from '@angular/common/http';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { AllRecipesComponent } from './all-recipes/all-recipes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RecipeComponent } from './recipe/recipe.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatButtonModule} from '@angular/material/button';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'all-recipes', component: AllRecipesComponent}
+  {path: 'all-recipes', component: AllRecipesComponent},
+  {path: 'recipe/:id', component: RecipeComponent}
 ];
 
 @NgModule({
@@ -26,7 +30,8 @@ const appRoutes: Routes = [
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    AllRecipesComponent
+    AllRecipesComponent,
+    RecipeComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +40,9 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     FontAwesomeModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatStepperModule,
+    MatButtonModule
   ],
   providers: [RecipeService,
   ShareService],
