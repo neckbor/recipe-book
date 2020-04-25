@@ -6,9 +6,6 @@ import {Filter} from '../models/Filter';
   providedIn: 'root'
 })
 export class ShareService {
-  recipes: Recipe[] = [new Recipe(1, 'яйцо', 'яйцо ин', 'Россия', 'alex'),
-    new Recipe(1, 'яйцо', 'яйцо ин', 'Россия', 'alex'),
-    new Recipe(1, 'яйцо', 'яйцо ин', 'Россия', 'alex'),
-    new Recipe(1, 'яйцо', 'яйцо ин', 'Россия', 'alex')];
+  recipes: Recipe[] = [];
   filter: Filter = new Filter();
 }
