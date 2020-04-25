@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Backend</name>
+    </assembly>
+    <members>
+        <member name="M:Backend.Controllers.SearchController.Post(Backend.Models.BindingModels.SearchConditionBindigModel)">
+            <summary>
+            Посик рецептов по заданным параметрам
+            </summary>
+            <param name="conditions"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

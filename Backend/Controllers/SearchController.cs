@@ -18,6 +18,15 @@ namespace Backend.Controllers
     [ApiController]
     public class SearchController : ControllerBase
     {
+        /// <summary>
+        /// Посик рецептов по заданным параметрам
+        /// </summary>
+        /// <param name="conditions">Параметры поиска</param>
+        /// <returns>Список найденный рецептов</returns>
+        /// <response code="204">Не найдено ни одного рецепта</response>
+        /// <response code="400">Параметры поиска == null</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="200">Рецепты найдены</response>
         [HttpPost("api/[controller]")]
         public IActionResult Post(SearchConditionBindigModel conditions)
 
