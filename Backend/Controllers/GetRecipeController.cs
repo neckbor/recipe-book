@@ -13,6 +13,15 @@ namespace Backend.Controllers
     [ApiController]
     public class GetRecipeController : ControllerBase
     {
+        /// <summary>
+        /// Получить данные рецепта по id
+        /// </summary>
+        /// <param name="idRecipe">id Рецепта</param>
+        /// <returns>Данные рецепта</returns>
+        /// <response code="200">ОК, рецепт найден</response>
+        /// <response code="400">idRecipe некоректное значение</response>
+        /// <response code="204">Рецепт не найден</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpGet("api/[controller]")]
         public IActionResult Get(int idRecipe)
         {
@@ -64,6 +73,16 @@ namespace Backend.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Получить описание следующего шага
+        /// </summary>
+        /// <param name="idRecipe">id Рецепта</param>
+        /// <param name="currentStep">Номер нынешнего шага</param>
+        /// <returns>Описание следующего шага</returns>
+        /// <response code="200">ОК, шаг найден</response>
+        /// <response code="400">idRecipe или currentStep некоректное значение</response>
+        /// <response code="204">Шаг не найден</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpGet("api/[controller]/nextstep")]
         public IActionResult NextStep(int idRecipe, int currentStep)
         {
@@ -85,6 +104,16 @@ namespace Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Получить описание предыдущего шага
+        /// </summary>
+        /// <param name="idRecipe">id Рецепта</param>
+        /// <param name="currentStep">Номер нынешнего шага</param>
+        /// <returns>Описание предыдущего шага</returns>
+        /// <response code="200">ОК, шаг найден</response>
+        /// <response code="400">idRecipe или currentStep некоректное значение</response>
+        /// <response code="204">Шаг не найден</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpGet("api/[controller]/previousstep")]
         public IActionResult PreviousStep(int idRecipe, int currentStep)
         {
