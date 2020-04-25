@@ -25,7 +25,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (ingredient.name == null || ingredient.name.Count() < 1)
+                if (ingredient == null || ingredient.name == null)
                     return BadRequest();
 
                 IEnumerable<IngredientBindingModel> result = GetIngredients(ingredient);
@@ -54,7 +54,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (nationality.name == null || nationality.name.Count() < 1)
+                if (nationality == null || nationality.name == null)
                     return BadRequest();
 
                 IEnumerable<NationalityBindingModel> result = GetNationalities(nationality);
