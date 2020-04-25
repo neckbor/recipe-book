@@ -11,13 +11,13 @@ namespace Backend.Models.BindingModels
         public string name { get; set; }
         public string mainIngredient { get; set; }
         public string nationality { get; set; }
-        public List<Step> steps { get; set; }
-        public List<IngredientList> ingredients  { get; set; }
+        public List<StepBindingModel> steps { get; set; }
+        public List<IngredientListBindingModel> ingredients  { get; set; }
 
         public RecipeBindingModel()
         {
-            steps = new List<Step>();
-            ingredients = new List<IngredientList>();
+            steps = new List<StepBindingModel>();
+            ingredients = new List<IngredientListBindingModel>();
         }
     }
 }
