@@ -28,12 +28,12 @@ namespace Backend.Controllers
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         /// <response code="200">Рецепты найдены</response>
         [HttpPost("api/[controller]")]
-        public IActionResult Post(SearchConditionBindigModel conditions)
+        public IActionResult Post(SearchConditionBindingModel conditions)
 
         {
             try
             {
-                if (conditions == null)
+                if (conditions.recipeName == null && conditions.nationality == null && conditions.ingredient == null && conditions.author == null)
                     return BadRequest();
 
                 IEnumerable<GetRcipesBySearch_Result> result = GetRecipes(conditions);
@@ -48,7 +48,7 @@ namespace Backend.Controllers
             }            
         }
 
-        private IEnumerable<GetRcipesBySearch_Result> GetRecipes(SearchConditionBindigModel conditions)
+        private IEnumerable<GetRcipesBySearch_Result> GetRecipes(SearchConditionBindingModel conditions)
         {
             IEnumerable<GetRcipesBySearch_Result> result;
             using (ModelDbContext model = new ModelDbContext())
@@ -65,7 +65,7 @@ namespace Backend.Controllers
                         duration = r.Duration,
                         ingredient = r.IdingredientNavigation.Name,
                         nationality = r.IdnationalityNavigation.Name
-                    }).ToList(); 
+                    }).ToList();
             }
             return result;
         }
