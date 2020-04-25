@@ -29,7 +29,6 @@ namespace Backend.Controllers
         /// <response code="200">Рецепты найдены</response>
         [HttpPost("api/[controller]")]
         public IActionResult Post(SearchConditionBindingModel conditions)
-
         {
             try
             {

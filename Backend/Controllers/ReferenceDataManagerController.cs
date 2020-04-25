@@ -25,7 +25,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (ingredient.name == null || ingredient.name.Count() < 1)
+                if (ingredient.name == null)
                     return BadRequest();
 
                 IEnumerable<IngredientBindingModel> result = GetIngredients(ingredient);
@@ -54,7 +54,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (nationality.name == null || nationality.name.Count() < 1)
+                if (nationality.name == null)
                     return BadRequest();
 
                 IEnumerable<NationalityBindingModel> result = GetNationalities(nationality);
@@ -83,7 +83,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (ingredient == null || ingredient.name.Count() < 1)
+                if (ingredient.name == null || ingredient.name.Count() < 1)
                     return BadRequest();
 
                 if (AddIntoDB(ingredient))
@@ -114,7 +114,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (ingredient == null || ingredient.idIngredient < 1 || ingredient.name.Count() < 1)
+                if (ingredient == null || ingredient.idIngredient < 1 || ingredient.name == null || ingredient.name.Count() < 1)
                     return BadRequest();
 
                 if (UpdateInDB(ingredient))
@@ -178,7 +178,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (nationality.name == null)
+                if (nationality.name == null || nationality.name.Count() < 1)
                     return BadRequest();
 
                 if (AddIntoDB(nationality))
@@ -209,7 +209,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (nationality == null || nationality.idNationality < 1 || nationality.name.Count() < 1)
+                if (nationality == null || nationality.idNationality < 1 || nationality.name == null || nationality.name.Count() < 1)
                     return BadRequest();
 
                 if (UpdateInDB(nationality))
