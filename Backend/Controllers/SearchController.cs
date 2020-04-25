@@ -19,7 +19,7 @@ namespace Backend.Controllers
     public class SearchController : ControllerBase
     {
         /// <summary>
-        /// Посик рецептов по заданным параметрам
+        /// Поиск рецептов по заданным параметрам
         /// </summary>
         /// <param name="conditions">Параметры поиска</param>
         /// <returns>Список найденный рецептов</returns>
@@ -37,7 +37,7 @@ namespace Backend.Controllers
                     return BadRequest();
 
                 IEnumerable<GetRcipesBySearch_Result> result = GetRecipes(conditions);
-                if (result == null)
+                if (result.Count() < 1)
                     return NoContent();
 
                 return Ok(result);
