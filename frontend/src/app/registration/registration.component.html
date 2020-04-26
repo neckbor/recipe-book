@@ -15,7 +15,7 @@
         <div [hidden]="email.valid || email.untouched || !user.email" class="alert alert-danger my-alert"
         >Email введен некорректно</div>
         <input type="password" name="pass" class="my-input" placeholder="Пароль" [(ngModel)]="user.password" required
-        pattern="^(?=.*[A-Za-a])(?=.*\d)[A-Za-z\d]{8,}$" #password="ngModel">
+        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" #password="ngModel">
         <div [hidden]="password.valid || password.untouched || !user.password" class="alert alert-danger my-alert">
           Пароль должен содержать минимум 8 символов и состоять из латинских букв (больших или маленьких) и цифр
         </div>
