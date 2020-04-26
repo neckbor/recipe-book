@@ -34,7 +34,9 @@
               <br />
               <span>Национальность: {{tempRecipe.nationality}}</span>
             </p>
-            <p class="duration">{{tempRecipe.duration}} минут</p>
+            <p class="duration">
+              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
+              {{tempRecipe.duration.value.minutes}} минут</p>
             <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
         </div>

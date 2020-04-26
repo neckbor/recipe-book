@@ -15,7 +15,8 @@
         <h4>Время приготовления
         <br />
           <small>(приблизительно)</small></h4>
-        <p>{{recipe.duration}} минут</p>
+        <p><span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
+          {{tempRecipe.duration.value.minutes}} минут</p></p>
       </div>
     </div>
   </div>

@@ -15,6 +15,7 @@ export class AllRecipesComponent implements OnInit {
   ngOnInit() {
     this.http.getRecipes(this.shareRecipes.filter).subscribe(data => {
         this.shareRecipes.recipes = data;
+        console.log(this.shareRecipes.recipes[0].duration);
         console.log('Recipes: ' + this.shareRecipes.recipes);
       },
       error => console.log('Error http request on allRecipesPage' + error));
