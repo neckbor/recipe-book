@@ -25,6 +25,7 @@ export class RecipeComponent implements OnInit {
     );
   }
   done() {
+    console.log(this.recipe.ingredients);
     console.log('рецепт завершен');
   }
 

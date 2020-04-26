@@ -18,11 +18,13 @@ import { RecipeComponent } from './recipe/recipe.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { RegistrationComponent } from './registration/registration.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'all-recipes', component: AllRecipesComponent},
-  {path: 'recipe/:id', component: RecipeComponent}
+  {path: 'recipe/:id', component: RecipeComponent},
+  {path: 'registration', component: RegistrationComponent}
 ];
 
 @NgModule({
@@ -32,7 +34,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     FooterComponent,
     AllRecipesComponent,
-    RecipeComponent
+    RecipeComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

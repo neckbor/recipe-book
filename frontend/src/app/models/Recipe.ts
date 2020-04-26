@@ -1,5 +1,6 @@
 import {Ingredient} from './Ingredient';
 import {Step} from './Step';
+import {TimeSpan} from 'ts-timespan/dist/timespan';
 
 export class Recipe {
   idRecipe: number;
@@ -7,7 +8,7 @@ export class Recipe {
   ingredient: string;
   nationality: string;
   author: string;
-  duration: any;
+  duration: TimeSpan;
   ingredients: Ingredient[] = [];
   steps: Step[] = [];
   constructor(id: number, name: string, mainIngredient: string,
