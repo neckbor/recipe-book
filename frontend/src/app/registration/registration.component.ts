@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {User} from '../models/User';
 
 @Component({
   selector: 'app-registration',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor() { }
-
+  constructor() {}
+  user: User = new User();
+  repeatPassword: string;
   ngOnInit() {
+  }
+
+  private registration() {
+    console.log(this.user.email);
   }
 
 }
