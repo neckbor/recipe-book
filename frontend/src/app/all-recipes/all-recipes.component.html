@@ -9,8 +9,8 @@
     <div class="col-lg-6 col-md-6 m-auto text-center">
       <h4>Фильтры</h4>
       <form>
-        <input type="text" name="name" class="my-input" placeholder="Название" [(ngModel)]="shareRecipes.filter.name">
-        <input type="text" name="ingredient" class="my-input" placeholder="Основной ингридиент" [(ngModel)]="shareRecipes.filter.mainIngredient">
+        <input type="text" name="name" class="my-input" placeholder="Название" [(ngModel)]="shareRecipes.filter.recipeName">
+        <input type="text" name="ingredient" class="my-input" placeholder="Основной ингридиент" [(ngModel)]="shareRecipes.filter.ingredient">
         <input type="text" name="origin" class="my-input" placeholder="Национальное происхождение" [(ngModel)]="shareRecipes.filter.nationality">
         <input type="text" name="author" class="my-input" placeholder="Автор" [(ngModel)]="shareRecipes.filter.author">
         <div class="m-auto btn-wrapper d-flex flex-wrap justify-content-between">
@@ -27,42 +27,51 @@
         <div class="col-lg-4 col-md-4">
         <div class="card">
           <div class="card-body">
-            <span class="author">Автор: {{tempRecipe.Author}}</span>
-            <h5 class="card-title">{{tempRecipe.Name}}</h5>
+            <span class="author">Автор: {{tempRecipe.author}}</span>
+            <h5 class="card-title">{{tempRecipe.name}}</h5>
             <p class="card-text">
-              <span>Главный ингридиент: {{tempRecipe.MainIngredient}}</span>
+              <span>Главный ингридиент: {{tempRecipe.ingredient}}</span>
               <br />
-              <span>Национальность: {{tempRecipe.Nationality}}</span>
+              <span>Национальность: {{tempRecipe.nationality}}</span>
             </p>
-            <a href="#" class="btn btn-primary btn-go">Просмотр</a>
+            <p class="duration">
+              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
+              {{tempRecipe.duration.value.minutes}} минут</p>
+            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
         </div>
       </div>
         <div *ngIf="i + 1 < shareRecipes.recipes.length" class="col-lg-4 col-md-4">
           <div class="card">
           <div class="card-body">
-            <span class="author">Автор: {{shareRecipes.recipes[i + 1].Author}}</span>
-            <h5 class="card-title">{{shareRecipes.recipes[i + 1].Name}}</h5>
+            <span class="author">Автор: {{shareRecipes.recipes[i + 1].author}}</span>
+            <h5 class="card-title">{{shareRecipes.recipes[i + 1].name}}</h5>
             <p class="card-text">
-              <span>Главный ингридиент: {{shareRecipes.recipes[i + 1].MainIngredient}}</span>
+              <span>Главный ингридиент: {{shareRecipes.recipes[i + 1].ingredient}}</span>
               <br />
-              <span>Национальность: {{shareRecipes.recipes[i + 1].Nationality}}</span>
+              <span>Национальность: {{shareRecipes.recipes[i + 1].nationality}}</span>
             </p>
-            <a href="#" class="btn btn-primary btn-go">Просмотр</a>
+            <p class="duration">
+              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
+              {{tempRecipe.duration.value.minutes}} минут</p>
+            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
         </div>
         </div>
         <div *ngIf="i + 2 < shareRecipes.recipes.length" class="col-lg-4 col-md-4">
           <div class="card">
           <div class="card-body">
-            <span class="author">Автор: {{shareRecipes.recipes[i + 2].Author}}</span>
-            <h5 class="card-title">{{shareRecipes.recipes[i + 2].Name}}</h5>
+            <span class="author">Автор: {{shareRecipes.recipes[i + 2].author}}</span>
+            <h5 class="card-title">{{shareRecipes.recipes[i + 2].name}}</h5>
             <p class="card-text">
-              <span>Главный ингридиент: {{shareRecipes.recipes[i + 2].MainIngredient}}</span>
+              <span>Главный ингридиент: {{shareRecipes.recipes[i + 2].ingredient}}</span>
               <br />
-              <span>Национальность: {{shareRecipes.recipes[i + 2].Nationality}}</span>
+              <span>Национальность: {{shareRecipes.recipes[i + 2].nationality}}</span>
             </p>
-            <a href="#" class="btn btn-primary btn-go">Просмотр</a>
+            <p class="duration">
+              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
+              {{tempRecipe.duration.value.minutes}} минут</p>
+            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
         </div>
         </div>

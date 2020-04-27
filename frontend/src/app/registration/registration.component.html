@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div class="container reg-wrapper">
+  <div class="row">
+    <div class="col-lg-7 col-md-7 text-center">
+      <h3>Присоединяйся к нам!</h3>
+      <p>Ты сможешь создавать свои рецепты и делиться опытом с другими пользователями!</p>
+      <img src="../../assets/registration-img/yummy_reg.jpg" class="img-fluid m-auto" alt="Регистрация">
+    </div>
+    <div class="col-lg-5 col-md-5 text-center m-auto">
+      <h3 class="reg-name">Зарегистрироваться</h3>
+      <form autocomplete="off">
+        <input type="text" name="login" class="my-input" placeholder="Логин" [(ngModel)]="user.login" required>
+        <input [autocomplete]="email" type="text" name="email" class="my-input" placeholder="Электронный адрес" [(ngModel)]="user.email" required
+               pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel">
+        <div [hidden]="email.valid || email.untouched || !user.email" class="alert alert-danger my-alert"
+        >Email введен некорректно</div>
+        <input type="password" name="pass" class="my-input" placeholder="Пароль" [(ngModel)]="user.password" required
+        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" #password="ngModel">
+        <div [hidden]="password.valid || password.untouched || !user.password" class="alert alert-danger my-alert">
+          Пароль должен содержать минимум 8 символов и состоять из латинских букв (больших или маленьких) и цифр
+        </div>
+        <input type="password" name="check_pass" class="my-input" placeholder="Повторите пароль" required
+        [(ngModel)]="repeatPassword">
+        <div *ngIf="user.password !== repeatPassword && repeatPassword" class="alert alert-danger my-alert">Пароли не совпадают</div>
+        <button class="my-btn" (click)="registration()">Зарегистрироваться</button>
+      </form>
+    </div>
+  </div>
+</div>
