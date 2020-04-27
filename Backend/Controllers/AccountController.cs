@@ -71,6 +71,14 @@ namespace Backend.Controllers
             return null;
         }
 
+        /// <summary>
+        /// Регистрация нового пользователя
+        /// </summary>
+        /// <param name="model">Данные пользователя</param>
+        /// <returns>Access token при удачной регистрации</returns>
+        /// <response code="200">Поьзователь зарегестрирован (прилагается токен)</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в теле)</response>
+        /// <response code="400">Некорректные значения (модель не прошла валидацию)</response>
         [HttpPost("api/[controller]/register")]
         public IActionResult Register(RegisterBindingModel model)
         {
