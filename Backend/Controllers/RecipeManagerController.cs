@@ -69,7 +69,17 @@ namespace Backend.Controllers
                         {
                             IngredientList i = new IngredientList();
                             i.Idrecipe = curidrecipe;
-                            i.Idingredient = ingredient.idIngredientList;
+                            i.Idingredient = ingredient.idIngredient;
+                            //if(_model.Ingredient.ToList().FindAll(i => i.Name.ToLower() == ingredient.ingredient.ToLower()).Count() == 0)
+                            //{
+                            //    _model.Ingredient.Add(new Ingredient { Name = ingredient.ingredient });
+                            //    _model.SaveChanges();
+                            //    i.Idingredient = _model.Ingredient.ToList().Last().Idingredient;
+                            //}
+                            //else
+                            //{
+                            //    i.Idingredient = _model.Ingredient.ToList().Find(i => i.Name.ToLower() == ingredient.ingredient.ToLower()).Idingredient;
+                            //}
                             i.Amount = ingredient.amount;
                             _model.IngredientList.Add(i);
                         }
@@ -109,16 +119,18 @@ namespace Backend.Controllers
         {
             try
             {
-                if (recipe == null)
+                if (recipe.idRecipe < 1)
                     return BadRequest();
 
-                if (UpdateInDB(recipe))
+                var response = UpdateInDB(recipe);
+
+                if (response == "OK")
                 {
                     return Ok();
                 }
                 else
                 {
-                    return StatusCode(500, "Во время изменения что-то пошло не так");
+                    return StatusCode(500, "Во время изменения что-то пошло не так!" + response);
                 }
             }
             catch (Exception e)
@@ -127,7 +139,7 @@ namespace Backend.Controllers
             }
         }
 
-        private bool UpdateInDB(FullInfoRecipeBindingModel recipe)
+        private string UpdateInDB(FullInfoRecipeBindingModel recipe)
         {
             using (ModelDbContext _model = new ModelDbContext())
             {
@@ -137,16 +149,23 @@ namespace Backend.Controllers
                     {
                         Recipe r = _model.Recipe.ToList().Find(r => r.Idrecipe == recipe.idRecipe);
 
-                        if (recipe.name != null)
+                        if (recipe.name != null && recipe.name.Length > 0)
                             r.Name = recipe.name;
+                        else
+                            throw new Exception("Имя нулевое");
 
                         if (recipe.idIngredient != 0)
                             r.Idingredient = recipe.idIngredient;
+                        else
+                            throw new Exception("Id главного ингредиента присвоен нулю");
+
 
                         if (recipe.idNationality != 0)
                             r.Idnationality = recipe.idNationality;
+                        else
+                            throw new Exception("Id национальности присвоено нулю");
 
-                        if (recipe.duration != null)
+                        if (recipe.duration != null || recipe.duration.Length > 0)
                             r.Duration = TimeSpan.Parse(recipe.duration);
 
                         if (recipe.steps.Count != 0)
@@ -160,6 +179,8 @@ namespace Backend.Controllers
                                 }
                             }
                         }
+                        else
+                            throw new Exception("Отсутствуют шаги");
 
                         if (recipe.ingredientList.Count != 0)
                         {
@@ -178,15 +199,17 @@ namespace Backend.Controllers
                                 }
                             }
                         }
+                        else
+                            throw new Exception("Отсутствует список ингредиентов");
 
                         _model.SaveChanges();
                         transaction.Commit();
-                        return true;
+                        return "OK";
                     }
                     catch (Exception e)
                     {
                         transaction.Rollback();
-                        return false;
+                        return e.Message;
                     }
                 }
             }
