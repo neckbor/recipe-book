@@ -16,8 +16,7 @@ namespace Backend.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        [HttpPost("/token")]
-        public IActionResult Token(LoginBindingModel model)
+        private IActionResult Token(LoginBindingModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -121,6 +120,30 @@ namespace Backend.Controllers
                 login = user.login,
                 password = user.password
             };
+        }
+
+        /// <summary>
+        /// Авторизация пользователя
+        /// </summary>
+        /// <param name="model">Данные пользователя</param>
+        /// <returns>Accesss token при удачном входе</returns>
+        /// <response code="200">Успешный вход (прилагается токен)</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в теле)</response>
+        /// <response code="400">Некорректные значения (модель не прошла валидацию или неверные логин/пароль)</response>
+        [HttpPost("api/[controller]/login")]
+        public IActionResult Login(LoginBindingModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Token(model);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
     }
