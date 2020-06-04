@@ -30,6 +30,8 @@ namespace Backend.Controllers
                 if (recipe == null)
                     return BadRequest();
 
+                recipe.author = User.Identity.Name;
+
                 if(AddIntoDB(recipe))
                 {
                     return Ok();
@@ -113,8 +115,9 @@ namespace Backend.Controllers
         /// </summary>
         /// <param name="recipe">Данные рецепта</param>
         /// <returns>Результат, получилось изменить или нет</returns>
-        /// <response code="400">Некорректные значения</response>
         /// <response code="200">Данные рецепта изменены</response>
+        /// <response code="400">Некорректные значения</response>
+        /// <response code="406">Логин пользователя и записанный автор рецепта не совпадает</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/update")]
         [Authorize(Roles = "admin, open, blocked")]
@@ -125,16 +128,21 @@ namespace Backend.Controllers
                 if (recipe.idRecipe < 1)
                     return BadRequest();
 
-                var response = UpdateInDB(recipe);
+                if(CheckAuthorLogin(User.Identity.Name, recipe.idRecipe) || User.IsInRole("admin"))
+                {
+                    var response = UpdateInDB(recipe);
 
-                if (response == "OK")
-                {
-                    return Ok();
+                    if (response == "OK")
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return StatusCode(500, "Во время изменения что-то пошло не так!" + response);
+                    }
                 }
-                else
-                {
-                    return StatusCode(500, "Во время изменения что-то пошло не так!" + response);
-                }
+
+                return StatusCode(406);
             }
             catch (Exception e)
             {
@@ -223,8 +231,9 @@ namespace Backend.Controllers
         /// </summary>
         /// <param name="idRecipe">id Рецепта</param>
         /// <returns>Результат, удалён рецепт или нет</returns>
-        /// <response code="400">Некорректные значения</response>
         /// <response code="200">Рецепт удалён</response>
+        /// <response code="400">Некорректные значения</response>
+        /// <response code="406">Логин пользователя и записанный автор рецепта не совпадает</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpDelete("api/[controller]/delete")]
         [Authorize(Roles = "admin, open, blocked")]
@@ -235,14 +244,20 @@ namespace Backend.Controllers
                 if (idRecipe < 1)
                     return BadRequest();
 
-                if (DeleteFromDB(idRecipe))
+                if (CheckAuthorLogin(User.Identity.Name, idRecipe) || User.IsInRole("admin"))
                 {
-                    return Ok();
+                    if (DeleteFromDB(idRecipe))
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return StatusCode(500, "Во время удаления что-то пошло не так");
+                    }
                 }
-                else
-                {
-                    return StatusCode(500, "Во время удаления что-то пошло не так");
-                }
+
+                return StatusCode(406);
+                
             }
             catch(Exception e)
             {
@@ -277,6 +292,14 @@ namespace Backend.Controllers
                         return false;
                     }
                 }
+            }
+        }
+
+        private bool CheckAuthorLogin(string login, int idRecipe)
+        {
+            using (ModelDbContext _model = new ModelDbContext())
+            {
+                return login == _model.Recipe.Find(idRecipe).Author;
             }
         }
     }
