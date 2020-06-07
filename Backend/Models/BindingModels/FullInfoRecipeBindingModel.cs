@@ -34,6 +34,7 @@ namespace Backend.Models.BindingModels
     {
         public int idIngredientList { get; set; }
         public int idIngredient { get; set; }
+        public string name { get; set; }
         public string amount { get; set; }
     }
 }
