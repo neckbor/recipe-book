@@ -17,6 +17,9 @@ export class RegistrationComponent implements OnInit {
   repeatPassword: string;
   receivedAndwer: Response;
   ngOnInit() {
+    if (this.cookie.get('access_token')) {
+      this.router.navigate(['/']);
+    }
   }
 
   private registration() {

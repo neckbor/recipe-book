@@ -22,7 +22,8 @@
         <input type="password" name="check_pass" class="my-input" placeholder="Повторите пароль" required
         [(ngModel)]="repeatPassword">
         <div *ngIf="user.password !== repeatPassword && repeatPassword" class="alert alert-danger my-alert">Пароли не совпадают</div>
-        <button class="my-btn" (click)="registration()">Зарегистрироваться</button>
+        <button class="my-btn" (click)="registration()"
+        [disabled]="email.invalid || password.invalid || (user.password !== repeatPassword && repeatPassword)">Зарегистрироваться</button>
       </form>
     </div>
   </div>
