@@ -22,8 +22,9 @@ export class RegistrationComponent implements OnInit {
     console.log(this.user.email);
     this.http.registerUser(this.user).subscribe(
       (data) => {
-        console.log(data);
+        this.user.access_token = data.access_token;
         this.router.navigate(['/']);
+        console.log('Регистрация прошла успешно');
       }, err => console.log(err)
     );
   }

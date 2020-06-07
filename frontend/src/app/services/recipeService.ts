@@ -24,7 +24,7 @@ export class RecipeService {
     return this.http.get<Recipe>(url);
   }
   registerUser(user: User) {
-    const url = this.baseUrl + '/PostUser';
+    const url = this.baseUrl + '/Account/register';
     return this.http.post<User>(url, user, {
       headers: new HttpHeaders({'Content-Type': 'application/json'
       })
