@@ -19,18 +19,18 @@ export class LoginComponent implements OnInit {
   }
 
   private loginUser() {
-    console.log(this.user.login);
-    console.log(this.user.password);
     this.http.loginUser(this.user).subscribe(
       (response) => {
-        this.check = response.status === 400;
         this.user.access_token = response.body.access_token;
         this.router.navigate(['/']);
         this.cookie.set('login', this.user.login);
         // this.cookie.set('role', this.user.role);
         this.cookie.set('access_token', this.user.access_token);
         console.log('Авторизация прошла успешно');
-      }, err => console.log(err)
+      }, err => {
+        this.check = err.status === 400;
+        console.log(err);
+      }
     );
   }
 
