@@ -19,6 +19,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { RegistrationComponent } from './registration/registration.component';
+import {CookieService} from 'ngx-cookie-service';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -50,7 +51,8 @@ const appRoutes: Routes = [
     MatIconModule
   ],
   providers: [RecipeService,
-  ShareService],
+  ShareService,
+  CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

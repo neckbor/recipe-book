@@ -8,8 +8,12 @@
       <li>
         <a href="">Случайный рецепт</a>
       </li>
+      <li *ngIf="login">
+        <a href="">Выйти</a>
+      </li>
       <li>
-        <a href="">Войти</a>
+        <a href="" *ngIf="!login">Войти</a>
+        <a href="" *ngIf="login">{{login}}</a>
       </li>
     </ul>
   </nav>

@@ -3,6 +3,7 @@ import {User} from '../models/User';
 import {RecipeService} from '../services/recipeService';
 import {Router} from '@angular/router';
 import {error} from 'util';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-registration',
@@ -11,7 +12,7 @@ import {error} from 'util';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private http: RecipeService, private router: Router) {}
+  constructor(private http: RecipeService, private router: Router, private cookie: CookieService) {}
   user: User = new User();
   repeatPassword: string;
   receivedAndwer: Response;
@@ -24,6 +25,9 @@ export class RegistrationComponent implements OnInit {
       (data) => {
         this.user.access_token = data.access_token;
         this.router.navigate(['/']);
+        this.cookie.set('login', this.user.login);
+        // this.cookie.set('role', this.user.role);
+        this.cookie.set('access_token', this.user.access_token);
         console.log('Регистрация прошла успешно');
       }, err => console.log(err)
     );
