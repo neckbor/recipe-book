@@ -20,12 +20,14 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { RegistrationComponent } from './registration/registration.component';
 import {CookieService} from 'ngx-cookie-service';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'all-recipes', component: AllRecipesComponent},
   {path: 'recipe/:id', component: RecipeComponent},
-  {path: 'registration', component: RegistrationComponent}
+  {path: 'registration', component: RegistrationComponent},
+  {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
@@ -36,7 +38,8 @@ const appRoutes: Routes = [
     FooterComponent,
     AllRecipesComponent,
     RecipeComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

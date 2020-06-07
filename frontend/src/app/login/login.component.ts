@@ -1,38 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../models/User';
 import {RecipeService} from '../services/recipeService';
 import {Router} from '@angular/router';
-import {error} from 'util';
 import {CookieService} from 'ngx-cookie-service';
+import {User} from '../models/User';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   constructor(private http: RecipeService, private router: Router, private cookie: CookieService) {}
   user: User = new User();
-  repeatPassword: string;
-  receivedAndwer: Response;
+  check = false;
+
   ngOnInit() {
-    if (this.cookie.get('access_token')) {
-      this.router.navigate(['/']);
-    }
   }
 
-  private registration() {
-    this.http.registerUser(this.user).subscribe(
-      (data) => {
-        this.user.access_token = data.access_token;
+  private loginUser() {
+    console.log(this.user.login);
+    console.log(this.user.password);
+    this.http.loginUser(this.user).subscribe(
+      (response) => {
+        this.check = response.status === 400;
+        this.user.access_token = response.body.access_token;
         this.router.navigate(['/']);
         this.cookie.set('login', this.user.login);
         // this.cookie.set('role', this.user.role);
         this.cookie.set('access_token', this.user.access_token);
-        console.log('Регистрация прошла успешно');
+        console.log('Авторизация прошла успешно');
       }, err => console.log(err)
     );
   }
+
 
 }
