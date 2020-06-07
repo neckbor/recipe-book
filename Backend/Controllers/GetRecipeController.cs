@@ -66,6 +66,7 @@ namespace Backend.Controllers
                         {
                             idIngredientList = il.IdingredientList,
                             idIngredient = il.IdingredientNavigation.Idingredient,
+                            name = il.IdingredientNavigation.Name,
                             amount = il.Amount
                         }).ToList(),
                     }).FirstOrDefault();
