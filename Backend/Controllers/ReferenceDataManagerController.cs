@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Backend.Models;
 using Backend.Models.BindingModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {
@@ -21,11 +23,12 @@ namespace Backend.Controllers
         /// <response code="200">Найдены ингредиенты</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/searchIngredients")]
+        [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Get(IngredientBindingModel ingredient)
         {
             try
             {
-                if (ingredient.name == null || ingredient.name.Count() < 1)
+                if (ingredient == null)
                     return BadRequest();
 
                 IEnumerable<IngredientBindingModel> result = GetIngredients(ingredient);
@@ -50,11 +53,12 @@ namespace Backend.Controllers
         /// <response code="200">Найдены национальности</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/searchNationalities")]
+        [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Get(NationalityBindingModel nationality)
         {
             try
             {
-                if (nationality.name == null || nationality.name.Count() < 1)
+                if (nationality == null)
                     return BadRequest();
 
                 IEnumerable<NationalityBindingModel> result = GetNationalities(nationality);
@@ -79,11 +83,12 @@ namespace Backend.Controllers
         /// <response code="200">Ингредиент добавлен</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/addIngredient")]
+        [Authorize(Roles = "admin")]
         public IActionResult AddIngredient(IngredientBindingModel ingredient)
         {
             try
             {
-                if (ingredient == null || ingredient.name.Count() < 1)
+                if (ingredient.name == null || ingredient.name.Count() < 1)
                     return BadRequest();
 
                 if (AddIntoDB(ingredient))
@@ -110,11 +115,12 @@ namespace Backend.Controllers
         /// <response code="200">Ингредиент изменён</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/updateIngredient")]
+        [Authorize(Roles = "admin")]
         public IActionResult UpdateIngredient(IngredientBindingModel ingredient)
         {
             try
             {
-                if (ingredient == null || ingredient.idIngredient < 1 || ingredient.name.Count() < 1)
+                if (ingredient == null || ingredient.idIngredient < 1 || ingredient.name == null || ingredient.name.Count() < 1)
                     return BadRequest();
 
                 if (UpdateInDB(ingredient))
@@ -141,6 +147,7 @@ namespace Backend.Controllers
         /// <response code="200">Ингредиент удалён</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpDelete("api/[controller]/deleteIngredient")]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteIngredient(int idIngredient)
         {
             try
@@ -174,11 +181,12 @@ namespace Backend.Controllers
         /// <response code="200">Национальность добавлена</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/addNationality")]
+        [Authorize(Roles = "admin")]
         public IActionResult AddNationality(NationalityBindingModel nationality)
         {
             try
             {
-                if (nationality.name == null)
+                if (nationality.name == null || nationality.name.Count() < 1)
                     return BadRequest();
 
                 if (AddIntoDB(nationality))
@@ -205,11 +213,12 @@ namespace Backend.Controllers
         /// <response code="200">Национальность изменена</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpPost("api/[controller]/updateNationality")]
+        [Authorize(Roles = "admin")]
         public IActionResult UpdateNationality(NationalityBindingModel nationality)
         {
             try
             {
-                if (nationality == null || nationality.idNationality < 1 || nationality.name.Count() < 1)
+                if (nationality == null || nationality.idNationality < 1 || nationality.name == null || nationality.name.Count() < 1)
                     return BadRequest();
 
                 if (UpdateInDB(nationality))
@@ -236,6 +245,7 @@ namespace Backend.Controllers
         /// <response code="200">Национальность удалена</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
         [HttpDelete("api/[controller]/deleteNationality")]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteNationality(int idNationality)
         {
             try

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Backend.Models.BindingModels
 {
-    public class SearchConditionBindigModel
+    public class SearchConditionBindingModel
     {
         public string recipeName { get; set; }
         public string nationality { get; set; }

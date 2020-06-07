@@ -65,7 +65,7 @@ namespace Backend.Controllers
                         ingredients = r.IngredientList.Select(il => new IngredientListBindingModel
                         {
                             idIngredientList = il.IdingredientList,
-                            ingredient = il.IdingredientNavigation.Name,
+                            idIngredient = il.IdingredientNavigation.Idingredient,
                             amount = il.Amount
                         }).ToList(),
                     }).FirstOrDefault();
