@@ -30,7 +30,10 @@ namespace Backend.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=YummYummY;User Id=yum; Password=peacedata73;");
+                // Server Connection
+                //optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=YummYummY;User Id=yum; Password=peacedata73;");
+                // Local Connection
+                optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=YummYummY;Trusted_Connection=True;");
             }
         }
 

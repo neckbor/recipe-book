@@ -92,7 +92,8 @@ namespace Backend
 
             services.AddDbContext<ModelDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("Server"));
+                //options.UseSqlServer(Configuration.GetConnectionString("Server"));
+                options.UseSqlServer(Configuration.GetConnectionString("Local"));
             });
 
         }
