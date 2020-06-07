@@ -92,7 +92,7 @@ namespace Backend
 
             services.AddDbContext<ModelDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("YummYDB"));
+                options.UseSqlServer(Configuration.GetConnectionString("Server"));
             });
 
         }
