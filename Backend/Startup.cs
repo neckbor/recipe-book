@@ -92,7 +92,7 @@ namespace Backend
 
             services.AddDbContext<ModelDbContext>(options =>
             {
-                options.UseSqlServer("server=.\\SQLEXPRESS;database=YummYummY;trusted_connection=true;");
+                options.UseSqlServer(Configuration.GetConnectionString("YummYDB"));
             });
 
         }
