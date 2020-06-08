@@ -88,7 +88,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (!ModelState.IsValid || model.login.Equals("") || model.password.Equals(""))
                     return BadRequest();
 
                 LoginBindingModel user = AddUser(model);
@@ -142,7 +142,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (!ModelState.IsValid || model.login.Equals("") || model.password.Equals(""))
                     return BadRequest();
 
                 return Token(model);
@@ -156,7 +156,7 @@ namespace Backend.Controllers
         /// <summary>
         /// Заблокировать пользователя
         /// </summary>
-        /// <param name="login">Данные пользователя</param>
+        /// <param name="model">Данные пользователя</param>
         /// <response code="200">Успешо</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в теле)</response>
         /// <response code="401">Неавторизован или низкий уровень доступа</response>
