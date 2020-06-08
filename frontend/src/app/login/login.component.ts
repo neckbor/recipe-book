@@ -16,6 +16,9 @@ export class LoginComponent implements OnInit {
   check = false;
 
   ngOnInit() {
+    if (this.cookie.get('login')) {
+      this.router.navigate(['/']);
+    }
   }
 
   private loginUser() {

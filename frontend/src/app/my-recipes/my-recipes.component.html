@@ -1,0 +1,63 @@
+<app-header></app-header>
+<h2 class="text-center">Мои рецепты</h2>
+<div class="recipes-wrapper">
+  <div *ngFor="let tempRecipe of myRecipes; let i = index;" class="container row-class">
+    <div *ngIf="i % 3 == 0" class="row">
+      <div class="col-lg-4 col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <span class="author">Автор: {{tempRecipe.author}}</span>
+            <h5 class="card-title">{{tempRecipe.name}}</h5>
+            <p class="card-text">
+              <span>Главный ингридиент: {{tempRecipe.ingredient}}</span>
+              <br />
+              <span>Национальность: {{tempRecipe.nationality}}</span>
+            </p>
+            <p class="duration">
+              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
+              {{tempRecipe.duration.value.minutes}} минут</p>
+          </div>
+          <div class="buttons">
+            <button class="btn btn-primary btn-go col-sm-12" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
+            <button *ngIf="checkCreate" class="btn btn-warning btn-go col-sm-12 mt-2" (click)="changeRecipe(tempRecipe.idRecipe)">Редактировать</button>
+            <button class="btn btn-danger btn-go col-sm-12 mt-2" (click)="deleteRecipe(tempRecipe.idRecipe)">Удалить</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="i + 1 < myRecipes.length" class="col-lg-4 col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <span class="author">Автор: {{myRecipes[i + 1].author}}</span>
+            <h5 class="card-title">{{myRecipes[i + 1].name}}</h5>
+            <p class="card-text">
+              <span>Главный ингридиент: {{myRecipes[i + 1].ingredient}}</span>
+              <br />
+              <span>Национальность: {{myRecipes[i + 1].nationality}}</span>
+            </p>
+            <p class="duration">
+              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
+              {{tempRecipe.duration.value.minutes}} минут</p>
+            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="i + 2 < myRecipes.length" class="col-lg-4 col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <span class="author">Автор: {{myRecipes[i + 2].author}}</span>
+            <h5 class="card-title">{{myRecipes[i + 2].name}}</h5>
+            <p class="card-text">
+              <span>Главный ингридиент: {{myRecipes[i + 2].ingredient}}</span>
+              <br />
+              <span>Национальность: {{myRecipes[i + 2].nationality}}</span>
+            </p>
+            <p class="duration">
+              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
+              {{tempRecipe.duration.value.minutes}} минут</p>
+            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

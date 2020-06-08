@@ -8,6 +8,9 @@
       <li>
         <a href="">Случайный рецепт</a>
       </li>
+      <li *ngIf="login">
+        <a routerLink="/my-recipes">Мои рецепты</a>
+      </li>
       <li *ngIf="login" (click)="exit()">
         <a href="">Выйти</a>
       </li>
