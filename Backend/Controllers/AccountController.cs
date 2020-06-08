@@ -6,8 +6,11 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Backend.Models;
 using Backend.Models.BindingModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -79,6 +82,7 @@ namespace Backend.Controllers
         /// <response code="200">Поьзователь зарегестрирован (прилагается токен)</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в теле)</response>
         /// <response code="400">Некорректные значения (модель не прошла валидацию)</response>
+        /// <response code="409">Пользователь с таким данными уже существует</response>
         [HttpPost("api/[controller]/register")]
         public IActionResult Register(RegisterBindingModel model)
         {
@@ -93,6 +97,8 @@ namespace Backend.Controllers
             }
             catch (Exception e)
             {
+                if (e.Message.Equals("Пользователь с таким логином уже существует"))
+                    return Conflict();
                 return StatusCode(500, e.Message);
             }
         }
@@ -145,6 +151,47 @@ namespace Backend.Controllers
             {
                 return StatusCode(500, e.Message);
             }
+        }
+
+        /// <summary>
+        /// Заблокировать пользователя
+        /// </summary>
+        /// <param name="login">Данные пользователя</param>
+        /// <response code="200">Успешо</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в теле)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
+        [HttpPost("api/[controller]/block")]
+        [Authorize(Roles = "admin")]
+        public IActionResult Block(UserLoginString model)
+        {
+            try
+            {
+                if(!ModelState.IsValid)
+                    return BadRequest();
+
+                BlockUser(model.login);
+
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private void BlockUser(string login)
+        {
+            using ModelDbContext model = new ModelDbContext();
+
+            User user = model.User.Where(u => EF.Functions.Like(u.Login, login)).FirstOrDefault();
+
+            if (user == null)
+                throw new Exception("Пользователь не найден");
+
+            user.Idrole = 2;
+
+            model.User.Update(user);
+            model.SaveChanges();
         }
 
     }

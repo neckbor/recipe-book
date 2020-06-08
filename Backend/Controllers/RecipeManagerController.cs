@@ -21,6 +21,7 @@ namespace Backend.Controllers
         /// <response code="200">Рецепт добавлен</response>
         /// <response code="400">Некорректные значения</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpPost("api/[controller]/add")]
         [Authorize(Roles = "admin, open")]
         public IActionResult Post(FullInfoRecipeBindingModel recipe)
@@ -119,6 +120,7 @@ namespace Backend.Controllers
         /// <response code="400">Некорректные значения</response>
         /// <response code="406">Логин пользователя и записанный автор рецепта не совпадает</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpPost("api/[controller]/update")]
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Update(FullInfoRecipeBindingModel recipe)
@@ -235,6 +237,7 @@ namespace Backend.Controllers
         /// <response code="400">Некорректные значения</response>
         /// <response code="406">Логин пользователя и записанный автор рецепта не совпадает</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpDelete("api/[controller]/delete")]
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Delete(int idRecipe)
