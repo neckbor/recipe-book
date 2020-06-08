@@ -44,7 +44,7 @@ namespace Backend.Controllers
             }
             catch(Exception e)
             {
-                return StatusCode(500, e.InnerException.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -201,9 +201,9 @@ namespace Backend.Controllers
                             {
                                 IngredientList i = _model.IngredientList.ToList().Find(i => i.Idrecipe == recipe.idRecipe && i.IdingredientList == ingredient.idIngredientList);
 
-                                if (ingredient.idIngredientList != 0)
+                                if (ingredient.idIngredient != 0)
                                 {
-                                    i.Idingredient = ingredient.idIngredientList;
+                                    i.Idingredient = ingredient.idIngredient;
                                 }
 
                                 if (ingredient.amount != null)
