@@ -34,7 +34,7 @@ export class MyRecipesComponent implements OnInit {
   }
 
   private changeRecipe(id: number) {
-
+    this.router.navigate(['change-recipe', id]);
   }
 
   private deleteRecipe(id: number) {

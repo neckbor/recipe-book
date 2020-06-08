@@ -22,6 +22,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import {CookieService} from 'ngx-cookie-service';
 import { LoginComponent } from './login/login.component';
 import { MyRecipesComponent } from './my-recipes/my-recipes.component';
+import { ChangeRecipeComponent } from './change-recipe/change-recipe.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
   {path: 'recipe/:id', component: RecipeComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'my-recipes', component: MyRecipesComponent}
+  {path: 'my-recipes', component: MyRecipesComponent},
+  {path: 'change-recipe', component: ChangeRecipeComponent}
 ];
 
 @NgModule({
@@ -42,7 +44,8 @@ const appRoutes: Routes = [
     RecipeComponent,
     RegistrationComponent,
     LoginComponent,
-    MyRecipesComponent
+    MyRecipesComponent,
+    ChangeRecipeComponent
   ],
   imports: [
     BrowserModule,
