@@ -38,7 +38,6 @@ namespace Backend.Tests
             recipe.name = "";
             recipe.idIngredient = 0;
             recipe.idNationality = 0;
-            recipe.author = "";
             recipe.duration = "";
 
             recipe.steps.Add(new StepBindingModel { description = "", orderIndex = 0 });
@@ -58,10 +57,10 @@ namespace Backend.Tests
             //Arrange
             RecipeManagerController controller = new RecipeManagerController();
             FullInfoRecipeBindingModel recipe = new FullInfoRecipeBindingModel();
-            recipe.name = "Тестовый рецепт";
+            recipe.name = "Тестовый рецептт";
             recipe.idIngredient = 1;
             recipe.idNationality = 1;
-            recipe.author = "Тестовый автор";
+            recipe.author = "wiefmiewf";
             recipe.duration = "1:30";
 
             recipe.steps.Add(new StepBindingModel { description = "Тестовое описание", orderIndex = 1 });
@@ -99,7 +98,6 @@ namespace Backend.Tests
             recipe.name = "";
             recipe.idIngredient = 0;
             recipe.idNationality = 0;
-            recipe.author = "";
             recipe.duration = "";
 
             recipe.steps.Add(new StepBindingModel { description = "", orderIndex = 0 });
@@ -122,7 +120,6 @@ namespace Backend.Tests
             recipe.name = "Тестовый рецепт";
             recipe.idIngredient = 1;
             recipe.idNationality = 1;
-            recipe.author = "Тестовый автор";
             recipe.duration = "1:30";
 
             recipe.steps.Add(new StepBindingModel { description = "Тестовое описание", orderIndex = 1 });
@@ -162,7 +159,6 @@ namespace Backend.Tests
             recipe.name = "";
             recipe.idIngredient = 0;
             recipe.idNationality = 0;
-            recipe.author = "";
             recipe.duration = "";
 
             recipe.steps.Add(new StepBindingModel { description = "", orderIndex = 0 });
@@ -182,15 +178,14 @@ namespace Backend.Tests
             //Arrange
             RecipeManagerController controller = new RecipeManagerController();
             FullInfoRecipeBindingModel recipe = new FullInfoRecipeBindingModel();
-            recipe.idRecipe = 1;
+            recipe.idRecipe = 5;
             recipe.name = "Тестовый рецепт";
             recipe.idIngredient = 1;
             recipe.idNationality = 1;
-            recipe.author = "Тестовый автор";
             recipe.duration = "1:30";
 
             recipe.steps.Add(new StepBindingModel { description = "Тестовое описание", orderIndex = 1 });
-            recipe.ingredientList.Add(new IngredientListBindingModel { amount = "100г", idIngredient = 1, idIngredientList = 1});
+            recipe.ingredientList.Add(new IngredientListBindingModel { amount = "100г", idIngredient = 1, idIngredientList = 4});
 
             //Act
             var response = controller.Update(recipe);
