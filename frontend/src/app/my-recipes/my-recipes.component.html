@@ -1,7 +1,7 @@
 <app-header></app-header>
 <h2 class="text-center">Мои рецепты</h2>
-<h3 *ngIf="myRecipes.length < 1" class="text-center">На данный момент у вас нет собственных рецептов</h3>
-<div class="recipes-wrapper" *ngIf="myRecipes.length > 0">
+<h3 *ngIf="!myRecipes" class="text-center">На данный момент у вас нет собственных рецептов</h3>
+<div class="recipes-wrapper" *ngIf="myRecipes">
   <div *ngFor="let tempRecipe of myRecipes; let i = index;" class="container row-class">
     <div *ngIf="i % 3 == 0" class="row">
       <div class="col-lg-4 col-md-4">

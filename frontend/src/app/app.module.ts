@@ -31,7 +31,7 @@ const appRoutes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'login', component: LoginComponent},
   {path: 'my-recipes', component: MyRecipesComponent},
-  {path: 'change-recipe', component: ChangeRecipeComponent}
+  {path: 'change-recipe/:id', component: ChangeRecipeComponent}
 ];
 
 @NgModule({
