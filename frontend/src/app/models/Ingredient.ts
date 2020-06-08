@@ -1,10 +1,10 @@
 export class Ingredient {
   idIngredientList: number;
-  ingredient: string;
+  name: string;
   amount: string;
   constructor(idIngredientList: number, ingredient: string, amount: string) {
     this.idIngredientList = idIngredientList;
-    this.ingredient = ingredient;
+    this.name = ingredient;
     this.amount = amount;
   }
 }
