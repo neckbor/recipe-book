@@ -29,7 +29,7 @@ namespace Backend.Tests
 
             //Assert
             var badRequestResult = Assert.IsType<BadRequestResult>(response);
-            Assert.Equal(BadRequest(), badRequestResult);
+            Assert.Equal(BadRequest().StatusCode, badRequestResult.StatusCode);
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace Backend.Tests
 
             //Assert
             var badRequestResult = Assert.IsType<BadRequestResult>(response);
-            Assert.Equal(BadRequest(), badRequestResult);
+            Assert.Equal(BadRequest().StatusCode, badRequestResult.StatusCode);
         }
 
         [Fact]
