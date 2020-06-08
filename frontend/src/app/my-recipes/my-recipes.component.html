@@ -1,6 +1,7 @@
 <app-header></app-header>
 <h2 class="text-center">Мои рецепты</h2>
-<div class="recipes-wrapper">
+<h3 *ngIf="myRecipes.length < 1" class="text-center">На данный момент у вас нет собственных рецептов</h3>
+<div class="recipes-wrapper" *ngIf="myRecipes.length > 0">
   <div *ngFor="let tempRecipe of myRecipes; let i = index;" class="container row-class">
     <div *ngIf="i % 3 == 0" class="row">
       <div class="col-lg-4 col-md-4">
@@ -37,8 +38,12 @@
             <p class="duration">
               <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
               {{tempRecipe.duration.value.minutes}} минут</p>
-            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
+            <div class="buttons">
+              <button class="btn btn-primary btn-go col-sm-12" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
+              <button *ngIf="checkCreate" class="btn btn-warning btn-go col-sm-12 mt-2" (click)="changeRecipe(tempRecipe.idRecipe)">Редактировать</button>
+              <button class="btn btn-danger btn-go col-sm-12 mt-2" (click)="deleteRecipe(tempRecipe.idRecipe)">Удалить</button>
+            </div>
         </div>
       </div>
       <div *ngIf="i + 2 < myRecipes.length" class="col-lg-4 col-md-4">
@@ -54,8 +59,12 @@
             <p class="duration">
               <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
               {{tempRecipe.duration.value.minutes}} минут</p>
-            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
+            <div class="buttons">
+              <button class="btn btn-primary btn-go col-sm-12" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
+              <button *ngIf="checkCreate" class="btn btn-warning btn-go col-sm-12 mt-2" (click)="changeRecipe(tempRecipe.idRecipe)">Редактировать</button>
+              <button class="btn btn-danger btn-go col-sm-12 mt-2" (click)="deleteRecipe(tempRecipe.idRecipe)">Удалить</button>
+            </div>
         </div>
       </div>
     </div>
