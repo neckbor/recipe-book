@@ -25,8 +25,8 @@ namespace Backend.Tests
             var response = controller.Get(ingredient);
 
             //Assert
-            var badRequestResult = Assert.IsType<BadRequestResult>(response);
-            Assert.Equal(BadRequest().StatusCode, badRequestResult.StatusCode);
+            var badRequestResult = Assert.IsType<ObjectResult>(response);
+            Assert.Equal(StatusCode(500).StatusCode, badRequestResult.StatusCode);
         }
 
         [Fact]
@@ -72,8 +72,8 @@ namespace Backend.Tests
             var response = controller.Get(nationality);
 
             //Assert
-            var badRequestResult = Assert.IsType<BadRequestResult>(response);
-            Assert.Equal(BadRequest().StatusCode, badRequestResult.StatusCode);
+            var badRequestResult = Assert.IsType<ObjectResult>(response);
+            Assert.Equal(StatusCode(500).StatusCode, badRequestResult.StatusCode);
         }
 
         [Fact]
