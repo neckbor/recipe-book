@@ -7,12 +7,13 @@
       <img src="../../assets/registration-img/yummy_reg.jpg" class="img-fluid m-auto" alt="Регистрация">
     </div>
     <div class="col-lg-5 col-md-5 text-center m-auto">
-      <h3 class="reg-name">Зарегистрироваться</h3>
+      <h3 class="reg-name">Войти</h3>
       <form autocomplete="off">
         <input [autocomplete]="login" type="text" name="email" class="my-input" placeholder="Логин"
                [(ngModel)]="user.login" required #login="ngModel">
         <input type="password" name="pass" class="my-input" placeholder="Пароль" [(ngModel)]="user.password" required>
         <button class="my-btn" (click)="loginUser()">Войти</button>
+        <p class="text-center note">Нет аккаунта? <a routerLink="/registration">Регистрация</a></p>
         <div [hidden]="!check" class="alert alert-danger my-alert"
         >Данные не верны!</div>
       </form>
