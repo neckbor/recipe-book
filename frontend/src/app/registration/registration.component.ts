@@ -28,7 +28,7 @@ export class RegistrationComponent implements OnInit {
         this.user.access_token = data.access_token;
         this.router.navigate(['/']);
         this.cookie.set('login', this.user.login);
-        // this.cookie.set('role', this.user.role);
+        this.cookie.set('role', this.user.role);
         this.cookie.set('access_token', this.user.access_token);
         console.log('Регистрация прошла успешно');
       }, err => console.log(err)
