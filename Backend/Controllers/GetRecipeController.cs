@@ -43,6 +43,28 @@ namespace Backend.Controllers
             }
         }
 
+        private int GetRandomId()
+        {
+            using ModelDbContext model = new ModelDbContext();
+
+            Random rnd = new Random();
+
+            int result = -1;
+
+            int min = model.Recipe.Min(r => r.Idrecipe);
+            int max = model.Recipe.Max(r => r.Idrecipe);
+
+            while (result == -1)
+            {
+                result = rnd.Next(min, max + 1);
+
+                if (model.Recipe.Find(result) == null)
+                    result = -1;
+            }
+
+            return result;
+        }
+
         private RecipeBindingModel GetRecipe(int idRecipe)
         {
             RecipeBindingModel result;
@@ -56,6 +78,7 @@ namespace Backend.Controllers
                         name = r.Name,
                         mainIngredient = r.IdingredientNavigation.Name,
                         nationality = r.IdnationalityNavigation.Name,
+                        duration = r.Duration,
                         steps = r.Step.Select(s => new StepBindingModel
                         {
                             idStep = s.Idstep,
@@ -66,11 +89,35 @@ namespace Backend.Controllers
                         {
                             idIngredientList = il.IdingredientList,
                             idIngredient = il.IdingredientNavigation.Idingredient,
+                            name = il.IdingredientNavigation.Name,
                             amount = il.Amount
                         }).ToList(),
                     }).FirstOrDefault();
             }
             return result;
+        }
+
+        /// <summary>
+        /// Получить случайный рецепт
+        /// </summary>
+        /// <returns>Данные рецепта</returns>
+        /// <response code="200">ОК, рецепт</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        [HttpGet("api/[controller]/random")]
+        public IActionResult GetRandom()
+        {
+            try
+            {
+                int idRecipe = GetRandomId();
+
+                RecipeBindingModel recipe = GetRecipe(idRecipe);
+
+                return Ok(recipe);
+            }
+            catch(Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         /// <summary>

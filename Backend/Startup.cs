@@ -79,7 +79,7 @@ namespace Backend
                 {
                     Version = "v1",
                     Title = "YummYummY_Backend",
-                    Description = "Первое подключение swagger"
+                    Description = "Документаци backend стороны сайта YummYummY"
                 });
 
                 //Determine base path for the application.
@@ -92,7 +92,8 @@ namespace Backend
 
             services.AddDbContext<ModelDbContext>(options =>
             {
-                options.UseSqlServer("server=.\\SQLEXPRESS;database=YummYummY;trusted_connection=true;");
+                //options.UseSqlServer(Configuration.GetConnectionString("Server"));
+                options.UseSqlServer(Configuration.GetConnectionString("Local"));
             });
 
         }
