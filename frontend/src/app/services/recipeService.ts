@@ -4,12 +4,13 @@ import {Observable} from 'rxjs';
 import {Recipe} from '../models/Recipe';
 import {Filter} from '../models/Filter';
 import {User} from '../models/User';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
-  private baseUrl = 'https://localhost:44383/api';
+  private baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) {
   }
   getRecipes(filters: Filter): Observable<Recipe[]> {
