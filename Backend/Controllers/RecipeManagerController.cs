@@ -21,6 +21,7 @@ namespace Backend.Controllers
         /// <response code="200">Рецепт добавлен</response>
         /// <response code="400">Некорректные значения</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpPost("api/[controller]/add")]
         [Authorize(Roles = "admin, open")]
         public IActionResult Post(FullInfoRecipeBindingModel recipe)
@@ -43,7 +44,7 @@ namespace Backend.Controllers
             }
             catch(Exception e)
             {
-                return StatusCode(500, e.InnerException.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -119,6 +120,7 @@ namespace Backend.Controllers
         /// <response code="400">Некорректные значения</response>
         /// <response code="406">Логин пользователя и записанный автор рецепта не совпадает</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpPost("api/[controller]/update")]
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Update(FullInfoRecipeBindingModel recipe)
@@ -184,7 +186,7 @@ namespace Backend.Controllers
                             foreach (var step in recipe.steps)
                             {
                                 Step s = _model.Step.ToList().Find(s => s.Idrecipe == recipe.idRecipe && s.OrderIndex == step.orderIndex);
-                                if(step.description!=null)
+                                if(step.description != null)
                                 {
                                     s.Description = step.description;
                                 }
@@ -199,9 +201,9 @@ namespace Backend.Controllers
                             {
                                 IngredientList i = _model.IngredientList.ToList().Find(i => i.Idrecipe == recipe.idRecipe && i.IdingredientList == ingredient.idIngredientList);
 
-                                if (ingredient.idIngredientList != 0)
+                                if (ingredient.idIngredient != 0)
                                 {
-                                    i.Idingredient = ingredient.idIngredientList;
+                                    i.Idingredient = ingredient.idIngredient;
                                 }
 
                                 if (ingredient.amount != null)
@@ -235,6 +237,7 @@ namespace Backend.Controllers
         /// <response code="400">Некорректные значения</response>
         /// <response code="406">Логин пользователя и записанный автор рецепта не совпадает</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpDelete("api/[controller]/delete")]
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Delete(int idRecipe)

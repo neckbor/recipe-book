@@ -82,6 +82,18 @@ namespace Backend
                     Description = "Документаци backend стороны сайта YummYummY"
                 });
 
+                c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Значение заголовка JWT авторизации.\nФормат: Bearer *token*",
+                });
+
+                c.OperationFilter<AuthOperationFilter>();
+
                 //Determine base path for the application.
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
 

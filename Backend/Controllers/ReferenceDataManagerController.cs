@@ -22,6 +22,7 @@ namespace Backend.Controllers
         /// <response code="204">Не найдено ни одного игредиента</response>
         /// <response code="200">Найдены ингредиенты</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpPost("api/[controller]/searchIngredients")]
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Get(IngredientBindingModel ingredient)
@@ -52,13 +53,14 @@ namespace Backend.Controllers
         /// <response code="204">Не найдено ни одной национальности</response>
         /// <response code="200">Найдены национальности</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpPost("api/[controller]/searchNationalities")]
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Get(NationalityBindingModel nationality)
         {
             try
             {
-                if (nationality == null)
+                if (!ModelState.IsValid)
                     return BadRequest();
 
                 IEnumerable<NationalityBindingModel> result = GetNationalities(nationality);
@@ -82,6 +84,7 @@ namespace Backend.Controllers
         /// <response code="400">Некорректное значение</response>
         /// <response code="200">Ингредиент добавлен</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpPost("api/[controller]/addIngredient")]
         [Authorize(Roles = "admin")]
         public IActionResult AddIngredient(IngredientBindingModel ingredient)
@@ -114,6 +117,7 @@ namespace Backend.Controllers
         /// <response code="400">Некорректное значение</response>
         /// <response code="200">Ингредиент изменён</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpPost("api/[controller]/updateIngredient")]
         [Authorize(Roles = "admin")]
         public IActionResult UpdateIngredient(IngredientBindingModel ingredient)
@@ -146,6 +150,7 @@ namespace Backend.Controllers
         /// <response code="400">Некорректное значение</response>
         /// <response code="200">Ингредиент удалён</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpDelete("api/[controller]/deleteIngredient")]
         [Authorize(Roles = "admin")]
         public IActionResult DeleteIngredient(int idIngredient)
@@ -180,6 +185,7 @@ namespace Backend.Controllers
         /// <response code="400">Некорректное значение</response>
         /// <response code="200">Национальность добавлена</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpPost("api/[controller]/addNationality")]
         [Authorize(Roles = "admin")]
         public IActionResult AddNationality(NationalityBindingModel nationality)
@@ -212,6 +218,7 @@ namespace Backend.Controllers
         /// <response code="400">Некорректное значение</response>
         /// <response code="200">Национальность изменена</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpPost("api/[controller]/updateNationality")]
         [Authorize(Roles = "admin")]
         public IActionResult UpdateNationality(NationalityBindingModel nationality)
@@ -244,6 +251,7 @@ namespace Backend.Controllers
         /// <response code="400">Некорректное значение</response>
         /// <response code="200">Национальность удалена</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
         [HttpDelete("api/[controller]/deleteNationality")]
         [Authorize(Roles = "admin")]
         public IActionResult DeleteNationality(int idNationality)

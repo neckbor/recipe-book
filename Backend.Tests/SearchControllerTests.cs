@@ -57,7 +57,7 @@ namespace Backend.Tests
             condition.author = "";
             condition.ingredient = "";
             condition.nationality = "";
-            condition.recipeName = "а";
+            condition.recipeName = "е";
 
             //Act
             var response = controller.Post(condition);
