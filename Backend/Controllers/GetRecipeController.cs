@@ -78,6 +78,7 @@ namespace Backend.Controllers
                         name = r.Name,
                         mainIngredient = r.IdingredientNavigation.Name,
                         nationality = r.IdnationalityNavigation.Name,
+                        duration = r.Duration,
                         steps = r.Step.Select(s => new StepBindingModel
                         {
                             idStep = s.Idstep,
