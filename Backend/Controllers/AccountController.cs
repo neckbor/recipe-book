@@ -8,6 +8,8 @@ using Backend.Models;
 using Backend.Models.BindingModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -79,6 +81,7 @@ namespace Backend.Controllers
         /// <response code="200">Поьзователь зарегестрирован (прилагается токен)</response>
         /// <response code="500">Внутренняя ошибка (читать сообщение в теле)</response>
         /// <response code="400">Некорректные значения (модель не прошла валидацию)</response>
+        /// <response code="409">Пользователь с таким данными уже существует</response>
         [HttpPost("api/[controller]/register")]
         public IActionResult Register(RegisterBindingModel model)
         {
@@ -93,6 +96,8 @@ namespace Backend.Controllers
             }
             catch (Exception e)
             {
+                if (e.Message.Equals("Пользователь с таким логином уже существует"))
+                    return Conflict();
                 return StatusCode(500, e.Message);
             }
         }
