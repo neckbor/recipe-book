@@ -60,7 +60,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if (nationality == null)
+                if (!ModelState.IsValid)
                     return BadRequest();
 
                 IEnumerable<NationalityBindingModel> result = GetNationalities(nationality);
