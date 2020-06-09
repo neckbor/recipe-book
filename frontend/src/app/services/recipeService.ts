@@ -44,7 +44,7 @@ export class RecipeService {
     const url = this.baseUrl + '/ReferenceDataManager/searchNationalities';
     const nationality = new Nationality();
     nationality.name = '';
-    return this.http.post(url, nationality, {
+    return this.http.post<Nationality[]>(url, nationality, {
       headers: new HttpHeaders({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`}
@@ -63,5 +63,16 @@ export class RecipeService {
       ),
       observe: 'response'
     });
+  }
+
+  updateRecipe(recipe: Recipe, token) {
+    const url = this.baseUrl + '/RecipeManager/add';
+    return this.http.post(url, Recipe, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    })
   }
 }

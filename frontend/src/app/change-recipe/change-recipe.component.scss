@@ -1,3 +1,4 @@
+@import "src/colors/colors";
 * {
   box-sizing: border-box;
 }
@@ -27,4 +28,11 @@ hr{
 }
 option-input{
   width: 20px;
+}
+.textarea {
+  width: 100%;
+}
+.update {
+  background: $blue;
+  color: #fff;
 }

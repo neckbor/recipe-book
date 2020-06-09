@@ -7,14 +7,14 @@
   [(ngModel)]="recipe.name" name="recipe-name" required class="input">
   <mat-form-field class="w-100">
     <mat-label><b>Национальность</b></mat-label>
-    <mat-select [(value)]="recipe.nationality" class="w-100" [compareWith]="compareNationalitites">
+    <mat-select [(ngModel)]="currentNationality" class="w-100" [compareWith]="compareNationalitites">
       <mat-option *ngFor="let nation of nationalities" [value]="nation">{{nation.name}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="w-100">
     <mat-label><b>Главный ингредиент</b></mat-label>
-    <mat-select [(value)]="recipe.ingredient" class="w-100">
+    <mat-select [(value)]="currentMainIngredient" class="w-100">
       <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient">{{ingredient.name}}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -25,6 +25,7 @@
       <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient">{{ingredient.name}}</mat-option>
     </mat-select>
   </mat-form-field>
+
   <div *ngFor="let item of selectedValue; let i = index;" class="mt-3">
     <div class="row">
       <div class="col-lg-6 col-md-6">
@@ -37,4 +38,42 @@
       </div>
     </div>
   </div>
+
+  <div>
+    <p><b>Продолжительность</b></p>
+    <div class="row">
+      <mat-form-field class="col-lg-4 col-md-4">
+        <mat-label><b>Часы</b></mat-label>
+        <input matInput [ngModel]="recipe.duration.value.hours">
+      </mat-form-field>
+      <mat-form-field class="col-lg-4 col-md-4">
+        <mat-label><b>Минуты</b></mat-label>
+        <input matInput [ngModel]="recipe.duration.value.minutes">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-vertical-stepper linear #stepper>
+    <ng-template matStepperIcon="edit">
+      <mat-icon>done</mat-icon>
+    </ng-template>
+    <mat-step *ngFor="let item of recipe.steps; let i = index;">
+      <ng-template matStepLabel>Шаг {{item.orderIndex}}</ng-template>
+      <p>
+        <mat-form-field class="textarea">
+          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" type="text"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="12"
+                    [(ngModel)]="item.description" placeholder="Описание шага">
+          </textarea></mat-form-field></p>
+      <div>
+        <button mat-button matStepperPrevious>Назад</button>
+        <button mat-button matStepperNext *ngIf="i != recipe.steps.length - 1">Вперед</button>
+        <button mat-button *ngIf="i === recipe.steps.length - 1" (click)="addStep()">Добавить шаг</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+
+  <button type="button" (click)="updateRecipe()" class="btn update d-block m-auto">Обновить рецепт</button>
+
 </div>

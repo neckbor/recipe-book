@@ -7,6 +7,8 @@ import {Recipe} from '../models/Recipe';
 import {SelectedValue} from "../models/SelectedValue";
 import {Ingredient} from "../models/Ingredient";
 import {Nationality} from "../models/Nationality";
+import {Step} from "../models/Step";
+import {SendRecipe} from "../models/SendRecipe";
 
 @Component({
   selector: 'app-change-recipe',
@@ -19,11 +21,13 @@ export class ChangeRecipeComponent implements OnInit {
     this.routeSubscription = route.params.subscribe(params => this.id = params.id);
   }
   private routeSubscription: Subscription;
-  nationalities: any;
+  nationalities: Nationality[] = [];
   ingredients: Ingredient[] = [];
   id: number;
   recipe: Recipe;
   selectedValue;
+  currentNationality: Nationality;
+  currentMainIngredient: Ingredient;
 
   ngOnInit() {
     if (!this.cookie.get('access_token')) {
@@ -31,6 +35,7 @@ export class ChangeRecipeComponent implements OnInit {
     } else {
       this.http.getRecipeById(this.id).subscribe(data => {
         this.recipe = data;
+        console.log(this.recipe);
         this.selectedValue = this.recipe.ingredients;
       },
         err => console.log(err));
@@ -44,6 +49,9 @@ export class ChangeRecipeComponent implements OnInit {
           console.log(this.ingredients);
         },
         error => console.log(error));
+      this.currentMainIngredient = this.ingredients.find(x => x.name == this.recipe.mainIngredient);
+      this.currentNationality = this.nationalities.find( x => x.name == this.recipe.nationality);
+      console.log('Главный' + this.currentNationality);
     }
   }
 
@@ -61,8 +69,16 @@ export class ChangeRecipeComponent implements OnInit {
     return ingredient1 && ingredient2 ? ingredient1.name === ingredient2.name : ingredient1 === ingredient2;
   }
 
-  // public compareNationalitites(str1: String, nation: Nationality) {
-  //   return str1 && nation ? str1 === nation.name : str1 === nation;
+  public addStep() {
+    this.recipe.steps.push(new Step(0, this.recipe.steps[this.recipe.steps.length - 1].orderIndex + 1, ""));
+  }
+
+  // public updateRecipe() {
+  //   const recipe = new SendRecipe(this.recipe.id, this.recipe.name, this.recipe.ingredient, this.recipe.nationality, )
   // }
+
+  public compareNationalitites(nat1: Nationality, nat2: Nationality) {
+    return nat1 && nat2 ? nat1.name === nat2.name : nat1 === nat2;
+  }
 
 }
