@@ -36,13 +36,13 @@
               <span>Национальность: {{myRecipes[i + 1].nationality}}</span>
             </p>
             <p class="duration">
-              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
-              {{tempRecipe.duration.value.minutes}} минут</p>
+              <span *ngIf="myRecipes[i + 1].duration.value.hours">{{myRecipes[i + 1].duration.value.hours}} час.</span>
+              {{myRecipes[i + 1].duration.value.minutes}} минут</p>
           </div>
             <div class="buttons">
-              <button class="btn btn-primary btn-go col-sm-12" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
-              <button *ngIf="checkCreate" class="btn btn-warning btn-go col-sm-12 mt-2" (click)="changeRecipe(tempRecipe.idRecipe)">Редактировать</button>
-              <button class="btn btn-danger btn-go col-sm-12 mt-2" (click)="deleteRecipe(tempRecipe.idRecipe)">Удалить</button>
+              <button class="btn btn-primary btn-go col-sm-12" (click)="seeRecipe(myRecipes[i + 1].idRecipe)">Просмотр</button>
+              <button *ngIf="checkCreate" class="btn btn-warning btn-go col-sm-12 mt-2" (click)="changeRecipe(myRecipes[i + 1].idRecipe)">Редактировать</button>
+              <button class="btn btn-danger btn-go col-sm-12 mt-2" (click)="deleteRecipe(myRecipes[i + 1].idRecipe)">Удалить</button>
             </div>
         </div>
       </div>
@@ -57,13 +57,13 @@
               <span>Национальность: {{myRecipes[i + 2].nationality}}</span>
             </p>
             <p class="duration">
-              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
-              {{tempRecipe.duration.value.minutes}} минут</p>
+              <span *ngIf="myRecipes[i + 2].duration.value.hours">{{myRecipes[i + 2].duration.value.hours}} час.</span>
+              {{myRecipes[i + 2].duration.value.minutes}} минут</p>
           </div>
             <div class="buttons">
-              <button class="btn btn-primary btn-go col-sm-12" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
-              <button *ngIf="checkCreate" class="btn btn-warning btn-go col-sm-12 mt-2" (click)="changeRecipe(tempRecipe.idRecipe)">Редактировать</button>
-              <button class="btn btn-danger btn-go col-sm-12 mt-2" (click)="deleteRecipe(tempRecipe.idRecipe)">Удалить</button>
+              <button class="btn btn-primary btn-go col-sm-12" (click)="seeRecipe(myRecipes[i + 2].idRecipe)">Просмотр</button>
+              <button *ngIf="checkCreate" class="btn btn-warning btn-go col-sm-12 mt-2" (click)="changeRecipe(myRecipes[i + 2].idRecipe)">Редактировать</button>
+              <button class="btn btn-danger btn-go col-sm-12 mt-2" (click)="deleteRecipe(myRecipes[i + 2].idRecipe)">Удалить</button>
             </div>
         </div>
       </div>

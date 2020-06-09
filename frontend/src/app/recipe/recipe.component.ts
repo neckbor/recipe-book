@@ -19,6 +19,7 @@ export class RecipeComponent implements OnInit {
     this.http.getRecipeById(this.id).subscribe(
       data => {
         this.recipe = data;
+        console.log(this.recipe);
         console.log('Получение рецепта прошло успешно');
       },
       err => console.log('Произошла ошибка при получении рецепта', err)

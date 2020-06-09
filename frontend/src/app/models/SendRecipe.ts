@@ -6,7 +6,7 @@ export class SendRecipe {
   idIngredient: number;
   idNationality: number;
   duration: string;
-  ingredients: any[] = [];
+  ingredientList: any[] = [];
   steps: Step[] = [];
   constructor(id: number, name: string, idIngredient: number,
               idNationality: number,duration: any, ingredients: any[], steps: Step[]) {
@@ -15,7 +15,7 @@ export class SendRecipe {
     this.idIngredient = idIngredient;
     this.idNationality = idNationality;
     this.duration = this.formatTime(duration);
-    this.ingredients = ingredients;
+    this.ingredientList = ingredients;
     this.steps = steps.sort(this.sortSteps);
   }
   private sortSteps(a, b) {

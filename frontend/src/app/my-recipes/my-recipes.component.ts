@@ -25,6 +25,7 @@ export class MyRecipesComponent implements OnInit {
     filter.author = this.cookie.get('login');
     this.http.getRecipes(filter).subscribe(data => {
       this.myRecipes = data;
+      console.log(this.myRecipes);
     },
       error => console.log(error));
   }

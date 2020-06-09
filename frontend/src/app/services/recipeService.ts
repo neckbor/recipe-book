@@ -67,7 +67,7 @@ export class RecipeService {
   }
 
   updateRecipe(recipe: SendRecipe, token) {
-    const url = this.baseUrl + '/RecipeManager/add';
+    const url = this.baseUrl + '/RecipeManager/update';
     return this.http.post<SendRecipe>(url, recipe, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
