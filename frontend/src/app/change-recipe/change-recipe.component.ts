@@ -43,6 +43,7 @@ export class ChangeRecipeComponent implements OnInit {
         this.nationalities = data.body;
         console.log(this.nationalities);
           this.currentNationality = this.nationalities.find( x => x.name == this.recipe.nationality);
+          console.log(this.currentNationality);
       },
       error => console.log(error));
       this.http.getAllIngredients(this.cookie.get('access_token')).subscribe(data => {
@@ -51,7 +52,6 @@ export class ChangeRecipeComponent implements OnInit {
           this.currentMainIngredient = this.ingredients.find(x => x.name == this.recipe.mainIngredient);
         },
         error => console.log(error));
-      console.log('Главный' + this.currentMainIngredient);
     }
   }
 
@@ -73,9 +73,16 @@ export class ChangeRecipeComponent implements OnInit {
     this.recipe.steps.push(new Step(0, this.recipe.steps[this.recipe.steps.length - 1].orderIndex + 1, ""));
   }
 
-  // public updateRecipe() {
-  //   const recipe = new SendRecipe(this.recipe.id, this.recipe.name, this.recipe.ingredient, this.recipe.nationality, )
-  // }
+  public updateRecipe() {
+    const recipe = new SendRecipe(this.recipe.idRecipe, this.recipe.name, this.currentMainIngredient.idIngredient, this.currentNationality.idNationality,
+      this.recipe.duration, this.selectedValue, this.recipe.steps);
+    console.log(recipe);
+    this.http.updateRecipe(recipe, this.cookie.get('access_token')).subscribe( data => {
+      console.log('Успешно обновлено');
+    },
+      err => console.log(err)
+    );
+  }
 
   public compareNationalitites(nat1: Nationality, nat2: Nationality) {
     return nat1 && nat2 ? nat1.name === nat2.name : nat1 === nat2;

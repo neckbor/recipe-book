@@ -7,6 +7,7 @@ import {User} from '../models/User';
 import {environment} from '../../environments/environment';
 import {Nationality} from '../models/Nationality';
 import {Ingredient} from "../models/Ingredient";
+import {SendRecipe} from "../models/SendRecipe";
 
 @Injectable({
   providedIn: 'root'
@@ -65,9 +66,9 @@ export class RecipeService {
     });
   }
 
-  updateRecipe(recipe: Recipe, token) {
+  updateRecipe(recipe: SendRecipe, token) {
     const url = this.baseUrl + '/RecipeManager/add';
-    return this.http.post(url, Recipe, {
+    return this.http.post<SendRecipe>(url, recipe, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`}
