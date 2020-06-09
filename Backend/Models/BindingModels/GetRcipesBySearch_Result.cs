@@ -11,7 +11,7 @@ namespace Backend.Models
         public string name { get; set; }
         public string author { get; set; }
         public TimeSpan? duration { get; set; }
-        public string ingredient { get; set; }
+        public string mainIngredient { get; set; }
         public string nationality { get; set; }
 
     }

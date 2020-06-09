@@ -62,7 +62,7 @@ namespace Backend.Controllers
                         name = r.Name,
                         author = r.Author,
                         duration = r.Duration,
-                        ingredient = r.IdingredientNavigation.Name,
+                        mainIngredient = r.IdingredientNavigation.Name,
                         nationality = r.IdnationalityNavigation.Name
                     }).ToList();
             }
