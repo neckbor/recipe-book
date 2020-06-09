@@ -166,7 +166,7 @@ namespace Backend.Controllers
         {
             try
             {
-                if(!ModelState.IsValid)
+                if (model == null || model.login.Length < 1)
                     return BadRequest();
 
                 BlockUser(model.login);
@@ -192,6 +192,97 @@ namespace Backend.Controllers
 
             model.User.Update(user);
             model.SaveChanges();
+        }
+
+        /// <summary>
+        /// Заблокировать пользователя
+        /// </summary>
+        /// <param name="model">Данные пользователя</param>
+        /// <response code="200">Успешо</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в теле)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
+        [HttpPost("api/[controller]/unblock")]
+        [Authorize(Roles = "admin")]
+        public IActionResult Unblock(UserLoginString model)
+        {
+            try
+            {
+                if (model == null || model.login.Length < 1)
+                    return BadRequest();
+
+                UnblockUser(model.login);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private void UnblockUser(string login)
+        {
+            using ModelDbContext model = new ModelDbContext();
+
+            User user = model.User.Where(u => EF.Functions.Like(u.Login, login)).FirstOrDefault();
+
+            if (user == null)
+                throw new Exception("Пользователь не найден");
+
+            user.Idrole = 1;
+
+            model.User.Update(user);
+            model.SaveChanges();
+        }
+
+        /// <summary>
+        /// Поиск информаци о пользователях
+        /// </summary>
+        /// <param name="model">Логин пользователя</param>
+        /// <returns>Информация о найденных пользователях</returns>
+        /// <response code="200">Удачный поиск</response>
+        /// <response code="204">Не найдено пользователей</response>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
+        [HttpPost("api/[controller]/search")]
+        [Authorize(Roles = "admin")]
+        public IActionResult Search(UserLoginString model)
+        {
+            try
+            {
+                if (model == null)
+                    return BadRequest();
+
+                IEnumerable<UserInfo> result = FindUser(model.login);
+
+                if (result.Count() < 1)
+                    return NoContent();
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private IEnumerable<UserInfo> FindUser(string login)
+        {
+            IEnumerable<UserInfo> result;
+
+            using (ModelDbContext _model = new ModelDbContext())
+            {
+                result = _model.User.Where(u => EF.Functions.Like(u.Login.ToLower(), '%' + login.ToLower() + '%'))
+                        .Select(u => new UserInfo
+                        {
+                            login = u.Login,
+                            role = u.IdroleNavigation.Name
+                        }).ToList();
+
+            };
+
+            return result;
         }
 
     }

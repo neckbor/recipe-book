@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Backend.Models.BindingModels
 {
-    public class UserLoginString
+    public class UserInfo : UserLoginString
     {
-        public string login { get; set; }
+        public string role { get; set; }
     }
 }
