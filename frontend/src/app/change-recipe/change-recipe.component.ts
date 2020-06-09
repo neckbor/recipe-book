@@ -42,16 +42,16 @@ export class ChangeRecipeComponent implements OnInit {
       this.http.getAllNationalities(this.cookie.get('access_token')).subscribe(data => {
         this.nationalities = data.body;
         console.log(this.nationalities);
+          this.currentNationality = this.nationalities.find( x => x.name == this.recipe.nationality);
       },
       error => console.log(error));
       this.http.getAllIngredients(this.cookie.get('access_token')).subscribe(data => {
           this.ingredients = data.body;
           console.log(this.ingredients);
+          this.currentMainIngredient = this.ingredients.find(x => x.name == this.recipe.mainIngredient);
         },
         error => console.log(error));
-      this.currentMainIngredient = this.ingredients.find(x => x.name == this.recipe.mainIngredient);
-      this.currentNationality = this.nationalities.find( x => x.name == this.recipe.nationality);
-      console.log('Главный' + this.currentNationality);
+      console.log('Главный' + this.currentMainIngredient);
     }
   }
 
