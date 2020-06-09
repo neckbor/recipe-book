@@ -23,6 +23,8 @@ import {CookieService} from 'ngx-cookie-service';
 import { LoginComponent } from './login/login.component';
 import { MyRecipesComponent } from './my-recipes/my-recipes.component';
 import { ChangeRecipeComponent } from './change-recipe/change-recipe.component';
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -57,7 +59,9 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatStepperModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+    MatInputModule
   ],
   providers: [RecipeService,
   ShareService,

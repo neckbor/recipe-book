@@ -6,6 +6,7 @@ import {Filter} from '../models/Filter';
 import {User} from '../models/User';
 import {environment} from '../../environments/environment';
 import {Nationality} from '../models/Nationality';
+import {Ingredient} from "../models/Ingredient";
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +56,7 @@ export class RecipeService {
     const url = this.baseUrl + '/ReferenceDataManager/searchIngredients';
     const ingredient = new Nationality();
     ingredient.name = '';
-    return this.http.post(url, ingredient, {
+    return this.http.post<Ingredient[]>(url, ingredient, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`}
