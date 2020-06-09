@@ -1,4 +1,15 @@
 <app-header></app-header>
-<div class="container">
-
+<div class="container" *ngIf="recipe">
+  <h1>Редактирование рецепта</h1>
+  <hr>
+  <label for="recipe_name"><b>Название рецепта</b></label>
+  <input type="text" placeholder="Введите название" id="recipe_name"
+  [(ngModel)]="recipe.name" name="recipe-name" required>
+  <label for="nationality"><b>Национальность</b></label>
+  <select id="nationality">
+    <option value="Русская" selected>Русская</option>
+  </select>
+  <label><b>Ингредиенты</b></label>
+  <div *ngFor="let ing of recipe.ingredients">
+  </div>
 </div>

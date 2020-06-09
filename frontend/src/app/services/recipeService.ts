@@ -52,7 +52,7 @@ export class RecipeService {
     });
   }
   getAllIngredients(token) {
-    const url = this.baseUrl + '/ReferenceDataManager/searchNationalities';
+    const url = this.baseUrl + '/ReferenceDataManager/searchIngredients';
     const ingredient = new Nationality();
     ingredient.name = '';
     return this.http.post(url, ingredient, {
