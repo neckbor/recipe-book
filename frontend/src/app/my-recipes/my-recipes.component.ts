@@ -39,7 +39,18 @@ export class MyRecipesComponent implements OnInit {
   }
 
   private deleteRecipe(id: number) {
-
+    this.http.deleteRecipe(id, this.cookie.get('access_token')).subscribe( data => {
+      console.log('Удаление прошло успешно');
+    },
+      err => console.log(err));
+    const filter = new Filter();
+    this.checkCreate = !!(this.cookie.get('role') === 'open' || 'admin');
+    filter.author = this.cookie.get('login');
+    this.http.getRecipes(filter).subscribe(data => {
+        this.myRecipes = data;
+        console.log(this.myRecipes);
+      },
+      error => console.log(error));
   }
 
 }

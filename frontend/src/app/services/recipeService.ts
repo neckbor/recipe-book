@@ -76,4 +76,14 @@ export class RecipeService {
       observe: 'response'
     })
   }
+
+  deleteRecipe(id: number, token){
+    const url = this.baseUrl + '/RecipeManager/delete/?idRecipe=' + id;
+    return this.http.delete(url, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    })
+  }
 }
