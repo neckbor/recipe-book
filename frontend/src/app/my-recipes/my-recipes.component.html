@@ -1,6 +1,9 @@
 <app-header></app-header>
 <h2 class="text-center">Мои рецепты</h2>
 <h3 *ngIf="!myRecipes" class="text-center">На данный момент у вас нет собственных рецептов</h3>
+<div class="container text-center mt-5">
+  <a routerLink="/add-recipe" class="btn btn-dark text-center">Добавить рецепт</a>
+</div>
 <div class="recipes-wrapper" *ngIf="myRecipes">
   <div *ngFor="let tempRecipe of myRecipes; let i = index;" class="container row-class">
     <div *ngIf="i % 3 == 0" class="row">
@@ -70,3 +73,4 @@
     </div>
   </div>
 </div>
+

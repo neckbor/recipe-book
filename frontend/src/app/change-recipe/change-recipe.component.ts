@@ -55,22 +55,8 @@ export class ChangeRecipeComponent implements OnInit {
     }
   }
 
-  public dependAmount() {
-    console.log(this.selectedValue);
-    // this.currentIngredients = [];
-    // for (const i = 0; i < this.selectedValue.length; i++) {
-    //   this.currentIngredients.push
-    // }
-    // this.amount = this.selectedValue ? [this.selectedValue.length] : [];
-    // console.log('Размер' + this.amount.length);
-  }
-
   public compareFn(ingredient1: Ingredient, ingredient2: Ingredient) {
     return ingredient1 && ingredient2 ? ingredient1.name === ingredient2.name : ingredient1 === ingredient2;
-  }
-
-  public addStep() {
-    this.recipe.steps.push(new Step(0, this.recipe.steps[this.recipe.steps.length - 1].orderIndex + 1, ""));
   }
 
   public updateRecipe() {

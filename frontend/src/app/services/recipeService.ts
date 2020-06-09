@@ -77,6 +77,17 @@ export class RecipeService {
     })
   }
 
+  addRecipe(recipe: SendRecipe, token) {
+    const url = this.baseUrl + '/RecipeManager/add';
+    return this.http.post<SendRecipe>(url, recipe, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    })
+  }
+
   deleteRecipe(id: number, token){
     const url = this.baseUrl + '/RecipeManager/delete/?idRecipe=' + id;
     return this.http.delete(url, {

@@ -25,6 +25,7 @@ import { MyRecipesComponent } from './my-recipes/my-recipes.component';
 import { ChangeRecipeComponent } from './change-recipe/change-recipe.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
+import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -33,7 +34,8 @@ const appRoutes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'login', component: LoginComponent},
   {path: 'my-recipes', component: MyRecipesComponent},
-  {path: 'change-recipe/:id', component: ChangeRecipeComponent}
+  {path: 'change-recipe/:id', component: ChangeRecipeComponent},
+  {path: 'add-recipe', component: AddRecipeComponent}
 ];
 
 @NgModule({
@@ -47,7 +49,8 @@ const appRoutes: Routes = [
     RegistrationComponent,
     LoginComponent,
     MyRecipesComponent,
-    ChangeRecipeComponent
+    ChangeRecipeComponent,
+    AddRecipeComponent
   ],
   imports: [
     BrowserModule,
