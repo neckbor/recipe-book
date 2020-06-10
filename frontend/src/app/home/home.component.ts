@@ -18,16 +18,18 @@ export class HomeComponent implements OnInit {
   }
 
   private searchRecipe() {
-    if (this.shareRecipes.filter.ingredient ||
-      this.shareRecipes.filter.nationality ||
-      this.shareRecipes.filter.author ||
-      this.shareRecipes.filter.recipeName) {
       this.http.getRecipes(this.shareRecipes.filter).subscribe(data => {
           this.shareRecipes.recipes = data;
           console.log('Recipes: ' + this.shareRecipes.recipes);
           this.router.navigate(['all-recipes']).then(nav => console.log(nav), err => console.log(err));
         },
         error => console.log('Error http request on HomePage' + error));
-    }
+  }
+
+  public getRandomRecipe() {
+    this.http.getRandomRecipe().subscribe( data => {
+      this.router.navigate(['recipe', data.idRecipe]);
+    },
+      error => console.log(error));
   }
 }

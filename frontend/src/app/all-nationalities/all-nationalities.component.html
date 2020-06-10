@@ -1,0 +1,30 @@
+<app-header></app-header>
+<h2 class="text-center">Добавить национальность</h2>
+<div class="container">
+  <mat-form-field class="w-100">
+    <mat-label><b>Название национальности</b></mat-label>
+    <input matInput type="text" placeholder="Название национальности"
+           [(ngModel)]="nameNationality" name="login" required class="input">
+  </mat-form-field>
+  <button (click)="addNationality()" class="btn update d-block m-auto">Добавить национальность</button>
+</div>
+
+
+<h2 class="text-center mt-3">Все национальности</h2>
+<div class="container">
+  <div *ngFor="let item of nationalities">
+    <div class="row">
+      <div class="col-lg-4 col-md-4">
+        <mat-form-field class="w-100">
+          <mat-label><b>Текущая национальность</b></mat-label>
+          <input matInput type="text" placeholder="Текущая национальность"
+                 [(ngModel)]="item.name" name="login" required class="input">
+        </mat-form-field>
+      </div>
+      <div class="col-lg-1 col-md-1"></div>
+      <button (click)="deleteNationality(item.idNationality)" class="btn btn-danger d-block m-auto col-lg-3 col-md-3">Удалить</button>
+      <div class="col-lg-1 col-md-1"></div>
+      <button (click)="updateNationality(item)" class="btn btn-warning d-block m-auto col-lg-3 col-md-3">Подтвердить изменения</button>
+    </div>
+  </div>
+</div>

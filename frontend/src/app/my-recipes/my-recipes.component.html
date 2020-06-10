@@ -1,0 +1,76 @@
+<app-header></app-header>
+<h2 class="text-center">Мои рецепты</h2>
+<h3 *ngIf="!myRecipes" class="text-center">На данный момент у вас нет собственных рецептов</h3>
+<div class="container text-center mt-5">
+  <a routerLink="/add-recipe" class="btn btn-dark text-center">Добавить рецепт</a>
+</div>
+<div class="recipes-wrapper" *ngIf="myRecipes">
+  <div *ngFor="let tempRecipe of myRecipes; let i = index;" class="container row-class">
+    <div *ngIf="i % 3 == 0" class="row">
+      <div class="col-lg-4 col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <span class="author">Автор: {{tempRecipe.author}}</span>
+            <h5 class="card-title">{{tempRecipe.name}}</h5>
+            <p class="card-text">
+              <span>Главный ингридиент: {{tempRecipe.mainIngredient}}</span>
+              <br />
+              <span>Национальность: {{tempRecipe.nationality}}</span>
+            </p>
+            <p class="duration">
+              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
+              {{tempRecipe.duration.value.minutes}} минут</p>
+          </div>
+          <div class="buttons">
+            <button class="btn btn-primary btn-go col-sm-12" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
+            <button *ngIf="checkCreate" class="btn btn-warning btn-go col-sm-12 mt-2" (click)="changeRecipe(tempRecipe.idRecipe)">Редактировать</button>
+            <button class="btn btn-danger btn-go col-sm-12 mt-2" (click)="deleteRecipe(tempRecipe.idRecipe)">Удалить</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="i + 1 < myRecipes.length" class="col-lg-4 col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <span class="author">Автор: {{myRecipes[i + 1].author}}</span>
+            <h5 class="card-title">{{myRecipes[i + 1].name}}</h5>
+            <p class="card-text">
+              <span>Главный ингридиент: {{myRecipes[i + 1].mainIngredient}}</span>
+              <br />
+              <span>Национальность: {{myRecipes[i + 1].nationality}}</span>
+            </p>
+            <p class="duration">
+              <span *ngIf="myRecipes[i + 1].duration.value.hours">{{myRecipes[i + 1].duration.value.hours}} час.</span>
+              {{myRecipes[i + 1].duration.value.minutes}} минут</p>
+          </div>
+            <div class="buttons">
+              <button class="btn btn-primary btn-go col-sm-12" (click)="seeRecipe(myRecipes[i + 1].idRecipe)">Просмотр</button>
+              <button *ngIf="checkCreate" class="btn btn-warning btn-go col-sm-12 mt-2" (click)="changeRecipe(myRecipes[i + 1].idRecipe)">Редактировать</button>
+              <button class="btn btn-danger btn-go col-sm-12 mt-2" (click)="deleteRecipe(myRecipes[i + 1].idRecipe)">Удалить</button>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="i + 2 < myRecipes.length" class="col-lg-4 col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <span class="author">Автор: {{myRecipes[i + 2].author}}</span>
+            <h5 class="card-title">{{myRecipes[i + 2].name}}</h5>
+            <p class="card-text">
+              <span>Главный ингридиент: {{myRecipes[i + 2].mainIngredient}}</span>
+              <br />
+              <span>Национальность: {{myRecipes[i + 2].nationality}}</span>
+            </p>
+            <p class="duration">
+              <span *ngIf="myRecipes[i + 2].duration.value.hours">{{myRecipes[i + 2].duration.value.hours}} час.</span>
+              {{myRecipes[i + 2].duration.value.minutes}} минут</p>
+          </div>
+            <div class="buttons">
+              <button class="btn btn-primary btn-go col-sm-12" (click)="seeRecipe(myRecipes[i + 2].idRecipe)">Просмотр</button>
+              <button *ngIf="checkCreate" class="btn btn-warning btn-go col-sm-12 mt-2" (click)="changeRecipe(myRecipes[i + 2].idRecipe)">Редактировать</button>
+              <button class="btn btn-danger btn-go col-sm-12 mt-2" (click)="deleteRecipe(myRecipes[i + 2].idRecipe)">Удалить</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

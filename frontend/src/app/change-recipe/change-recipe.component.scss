@@ -1,0 +1,38 @@
+@import "src/colors/colors";
+* {
+  box-sizing: border-box;
+}
+h1 {
+  font-size: 36px;
+}
+h2 {
+  margin-bottom: 30px;
+  font-size: 18px;
+  padding-bottom: 14px;
+}
+.input , select{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+.input:focus {
+  background-color: #ddd;
+  outline: none;
+}
+hr{
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+option-input{
+  width: 20px;
+}
+.textarea {
+  width: 100%;
+}
+.update {
+  background: $blue;
+  color: #fff;
+}

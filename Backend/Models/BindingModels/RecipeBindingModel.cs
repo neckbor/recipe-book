@@ -8,9 +8,11 @@ namespace Backend.Models.BindingModels
     public class RecipeBindingModel
     {
         public int idRecipe { get; set; }
+        public string author { get; set; }
         public string name { get; set; }
         public string mainIngredient { get; set; }
         public string nationality { get; set; }
+        public TimeSpan? duration { get; set; }
         public List<StepBindingModel> steps { get; set; }
         public List<IngredientListBindingModel> ingredients  { get; set; }
 
