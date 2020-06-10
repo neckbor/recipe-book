@@ -343,11 +343,11 @@ namespace Backend.Controllers
 
             User user = model.User.Where(u => u.Login.Equals(nUser.oldLogin)).FirstOrDefault();
 
-            if (nUser.login != null)
+            if (nUser.login != null && !nUser.login.Equals(""))
                 user.Login = nUser.login;
-            if (nUser.email != null)
+            if (nUser.email != null && !nUser.email.Equals(""))
                 user.Email = nUser.email;
-            if (nUser.password != null)
+            if (nUser.password != null && !nUser.password.Equals(""))
                 user.PassworgHash = nUser.password;
 
             model.User.Update(user);
