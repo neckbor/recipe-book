@@ -300,5 +300,60 @@ namespace Backend.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Изменение данных пользователя
+        /// </summary>
+        /// <param name="model">Новые данные</param>
+        /// <returns>Новый токен</returns>
+        /// <response code="200">Удачно (прилагается токен)</response>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован</response>
+        [HttpPost("api/[controller]/change")]
+        [Authorize]
+        public IActionResult Changedata(UserInfo model)
+        {
+            _logger.LogError("ChangeData: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
+            try
+            {
+                if (model == null || model.oldLogin.Equals(""))
+                    return BadRequest();
+                if (model.oldLogin != User.Identity.Name)
+                    return Forbid();
+
+                User user = UpdateUser(model);
+
+                return Token(new LoginBindingModel()
+                {
+                    login = user.Login,
+                    password = user.PassworgHash
+                });
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private User UpdateUser(UserInfo nUser)
+        {
+            using ModelDbContext model = new ModelDbContext();
+
+            User user = model.User.Where(u => u.Login.Equals(nUser.oldLogin)).FirstOrDefault();
+
+            if (nUser.login != null)
+                user.Login = nUser.login;
+            if (nUser.email != null)
+                user.Email = nUser.email;
+            if (nUser.password != null)
+                user.PassworgHash = nUser.password;
+
+            model.User.Update(user);
+            model.SaveChanges();
+
+            return user;
+        }
+
     }
 }

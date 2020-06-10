@@ -9,5 +9,7 @@ namespace Backend.Models.BindingModels
     {
         public string role { get; set; }
         public string email { get; set; }
+        public string oldLogin { get; set; }
+        public string password { get; set; }
     }
 }
