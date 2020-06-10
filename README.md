@@ -2,7 +2,9 @@
 
 *[YummYummY/Ссылка на приложение](http://195.133.196.144/yummy/)*
 
-*[Видеопоказ/Ссылка на видео](https://github.com/neckbor/recipe-book/blob/master/video.mp4)*
+*[Видеопоказ/Ссылка на видео](https://www.youtube.com/watch?v=IcoHOXVD0CQ&feature=youtu.be)*
+
+*[Swagger/Ссылка на Swagger](http://195.133.196.144/index.html)*
 
 ### Техническое задание
 *[Github/Техническое задание.docx](https://github.com/neckbor/recipe-book/blob/master/%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5.docx)*
