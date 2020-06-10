@@ -31,6 +31,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import { UserChangesComponent } from './user-changes/user-changes.component';
 import { AllIngredientsComponent } from './all-ingredients/all-ingredients.component';
+import { AllNationalitiesComponent } from './all-nationalities/all-nationalities.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -43,7 +44,8 @@ const appRoutes: Routes = [
   {path: 'add-recipe', component: AddRecipeComponent},
   {path: 'users', component: UsersComponent},
   {path: 'user-changes', component: UserChangesComponent},
-  {path: 'all-ingredients', component: AllIngredientsComponent}
+  {path: 'all-ingredients', component: AllIngredientsComponent},
+  {path: 'all-nationalities', component: AllNationalitiesComponent}
 ];
 
 @NgModule({
@@ -61,7 +63,8 @@ const appRoutes: Routes = [
     AddRecipeComponent,
     UsersComponent,
     UserChangesComponent,
-    AllIngredientsComponent
+    AllIngredientsComponent,
+    AllNationalitiesComponent
   ],
   imports: [
     BrowserModule,

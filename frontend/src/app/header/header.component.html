@@ -6,6 +6,12 @@
   <nav id="nav">
     <ul>
       <li *ngIf="role == 'admin'">
+        <a routerLink="/all-ingredients">Ингредиенты</a>
+      </li>
+      <li *ngIf="role == 'admin'">
+        <a routerLink="/all-nationalities">Национальности</a>
+      </li>
+      <li *ngIf="role == 'admin'">
         <a routerLink="/users">Пользователи</a>
       </li>
       <li (click)="getRandom()">
