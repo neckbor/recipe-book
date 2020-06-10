@@ -7,12 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 using Backend.Models.BindingModels;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Backend.Controllers
 {
     [ApiController]
     public class RecipeManagerController : ControllerBase
     {
+        private readonly ILogger<RecipeManagerController> _logger;
+
+        public RecipeManagerController(ILogger<RecipeManagerController> logger)
+        {
+            this._logger = logger;
+        }
         /// <summary>
         /// Добавить новый рецепт
         /// </summary>
@@ -26,6 +34,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin, open")]
         public IActionResult Post(FullInfoRecipeBindingModel recipe)
         {
+            _logger.LogError("Add: запуск с параметрами\n" + JsonConvert.SerializeObject(recipe));
             try
             {
                 if (recipe == null)
@@ -125,6 +134,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Update(FullInfoRecipeBindingModel recipe)
         {
+            _logger.LogError("Update: запуск с параметрами\n" + JsonConvert.SerializeObject(recipe));
             try
             {
                 if (recipe.idRecipe < 1)
@@ -253,6 +263,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Delete(int idRecipe)
         {
+            _logger.LogError("Delete: запуск с параметрами\n" + JsonConvert.SerializeObject(idRecipe));
             try
             {
                 if (idRecipe < 1)
