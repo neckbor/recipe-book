@@ -291,7 +291,8 @@ namespace Backend.Controllers
                         .Select(u => new UserInfo
                         {
                             login = u.Login,
-                            role = u.IdroleNavigation.Name
+                            role = u.IdroleNavigation.Name,
+                            email = u.Email
                         }).ToList();
 
             };

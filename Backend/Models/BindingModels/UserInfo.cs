@@ -8,5 +8,6 @@ namespace Backend.Models.BindingModels
     public class UserInfo : UserLoginString
     {
         public string role { get; set; }
+        public string email { get; set; }
     }
 }
