@@ -26,6 +26,7 @@ namespace Backend.Controllers
         {
             this._logger = logger;
         }
+
         /// <summary>
         /// Поиск рецептов по заданным параметрам
         /// </summary>

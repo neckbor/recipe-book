@@ -54,7 +54,7 @@ namespace Backend.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name,
+                login = identity.Name,
                 role = identity.Claims.Where(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).FirstOrDefault().Value
             };
 
@@ -96,6 +96,7 @@ namespace Backend.Controllers
         [HttpPost("api/[controller]/register")]
         public IActionResult Register(RegisterBindingModel model)
         {
+            _logger.LogError("Register: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
             try
             {
                 if (!ModelState.IsValid || model.login.Equals("") || model.password.Equals(""))
@@ -207,7 +208,7 @@ namespace Backend.Controllers
         }
 
         /// <summary>
-        /// Заблокировать пользователя
+        /// Разблокировать пользователя
         /// </summary>
         /// <param name="model">Данные пользователя</param>
         /// <response code="200">Успешо</response>
@@ -291,12 +292,74 @@ namespace Backend.Controllers
                         .Select(u => new UserInfo
                         {
                             login = u.Login,
-                            role = u.IdroleNavigation.Name
+                            role = u.IdroleNavigation.Name,
+                            email = u.Email
                         }).ToList();
 
             };
 
             return result;
+        }
+
+        /// <summary>
+        /// Изменение данных пользователя
+        /// </summary>
+        /// <param name="model">Новые данные</param>
+        /// <returns>Новый токен</returns>
+        /// <response code="200">Удачно (прилагается токен)</response>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован</response>
+        [HttpPost("api/[controller]/change")]
+        [Authorize]
+        public IActionResult Changedata(UserInfo model)
+        {
+            _logger.LogError("ChangeData: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
+            try
+            {
+                if (model == null || model.oldLogin.Equals(""))
+                    return BadRequest();
+                if (model.oldLogin != User.Identity.Name)
+                    return Forbid();
+
+                User user = UpdateUser(model);
+
+                return Token(new LoginBindingModel()
+                {
+                    login = user.Login,
+                    password = user.PassworgHash
+                });
+
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Equals("Логин занят"))
+                    return Conflict();
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private User UpdateUser(UserInfo nUser)
+        {
+            using ModelDbContext model = new ModelDbContext();
+
+            User user = model.User.Where(u => u.Login.Equals(nUser.oldLogin)).FirstOrDefault();
+
+            if (nUser.login != null && !nUser.login.Equals(""))
+            {
+                if (model.User.Where(u => u.Login.Equals(nUser.login)).FirstOrDefault() != null)
+                    throw new Exception("Логин занят");
+                user.Login = nUser.login;
+            }
+            if (nUser.email != null && !nUser.email.Equals(""))
+                user.Email = nUser.email;
+            if (nUser.password != null && !nUser.password.Equals(""))
+                user.PassworgHash = nUser.password;
+
+            model.User.Update(user);
+            model.SaveChanges();
+
+            return user;
         }
 
     }
