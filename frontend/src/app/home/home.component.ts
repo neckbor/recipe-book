@@ -25,4 +25,11 @@ export class HomeComponent implements OnInit {
         },
         error => console.log('Error http request on HomePage' + error));
   }
+
+  public getRandomRecipe() {
+    this.http.getRandomRecipe().subscribe( data => {
+      this.router.navigate(['recipe', data.idRecipe]);
+    },
+      error => console.log(error));
+  }
 }

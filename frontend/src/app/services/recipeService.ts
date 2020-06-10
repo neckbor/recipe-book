@@ -136,4 +136,9 @@ export class RecipeService {
       observe: 'response'
     });
   }
+
+  getRandomRecipe() {
+    const url = this.baseUrl + '/GetRecipe/random';
+    return this.http.get<Recipe>(url);
+  }
 }

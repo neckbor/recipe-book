@@ -1,12 +1,12 @@
 <header>
-  <a href="" class="logo">YummYummY</a>
+  <a routerLink="/" class="logo">YummYummY</a>
   <div id="menu-toggle" (click)="adaptiveHeader()" >
     <fa-icon [icon]="faBars" class="faBars"></fa-icon>
     <fa-icon [icon]="faTimes" class="faTimes"></fa-icon></div>
   <nav id="nav">
     <ul>
-      <li>
-        <a href="">Случайный рецепт</a>
+      <li (click)="getRandom()">
+        <a>Случайный рецепт</a>
       </li>
       <li *ngIf="login">
         <a routerLink="/my-recipes">Мои рецепты</a>
@@ -15,8 +15,11 @@
         <a href="">Выйти</a>
       </li>
       <li>
+        <a routerLink="/registration" *ngIf="!login">Зарегистрироваться</a>
+      </li>
+      <li>
         <a routerLink="/login" *ngIf="!login">Войти</a>
-        <a *ngIf="login">{{login}}</a>
+        <a *ngIf="login" class="login">{{login}}</a>
       </li>
     </ul>
   </nav>
