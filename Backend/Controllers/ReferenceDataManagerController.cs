@@ -7,12 +7,21 @@ using Backend.Models.BindingModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Backend.Controllers
 {
     [ApiController]
     public class ReferenceDataManagerController : ControllerBase
     {
+        private readonly ILogger<ReferenceDataManagerController> _logger;
+
+        public ReferenceDataManagerController(ILogger<ReferenceDataManagerController> logger)
+        {
+            this._logger = logger;
+        }
+
         /// <summary>
         /// Поиск ингредиентов по названию
         /// </summary>
@@ -27,6 +36,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Get(IngredientBindingModel ingredient)
         {
+            _logger.LogError("SearchIngredient: запуск с параметрами\n" + JsonConvert.SerializeObject(ingredient));
             try
             {
                 if (ingredient == null)
@@ -58,6 +68,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Get(NationalityBindingModel nationality)
         {
+            _logger.LogError("SearchNationality: запуск с параметрами\n" + JsonConvert.SerializeObject(nationality));
             try
             {
                 if (!ModelState.IsValid)
@@ -89,6 +100,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult AddIngredient(IngredientBindingModel ingredient)
         {
+            _logger.LogError("AddIngredient: запуск с параметрами\n" + JsonConvert.SerializeObject(ingredient));
             try
             {
                 if (ingredient.name == null || ingredient.name.Count() < 1)
@@ -122,6 +134,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult UpdateIngredient(IngredientBindingModel ingredient)
         {
+            _logger.LogError("UpdateIngredient: запуск с параметрами\n" + JsonConvert.SerializeObject(ingredient));
             try
             {
                 if (ingredient == null || ingredient.idIngredient < 1 || ingredient.name == null || ingredient.name.Count() < 1)
@@ -155,6 +168,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult DeleteIngredient(int idIngredient)
         {
+            _logger.LogError("DeleteIngredient: запуск с параметрами\n" + JsonConvert.SerializeObject(idIngredient));
             try
             {
                 if (idIngredient < 1)
@@ -190,6 +204,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult AddNationality(NationalityBindingModel nationality)
         {
+            _logger.LogError("AddNationality: запуск с параметрами\n" + JsonConvert.SerializeObject(nationality));
             try
             {
                 if (nationality.name == null || nationality.name.Count() < 1)
@@ -223,6 +238,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult UpdateNationality(NationalityBindingModel nationality)
         {
+            _logger.LogError("UpdateNationality: запуск с параметрами\n" + JsonConvert.SerializeObject(nationality));
             try
             {
                 if (nationality == null || nationality.idNationality < 1 || nationality.name == null || nationality.name.Count() < 1)
@@ -256,6 +272,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult DeleteNationality(int idNationality)
         {
+            _logger.LogError("DeleteNationality: запуск с параметрами\n" + JsonConvert.SerializeObject(idNationality));
             try
             {
                 if (idNationality < 1)

@@ -8,7 +8,6 @@ namespace Backend.Models.BindingModels
 {
     public class UserLoginString
     {
-        [Required]
         public string login { get; set; }
     }
 }

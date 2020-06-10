@@ -9,14 +9,12 @@ namespace Backend.Models.BindingModels
     public class IngredientBindingModel
     {
         public int idIngredient { get; set; }
-        [Required]
         public string name { get; set; }
     }
 
     public class NationalityBindingModel
     {
         public int idNationality { get; set; }
-        [Required]
         public string name { get; set; }
     }
 }

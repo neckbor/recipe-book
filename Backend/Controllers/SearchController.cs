@@ -12,12 +12,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Backend.Controllers
 {
     [ApiController]
     public class SearchController : ControllerBase
     {
+        private readonly ILogger<SearchController> _logger;
+
+        public SearchController(ILogger<SearchController> logger)
+        {
+            this._logger = logger;
+        }
+
         /// <summary>
         /// Поиск рецептов по заданным параметрам
         /// </summary>
@@ -30,6 +39,7 @@ namespace Backend.Controllers
         [HttpPost("api/[controller]")]
         public IActionResult Post(SearchConditionBindingModel conditions)
         {
+            _logger.LogError("Search: запуск с параметрами\n" + JsonConvert.SerializeObject(conditions));
             try
             {
                 if (conditions.recipeName == null && conditions.nationality == null && conditions.ingredient == null && conditions.author == null)
@@ -62,7 +72,7 @@ namespace Backend.Controllers
                         name = r.Name,
                         author = r.Author,
                         duration = r.Duration,
-                        ingredient = r.IdingredientNavigation.Name,
+                        mainIngredient = r.IdingredientNavigation.Name,
                         nationality = r.IdnationalityNavigation.Name
                     }).ToList();
             }

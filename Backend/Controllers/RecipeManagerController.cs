@@ -7,12 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 using Backend.Models.BindingModels;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Backend.Controllers
 {
     [ApiController]
     public class RecipeManagerController : ControllerBase
     {
+        private readonly ILogger<RecipeManagerController> _logger;
+
+        public RecipeManagerController(ILogger<RecipeManagerController> logger)
+        {
+            this._logger = logger;
+        }
+
         /// <summary>
         /// Добавить новый рецепт
         /// </summary>
@@ -26,6 +35,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin, open")]
         public IActionResult Post(FullInfoRecipeBindingModel recipe)
         {
+            _logger.LogError("Add: запуск с параметрами\n" + JsonConvert.SerializeObject(recipe));
             try
             {
                 if (recipe == null)
@@ -125,6 +135,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Update(FullInfoRecipeBindingModel recipe)
         {
+            _logger.LogError("Update: запуск с параметрами\n" + JsonConvert.SerializeObject(recipe));
             try
             {
                 if (recipe.idRecipe < 1)
@@ -197,19 +208,30 @@ namespace Backend.Controllers
 
                         if (recipe.ingredientList.Count != 0)
                         {
+                            var old_ingredients = _model.IngredientList.ToList().FindAll(i => i.Idrecipe == recipe.idRecipe);
+
+                            _model.IngredientList.RemoveRange(old_ingredients);
+
                             foreach (var ingredient in recipe.ingredientList)
                             {
-                                IngredientList i = _model.IngredientList.ToList().Find(i => i.Idrecipe == recipe.idRecipe && i.IdingredientList == ingredient.idIngredientList);
+                                IngredientList new_ingredient = new IngredientList();
+                                new_ingredient.Amount = ingredient.amount;
+                                new_ingredient.Idingredient = ingredient.idIngredient;
+                                new_ingredient.Idrecipe = recipe.idRecipe;
 
-                                if (ingredient.idIngredient != 0)
-                                {
-                                    i.Idingredient = ingredient.idIngredient;
-                                }
+                                _model.IngredientList.Add(new_ingredient);
 
-                                if (ingredient.amount != null)
-                                {
-                                    i.Amount = ingredient.amount;
-                                }
+                                //IngredientList i = _model.IngredientList.ToList().Find(i => i.Idrecipe == recipe.idRecipe && i.IdingredientList == ingredient.idIngredientList);
+
+                                //if (ingredient.idIngredient != 0)
+                                //{
+                                //    i.Idingredient = ingredient.idIngredient;
+                                //}
+
+                                //if (ingredient.amount != null)
+                                //{
+                                //    i.Amount = ingredient.amount;
+                                //}
                             }
                         }
                         else
@@ -242,6 +264,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin, open, blocked")]
         public IActionResult Delete(int idRecipe)
         {
+            _logger.LogError("Delete: запуск с параметрами\n" + JsonConvert.SerializeObject(idRecipe));
             try
             {
                 if (idRecipe < 1)

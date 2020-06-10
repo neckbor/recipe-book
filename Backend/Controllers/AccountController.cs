@@ -12,13 +12,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Serilog;
 
 namespace Backend.Controllers
 {
     [ApiController]
     public class AccountController : ControllerBase
     {
+        private readonly ILogger<AccountController> _logger;
+
+        public AccountController(ILogger<AccountController> logger)
+        {
+            this._logger = logger;
+        }
+
         private IActionResult Token(LoginBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -44,7 +54,7 @@ namespace Backend.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name,
+                login = identity.Name,
                 role = identity.Claims.Where(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).FirstOrDefault().Value
             };
 
@@ -86,6 +96,7 @@ namespace Backend.Controllers
         [HttpPost("api/[controller]/register")]
         public IActionResult Register(RegisterBindingModel model)
         {
+            _logger.LogError("Register: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
             try
             {
                 if (!ModelState.IsValid || model.login.Equals("") || model.password.Equals(""))
@@ -140,6 +151,7 @@ namespace Backend.Controllers
         [HttpPost("api/[controller]/login")]
         public IActionResult Login(LoginBindingModel model)
         {
+            _logger.LogError("Login: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
             try
             {
                 if (!ModelState.IsValid || model.login.Equals("") || model.password.Equals(""))
@@ -164,9 +176,10 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Block(UserLoginString model)
         {
+            _logger.LogError("Block: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
             try
             {
-                if(!ModelState.IsValid)
+                if (model == null || model.login.Length < 1)
                     return BadRequest();
 
                 BlockUser(model.login);
@@ -192,6 +205,161 @@ namespace Backend.Controllers
 
             model.User.Update(user);
             model.SaveChanges();
+        }
+
+        /// <summary>
+        /// Разблокировать пользователя
+        /// </summary>
+        /// <param name="model">Данные пользователя</param>
+        /// <response code="200">Успешо</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в теле)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
+        [HttpPost("api/[controller]/unblock")]
+        [Authorize(Roles = "admin")]
+        public IActionResult Unblock(UserLoginString model)
+        {
+            _logger.LogError("Unblock: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
+            try
+            {
+                if (model == null || model.login.Length < 1)
+                    return BadRequest();
+
+                UnblockUser(model.login);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private void UnblockUser(string login)
+        {
+            using ModelDbContext model = new ModelDbContext();
+
+            User user = model.User.Where(u => EF.Functions.Like(u.Login, login)).FirstOrDefault();
+
+            if (user == null)
+                throw new Exception("Пользователь не найден");
+
+            user.Idrole = 1;
+
+            model.User.Update(user);
+            model.SaveChanges();
+        }
+
+        /// <summary>
+        /// Поиск информаци о пользователях
+        /// </summary>
+        /// <param name="model">Логин пользователя</param>
+        /// <returns>Информация о найденных пользователях</returns>
+        /// <response code="200">Удачный поиск</response>
+        /// <response code="204">Не найдено пользователей</response>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован или низкий уровень доступа</response>
+        [HttpPost("api/[controller]/search")]
+        [Authorize(Roles = "admin")]
+        public IActionResult Search(UserLoginString model)
+        {
+            _logger.LogError("Search: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
+            try
+            {
+                if (model == null)
+                    return BadRequest();
+
+                IEnumerable<UserInfo> result = FindUser(model.login);
+
+                if (result.Count() < 1)
+                    return NoContent();
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private IEnumerable<UserInfo> FindUser(string login)
+        {
+            IEnumerable<UserInfo> result;
+
+            using (ModelDbContext _model = new ModelDbContext())
+            {
+                result = _model.User.Where(u => EF.Functions.Like(u.Login.ToLower(), '%' + login.ToLower() + '%'))
+                        .Select(u => new UserInfo
+                        {
+                            login = u.Login,
+                            role = u.IdroleNavigation.Name,
+                            email = u.Email
+                        }).ToList();
+
+            };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Изменение данных пользователя
+        /// </summary>
+        /// <param name="model">Новые данные</param>
+        /// <returns>Новый токен</returns>
+        /// <response code="200">Удачно (прилагается токен)</response>
+        /// <response code="400">Некорректное значение</response>
+        /// <response code="500">Внутренняя ошибка (читать сообщение в ответе)</response>
+        /// <response code="401">Неавторизован</response>
+        [HttpPost("api/[controller]/change")]
+        [Authorize]
+        public IActionResult Changedata(UserInfo model)
+        {
+            _logger.LogError("ChangeData: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
+            try
+            {
+                if (model == null || model.oldLogin.Equals(""))
+                    return BadRequest();
+                if (model.oldLogin != User.Identity.Name)
+                    return Forbid();
+
+                User user = UpdateUser(model);
+
+                return Token(new LoginBindingModel()
+                {
+                    login = user.Login,
+                    password = user.PassworgHash
+                });
+
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Equals("Логин занят"))
+                    return Conflict();
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        private User UpdateUser(UserInfo nUser)
+        {
+            using ModelDbContext model = new ModelDbContext();
+
+            User user = model.User.Where(u => u.Login.Equals(nUser.oldLogin)).FirstOrDefault();
+
+            if (nUser.login != null && !nUser.login.Equals(""))
+            {
+                if (model.User.Where(u => u.Login.Equals(nUser.login)).FirstOrDefault() != null)
+                    throw new Exception("Логин занят");
+                user.Login = nUser.login;
+            }
+            if (nUser.email != null && !nUser.email.Equals(""))
+                user.Email = nUser.email;
+            if (nUser.password != null && !nUser.password.Equals(""))
+                user.PassworgHash = nUser.password;
+
+            model.User.Update(user);
+            model.SaveChanges();
+
+            return user;
         }
 
     }
