@@ -65,6 +65,7 @@ export class ChangeRecipeComponent implements OnInit {
     console.log(recipe);
     this.http.updateRecipe(recipe, this.cookie.get('access_token')).subscribe( data => {
       console.log('Успешно обновлено');
+      this.router.navigate(['/my-recipes']);
     },
       err => console.log(err)
     );

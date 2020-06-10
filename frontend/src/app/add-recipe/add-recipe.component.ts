@@ -48,7 +48,7 @@ export class AddRecipeComponent implements OnInit {
 
 
   public addStep() {
-    this.steps.push(new Step(0, this.steps[this.steps.length - 1].orderIndex + 1, ""));
+    this.steps.push(new Step(1, this.steps[this.steps.length - 1].orderIndex + 1, ""));
   }
 
   public addRecipe() {
@@ -59,8 +59,9 @@ export class AddRecipeComponent implements OnInit {
       duration, this.ingredientList, this.steps);
     recipe.author = this.cookie.get('login');
     console.log(recipe);
-    this.http.updateRecipe(recipe, this.cookie.get('access_token')).subscribe( data => {
-        console.log('Успешно обновлено');
+    this.http.addRecipe(recipe, this.cookie.get('access_token')).subscribe( data => {
+        console.log('Успешно добавлено');
+        this.router.navigate(['/my-recipes']);
       },
       err => console.log(err)
     );
