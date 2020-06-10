@@ -96,6 +96,7 @@ namespace Backend.Controllers
         [HttpPost("api/[controller]/register")]
         public IActionResult Register(RegisterBindingModel model)
         {
+            _logger.LogError("Register: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
             try
             {
                 if (!ModelState.IsValid || model.login.Equals("") || model.password.Equals(""))
@@ -207,7 +208,7 @@ namespace Backend.Controllers
         }
 
         /// <summary>
-        /// Заблокировать пользователя
+        /// Разблокировать пользователя
         /// </summary>
         /// <param name="model">Данные пользователя</param>
         /// <response code="200">Успешо</response>

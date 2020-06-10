@@ -7,12 +7,21 @@ using Backend.Models.BindingModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Backend.Controllers
 {
     [ApiController]
     public class GetRecipeController : ControllerBase
     {
+        private readonly ILogger<GetRecipeController> _logger;
+
+        public GetRecipeController(ILogger<GetRecipeController> logger)
+        {
+            this._logger = logger;
+        }
+
         /// <summary>
         /// Получить данные рецепта по id
         /// </summary>
@@ -25,6 +34,7 @@ namespace Backend.Controllers
         [HttpGet("api/[controller]")]
         public IActionResult Get(int idRecipe)
         {
+            _logger.LogError("Get: запуск с параметрами\n" + JsonConvert.SerializeObject(idRecipe));
             try
             {
                 if (idRecipe < 1)
@@ -107,6 +117,7 @@ namespace Backend.Controllers
         [HttpGet("api/[controller]/random")]
         public IActionResult GetRandom()
         {
+            _logger.LogError("GetRandom: запуск");
             try
             {
                 int idRecipe = GetRandomId();
@@ -134,6 +145,7 @@ namespace Backend.Controllers
         [HttpGet("api/[controller]/nextstep")]
         public IActionResult NextStep(int idRecipe, int currentStep)
         {
+
             try
             {
                 if (idRecipe < 1 || currentStep < 1)
