@@ -333,6 +333,8 @@ namespace Backend.Controllers
             }
             catch (Exception e)
             {
+                if (e.Message.Equals("Логин занят"))
+                    return Conflict();
                 return StatusCode(500, e.Message);
             }
         }
@@ -344,7 +346,11 @@ namespace Backend.Controllers
             User user = model.User.Where(u => u.Login.Equals(nUser.oldLogin)).FirstOrDefault();
 
             if (nUser.login != null && !nUser.login.Equals(""))
+            {
+                if (model.User.Where(u => u.Login.Equals(nUser.login)).FirstOrDefault() != null)
+                    throw new Exception("Логин занят");
                 user.Login = nUser.login;
+            }
             if (nUser.email != null && !nUser.email.Equals(""))
                 user.Email = nUser.email;
             if (nUser.password != null && !nUser.password.Equals(""))
