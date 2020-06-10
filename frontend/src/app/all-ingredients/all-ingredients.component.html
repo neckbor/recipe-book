@@ -1,0 +1,30 @@
+<app-header></app-header>
+<h2 class="text-center">Добавить ингредиент</h2>
+<div class="container">
+<mat-form-field class="w-100">
+  <mat-label><b>Название ингредиента</b></mat-label>
+  <input matInput type="text" placeholder="Название ингредиента"
+         [(ngModel)]="nameIngredient" name="login" required class="input">
+</mat-form-field>
+<button (click)="addIngredient()" class="btn update d-block m-auto">Добавить ингредиент</button>
+</div>
+
+
+<h2 class="text-center mt-3">Все ингредиенты</h2>
+<div class="container">
+  <div *ngFor="let item of ingredients">
+    <div class="row">
+      <div class="col-lg-4 col-md-4">
+    <mat-form-field class="w-100">
+      <mat-label><b>Новый пароль</b></mat-label>
+      <input matInput type="text" placeholder="Ваш логин"
+             [(ngModel)]="item.name" name="login" required class="input">
+    </mat-form-field>
+      </div>
+      <div class="col-lg-1 col-md-1"></div>
+    <button (click)="deleteIngredient(item.idIngredient)" class="btn btn-danger d-block m-auto col-lg-3 col-md-3">Удалить</button>
+      <div class="col-lg-1 col-md-1"></div>
+    <button (click)="updateIngredient(item)" class="btn btn-warning d-block m-auto col-lg-3 col-md-3">Подтвердить изменения</button>
+  </div>
+  </div>
+</div>

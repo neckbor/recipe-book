@@ -153,4 +153,65 @@ export class RecipeService {
     const url = this.baseUrl + '/GetRecipe/random';
     return this.http.get<Recipe>(url);
   }
+
+  deleteIngredient(id: number, token){
+    const url = this.baseUrl + '/ReferenceDataManager/deleteIngredient?idIngredient=' + id;
+    return this.http.delete(url, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    })
+  }
+  updateIngredient(ingredient:Ingredient, token) {
+    const url = this.baseUrl + '/ReferenceDataManager/updateIngredient';
+    return this.http.post(url, ingredient, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    })
+  }
+  addIngredient(ingredient:Ingredient, token) {
+    const url = this.baseUrl + '/ReferenceDataManager/addIngredient';
+    return this.http.post(url, ingredient, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    })
+  }
+
+  addNationality(nationality:Nationality, token) {
+    const url = this.baseUrl + '/ReferenceDataManager/addNationality';
+    return this.http.post(url, nationality, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    })
+  }
+
+  updateNationality(nationality:Nationality, token) {
+    const url = this.baseUrl + '/ReferenceDataManager/updateNationality';
+    return this.http.post(url, nationality, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    })
+  }
+  deleteNationality(id: number, token){
+    const url = this.baseUrl + '/ReferenceDataManager/deleteNationality?idNationality=' + id;
+    return this.http.delete(url, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    })
+  }
 }
