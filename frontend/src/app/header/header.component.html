@@ -22,7 +22,7 @@
       </li>
       <li>
         <a routerLink="/login" *ngIf="!login">Войти</a>
-        <a *ngIf="login" class="login">{{login}}</a>
+        <a *ngIf="login" class="login" routerLink="/user-changes"> {{login}}</a>
       </li>
     </ul>
   </nav>
