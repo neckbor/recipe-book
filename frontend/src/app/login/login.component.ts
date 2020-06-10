@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
     this.http.loginUser(this.user).subscribe(
       (response) => {
         this.user.access_token = response.body.access_token;
+        this.user.role = response.body.role;
         this.router.navigate(['/']);
         this.cookie.set('login', this.user.login);
         this.cookie.set('role', this.user.role);

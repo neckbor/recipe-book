@@ -26,6 +26,7 @@ export class RegistrationComponent implements OnInit {
     this.http.registerUser(this.user).subscribe(
       (data) => {
         this.user.access_token = data.access_token;
+        this.user.role = data.role;
         this.router.navigate(['/']);
         this.cookie.set('login', this.user.login);
         this.cookie.set('role', this.user.role);

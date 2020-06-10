@@ -97,4 +97,43 @@ export class RecipeService {
       observe: 'response'
     })
   }
+
+  getAllUsers(token) {
+    const url = this.baseUrl + '/Account/search';
+    const user = new User();
+    user.login = '';
+    return this.http.post<User[]>(url, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    });
+  }
+
+  blockUser(login, token) {
+    const url = this.baseUrl + '/Account/block';
+    const user = new User();
+    user.login = login;
+    return this.http.post<User[]>(url, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    });
+  }
+
+  unBlockUser(login, token) {
+    const url = this.baseUrl + '/Account/unblock';
+    const user = new User();
+    user.login = login;
+    return this.http.post<User[]>(url, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`}
+      ),
+      observe: 'response'
+    });
+  }
 }

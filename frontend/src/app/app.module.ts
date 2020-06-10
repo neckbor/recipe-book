@@ -26,6 +26,9 @@ import { ChangeRecipeComponent } from './change-recipe/change-recipe.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import { AddRecipeComponent } from './add-recipe/add-recipe.component';
+import { UsersComponent } from './users/users.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -35,7 +38,8 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'my-recipes', component: MyRecipesComponent},
   {path: 'change-recipe/:id', component: ChangeRecipeComponent},
-  {path: 'add-recipe', component: AddRecipeComponent}
+  {path: 'add-recipe', component: AddRecipeComponent},
+  {path: 'users', component: UsersComponent}
 ];
 
 @NgModule({
@@ -50,7 +54,8 @@ const appRoutes: Routes = [
     LoginComponent,
     MyRecipesComponent,
     ChangeRecipeComponent,
-    AddRecipeComponent
+    AddRecipeComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +69,9 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [RecipeService,
   ShareService,
