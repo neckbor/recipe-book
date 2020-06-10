@@ -15,6 +15,7 @@ export class UserChangesComponent implements OnInit {
 
   login = this.cookie.get('login');
   password = '';
+  check = false;
 
   ngOnInit() {
     if (!this.cookie.get('login')) {
@@ -41,7 +42,10 @@ export class UserChangesComponent implements OnInit {
           this.cookie.set('access_token', data.body.access_token);
           this.router.navigate(['/']);
         },
-        err => console.log(err));
+        err => {
+          console.log(err);
+          this.check = err.status === 409;
+        });
     }
   }
 

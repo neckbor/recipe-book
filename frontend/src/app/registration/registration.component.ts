@@ -16,6 +16,7 @@ export class RegistrationComponent implements OnInit {
   user: User = new User();
   repeatPassword: string;
   receivedAndwer: Response;
+  check = false;
   ngOnInit() {
     if (this.cookie.get('access_token')) {
       this.router.navigate(['/']);
@@ -25,14 +26,17 @@ export class RegistrationComponent implements OnInit {
   private registration() {
     this.http.registerUser(this.user).subscribe(
       (data) => {
-        this.user.access_token = data.access_token;
-        this.user.role = data.role;
+        this.user.access_token = data.body.access_token;
+        this.user.role = data.body.role;
         this.router.navigate(['/']);
         this.cookie.set('login', this.user.login);
         this.cookie.set('role', this.user.role);
         this.cookie.set('access_token', this.user.access_token);
         console.log('Регистрация прошла успешно');
-      }, err => console.log(err)
+      }, err => {
+        console.log(err);
+        this.check = err.status === 409;
+      }
     );
   }
 

@@ -31,8 +31,8 @@ export class RecipeService {
   registerUser(user: User) {
     const url = this.baseUrl + '/Account/register';
     return this.http.post<User>(url, user, {
-      headers: new HttpHeaders({'Content-Type': 'application/json'
-      })
+      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      observe: 'response'
     });
   }
   loginUser(user: User) {

@@ -11,5 +11,7 @@
     <input matInput type="text" placeholder="Ваш логин"
            [(ngModel)]="password" name="login" required class="input">
   </mat-form-field>
+  <div [hidden]="!check" class="alert alert-danger my-alert w-100"
+  >Логин уже занят!</div>
   <button (click)="updateUser()" class="btn update d-block m-auto">Подтвердить изменение</button>
 </div>
