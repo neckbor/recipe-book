@@ -197,19 +197,30 @@ namespace Backend.Controllers
 
                         if (recipe.ingredientList.Count != 0)
                         {
+                            var old_ingredients = _model.IngredientList.ToList().FindAll(i => i.Idrecipe == recipe.idRecipe);
+
+                            _model.IngredientList.RemoveRange(old_ingredients);
+
                             foreach (var ingredient in recipe.ingredientList)
                             {
-                                IngredientList i = _model.IngredientList.ToList().Find(i => i.Idrecipe == recipe.idRecipe && i.IdingredientList == ingredient.idIngredientList);
+                                IngredientList new_ingredient = new IngredientList();
+                                new_ingredient.Amount = ingredient.amount;
+                                new_ingredient.Idingredient = ingredient.idIngredient;
+                                new_ingredient.Idrecipe = recipe.idRecipe;
 
-                                if (ingredient.idIngredient != 0)
-                                {
-                                    i.Idingredient = ingredient.idIngredient;
-                                }
+                                _model.IngredientList.Add(new_ingredient);
 
-                                if (ingredient.amount != null)
-                                {
-                                    i.Amount = ingredient.amount;
-                                }
+                                //IngredientList i = _model.IngredientList.ToList().Find(i => i.Idrecipe == recipe.idRecipe && i.IdingredientList == ingredient.idIngredientList);
+
+                                //if (ingredient.idIngredient != 0)
+                                //{
+                                //    i.Idingredient = ingredient.idIngredient;
+                                //}
+
+                                //if (ingredient.amount != null)
+                                //{
+                                //    i.Amount = ingredient.amount;
+                                //}
                             }
                         }
                         else

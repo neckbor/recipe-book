@@ -76,6 +76,7 @@ namespace Backend.Controllers
                     {
                         idRecipe = r.Idrecipe,
                         name = r.Name,
+                        author = r.Author,
                         mainIngredient = r.IdingredientNavigation.Name,
                         nationality = r.IdnationalityNavigation.Name,
                         duration = r.Duration,
