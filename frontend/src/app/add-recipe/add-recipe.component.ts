@@ -7,6 +7,8 @@ import {Ingredient} from "../models/Ingredient";
 import {Step} from "../models/Step";
 import {SendRecipe} from "../models/SendRecipe";
 
+declare var ym: any;
+
 @Component({
   selector: 'app-add-recipe',
   templateUrl: './add-recipe.component.html',
@@ -59,6 +61,7 @@ export class AddRecipeComponent implements OnInit {
     console.log(recipe);
     this.http.addRecipe(recipe, this.cookie.get('access_token')).subscribe( data => {
         console.log('Успешно добавлено');
+        ym(64770259,'reachGoal','add_recipe');
         this.router.navigate(['/']);
       },
       err => console.log(err)
