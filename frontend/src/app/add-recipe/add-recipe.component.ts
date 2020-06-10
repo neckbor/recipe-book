@@ -4,9 +4,7 @@ import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
 import {Nationality} from "../models/Nationality";
 import {Ingredient} from "../models/Ingredient";
-import {Recipe} from "../models/Recipe";
 import {Step} from "../models/Step";
-import {TimeSpan} from "ts-timespan/dist/timespan";
 import {SendRecipe} from "../models/SendRecipe";
 
 @Component({
@@ -61,7 +59,7 @@ export class AddRecipeComponent implements OnInit {
     console.log(recipe);
     this.http.addRecipe(recipe, this.cookie.get('access_token')).subscribe( data => {
         console.log('Успешно добавлено');
-        this.router.navigate(['/my-recipes']);
+        this.router.navigate(['/']);
       },
       err => console.log(err)
     );

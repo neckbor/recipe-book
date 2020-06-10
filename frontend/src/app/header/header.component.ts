@@ -15,8 +15,10 @@ export class HeaderComponent implements OnInit {
   faBars = faBars;
   faTimes = faTimes;
   login: string;
+  role;
   constructor(private cookie: CookieService, private http: RecipeService, private router: Router) {
     this.login = cookie.get('login');
+    this.role = cookie.get('role');
   }
 
   ngOnInit() {

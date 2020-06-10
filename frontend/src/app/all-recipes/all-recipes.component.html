@@ -34,10 +34,10 @@
               <br />
               <span>Национальность: {{tempRecipe.nationality}}</span>
             </p>
-            <p class="duration" *ngIf="role=='open'">
+            <p class="duration" *ngIf="!role || role!='admin'">
               <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
               {{tempRecipe.duration.value.minutes}} минут</p>
-            <button *ngIf="role=='open'" class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
+            <button *ngIf="!role || role!='admin'" class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
             <div class="buttons" *ngIf="role=='admin'">
               <button class="btn btn-primary col-sm-12" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
               <button class="btn btn-warning col-sm-12 mt-2" (click)="changeRecipe(tempRecipe.idRecipe)">Редактировать</button>
@@ -59,10 +59,10 @@
               <br />
               <span>Национальность: {{shareRecipes.recipes[i + 1].nationality}}</span>
             </p>
-            <p class="duration" *ngIf="role=='open'">
+            <p class="duration" *ngIf="!role || role!='admin'">
               <span *ngIf="shareRecipes.recipes[i + 1].duration.value.hours">{{shareRecipes.recipes[i + 1].duration.value.hours}} час.</span>
               {{shareRecipes.recipes[i + 1].duration.value.minutes}} минут</p>
-            <button *ngIf="role=='open'" class="btn btn-primary btn-go" (click)="seeRecipe(shareRecipes.recipes[i + 1].idRecipe)">Просмотр</button>
+            <button *ngIf="!role || role!='admin'" class="btn btn-primary btn-go" (click)="seeRecipe(shareRecipes.recipes[i + 1].idRecipe)">Просмотр</button>
             <div class="buttons" *ngIf="role=='admin'">
               <button class="btn btn-primary col-sm-12" (click)="seeRecipe(shareRecipes.recipes[i + 1].idRecipe)">Просмотр</button>
               <button class="btn btn-warning col-sm-12 mt-2" (click)="changeRecipe(shareRecipes.recipes[i + 1].idRecipe)">Редактировать</button>
@@ -84,10 +84,10 @@
               <br />
               <span>Национальность: {{shareRecipes.recipes[i + 2].nationality}}</span>
             </p>
-            <p class="duration" *ngIf="role=='open'">
+            <p class="duration" *ngIf="!role || role!='admin'">
               <span *ngIf="shareRecipes.recipes[i + 2].duration.value.hours">{{shareRecipes.recipes[i + 2].duration.value.hours}} час.</span>
               {{shareRecipes.recipes[i + 2].duration.value.minutes}} минут</p>
-            <button *ngIf="role=='open'" class="btn btn-primary btn-go" (click)="seeRecipe(shareRecipes.recipes[i + 2].idRecipe)">Просмотр</button>
+            <button *ngIf="!role || role!='admin'" class="btn btn-primary btn-go" (click)="seeRecipe(shareRecipes.recipes[i + 2].idRecipe)">Просмотр</button>
             <div class="buttons" *ngIf="role=='admin'">
               <button class="btn btn-primary col-sm-12" (click)="seeRecipe(shareRecipes.recipes[i + 2].idRecipe)">Просмотр</button>
               <button class="btn btn-warning col-sm-12 mt-2" (click)="changeRecipe(shareRecipes.recipes[i + 2].idRecipe)">Редактировать</button>
