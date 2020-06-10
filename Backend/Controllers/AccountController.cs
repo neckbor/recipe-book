@@ -12,13 +12,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Serilog;
 
 namespace Backend.Controllers
 {
     [ApiController]
     public class AccountController : ControllerBase
     {
+        private readonly ILogger<AccountController> _logger;
+
+        public AccountController(ILogger<AccountController> logger)
+        {
+            this._logger = logger;
+        }
+
         private IActionResult Token(LoginBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -140,6 +150,7 @@ namespace Backend.Controllers
         [HttpPost("api/[controller]/login")]
         public IActionResult Login(LoginBindingModel model)
         {
+            _logger.LogError("Login: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
             try
             {
                 if (!ModelState.IsValid || model.login.Equals("") || model.password.Equals(""))
@@ -164,6 +175,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Block(UserLoginString model)
         {
+            _logger.LogError("Block: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
             try
             {
                 if (model == null || model.login.Length < 1)
@@ -205,6 +217,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Unblock(UserLoginString model)
         {
+            _logger.LogError("Unblock: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
             try
             {
                 if (model == null || model.login.Length < 1)
@@ -249,6 +262,7 @@ namespace Backend.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Search(UserLoginString model)
         {
+            _logger.LogError("Search: запуск с параметрами\n" + JsonConvert.SerializeObject(model));
             try
             {
                 if (model == null)
