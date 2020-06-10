@@ -5,7 +5,7 @@ import {TimeSpan} from 'ts-timespan/dist/timespan';
 export class Recipe {
   idRecipe: number;
   name: string;
-  ingredient: string;
+  mainIngredient: string;
   nationality: string;
   author: string;
   duration: TimeSpan;
@@ -15,7 +15,7 @@ export class Recipe {
               nationality: string, author: string, duration: any, ingredients: Ingredient[], steps: Step[]) {
     this.idRecipe = id;
     this.name = name;
-    this.ingredient = mainIngredient;
+    this.mainIngredient = mainIngredient;
     this.nationality = nationality;
     this.author = author;
     this.duration = duration;

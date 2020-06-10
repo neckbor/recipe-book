@@ -1,0 +1,17 @@
+<app-header></app-header>
+<div class="container">
+  <h2>Ваши данные</h2>
+  <mat-form-field class="w-100">
+    <mat-label><b>Ваш логин</b></mat-label>
+    <input matInput type="text" placeholder="Ваш логин"
+           [(ngModel)]="login" name="login" required class="input">
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <mat-label><b>Новый пароль</b></mat-label>
+    <input matInput type="text" placeholder="Ваш логин"
+           [(ngModel)]="password" name="login" required class="input">
+  </mat-form-field>
+  <div [hidden]="!check" class="alert alert-danger my-alert w-100"
+  >Логин уже занят!</div>
+  <button (click)="updateUser()" class="btn update d-block m-auto">Подтвердить изменение</button>
+</div>
