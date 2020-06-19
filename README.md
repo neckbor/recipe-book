@@ -4,6 +4,8 @@
 
 *[Видеопоказ/Ссылка на видео](https://www.youtube.com/watch?v=IcoHOXVD0CQ&feature=youtu.be)*
 
+*[Видео-презентация/Ссылка на видео](https://youtu.be/r92gtvGY9Mw)*
+
 *[Swagger/Ссылка на Swagger](http://195.133.196.144/index.html)*
 
 ### Техническое задание
