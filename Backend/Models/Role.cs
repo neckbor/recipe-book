@@ -7,12 +7,12 @@ namespace Backend.Models
     {
         public Role()
         {
-            UserRole = new HashSet<UserRole>();
+            User = new HashSet<User>();
         }
 
         public int Idrole { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<UserRole> UserRole { get; set; }
+        public virtual ICollection<User> User { get; set; }
     }
 }

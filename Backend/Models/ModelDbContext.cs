@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.IdentityModel.Protocols;
 
 namespace Backend.Models
 {
@@ -22,13 +24,15 @@ namespace Backend.Models
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Step> Step { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserRole> UserRole { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                // Server Connection
+                //optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=YummYummY;User Id=yum; Password=peacedata73;");
+                // Local Connection
                 optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=YummYummY;Trusted_Connection=True;");
             }
         }
@@ -158,6 +162,8 @@ namespace Backend.Models
                     .IsRequired()
                     .HasMaxLength(100);
 
+                entity.Property(e => e.Idrole).HasColumnName("IDRole");
+
                 entity.Property(e => e.Login)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -165,27 +171,11 @@ namespace Backend.Models
                 entity.Property(e => e.PassworgHash)
                     .IsRequired()
                     .HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<UserRole>(entity =>
-            {
-                entity.HasKey(e => e.IduserRole);
-
-                entity.Property(e => e.IduserRole).HasColumnName("IDUserRole");
-
-                entity.Property(e => e.Idrole).HasColumnName("IDRole");
-
-                entity.Property(e => e.Iduser).HasColumnName("IDUser");
 
                 entity.HasOne(d => d.IdroleNavigation)
-                    .WithMany(p => p.UserRole)
+                    .WithMany(p => p.User)
                     .HasForeignKey(d => d.Idrole)
-                    .HasConstraintName("FK_UserRole_Role");
-
-                entity.HasOne(d => d.IduserNavigation)
-                    .WithMany(p => p.UserRole)
-                    .HasForeignKey(d => d.Iduser)
-                    .HasConstraintName("FK_UserRole_User");
+                    .HasConstraintName("FK_User_Role");
             });
 
             OnModelCreatingPartial(modelBuilder);

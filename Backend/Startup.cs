@@ -79,8 +79,20 @@ namespace Backend
                 {
                     Version = "v1",
                     Title = "YummYummY_Backend",
-                    Description = "Первое подключение swagger"
+                    Description = "Документаци backend стороны сайта YummYummY"
                 });
+
+                c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Значение заголовка JWT авторизации.\nФормат: Bearer *token*",
+                });
+
+                c.OperationFilter<AuthOperationFilter>();
 
                 //Determine base path for the application.
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
@@ -92,7 +104,8 @@ namespace Backend
 
             services.AddDbContext<ModelDbContext>(options =>
             {
-                options.UseSqlServer("server=.\\SQLEXPRESS;database=YummYummY;trusted_connection=true;");
+                //options.UseSqlServer(Configuration.GetConnectionString("Server"));
+                options.UseSqlServer(Configuration.GetConnectionString("Local"));
             });
 
         }

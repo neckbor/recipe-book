@@ -10,7 +10,7 @@
       <h4>Фильтры</h4>
       <form>
         <input type="text" name="name" class="my-input" placeholder="Название" [(ngModel)]="shareRecipes.filter.recipeName">
-        <input type="text" name="ingredient" class="my-input" placeholder="Основной ингридиент" [(ngModel)]="shareRecipes.filter.ingredient">
+        <input type="text" name="ingredient" class="my-input" placeholder="Основной ингредиент" [(ngModel)]="shareRecipes.filter.ingredient">
         <input type="text" name="origin" class="my-input" placeholder="Национальное происхождение" [(ngModel)]="shareRecipes.filter.nationality">
         <input type="text" name="author" class="my-input" placeholder="Автор" [(ngModel)]="shareRecipes.filter.author">
         <div class="m-auto btn-wrapper d-flex flex-wrap justify-content-between">
@@ -30,14 +30,22 @@
             <span class="author">Автор: {{tempRecipe.author}}</span>
             <h5 class="card-title">{{tempRecipe.name}}</h5>
             <p class="card-text">
-              <span>Главный ингридиент: {{tempRecipe.ingredient}}</span>
+              <span>Главный ингридиент: {{tempRecipe.mainIngredient}}</span>
               <br />
               <span>Национальность: {{tempRecipe.nationality}}</span>
             </p>
-            <p class="duration">
+            <p class="duration" *ngIf="!role || role!='admin'">
               <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
               {{tempRecipe.duration.value.minutes}} минут</p>
-            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
+            <button *ngIf="!role || role!='admin'" class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
+            <div class="buttons" *ngIf="role=='admin'">
+              <button class="btn btn-primary col-sm-12" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
+              <button class="btn btn-warning col-sm-12 mt-2" (click)="changeRecipe(tempRecipe.idRecipe)">Редактировать</button>
+              <button class="btn btn-danger col-sm-12 mt-2" (click)="deleteRecipe(tempRecipe.idRecipe)">Удалить</button>
+            </div>
+            <p class="duration-admin" *ngIf="role=='admin'">
+              <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
+              {{tempRecipe.duration.value.minutes}} минут</p>
           </div>
         </div>
       </div>
@@ -47,14 +55,22 @@
             <span class="author">Автор: {{shareRecipes.recipes[i + 1].author}}</span>
             <h5 class="card-title">{{shareRecipes.recipes[i + 1].name}}</h5>
             <p class="card-text">
-              <span>Главный ингридиент: {{shareRecipes.recipes[i + 1].ingredient}}</span>
+              <span>Главный ингридиент: {{shareRecipes.recipes[i + 1].mainIngredient}}</span>
               <br />
               <span>Национальность: {{shareRecipes.recipes[i + 1].nationality}}</span>
             </p>
-            <p class="duration">
+            <p class="duration" *ngIf="!role || role!='admin'">
+              <span *ngIf="shareRecipes.recipes[i + 1].duration.value.hours">{{shareRecipes.recipes[i + 1].duration.value.hours}} час.</span>
+              {{shareRecipes.recipes[i + 1].duration.value.minutes}} минут</p>
+            <button *ngIf="!role || role!='admin'" class="btn btn-primary btn-go" (click)="seeRecipe(shareRecipes.recipes[i + 1].idRecipe)">Просмотр</button>
+            <div class="buttons" *ngIf="role=='admin'">
+              <button class="btn btn-primary col-sm-12" (click)="seeRecipe(shareRecipes.recipes[i + 1].idRecipe)">Просмотр</button>
+              <button class="btn btn-warning col-sm-12 mt-2" (click)="changeRecipe(shareRecipes.recipes[i + 1].idRecipe)">Редактировать</button>
+              <button class="btn btn-danger col-sm-12 mt-2" (click)="deleteRecipe(shareRecipes.recipes[i + 1].idRecipe)">Удалить</button>
+            </div>
+            <p class="duration-admin" *ngIf="role=='admin'">
               <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
               {{tempRecipe.duration.value.minutes}} минут</p>
-            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
         </div>
         </div>
@@ -64,14 +80,22 @@
             <span class="author">Автор: {{shareRecipes.recipes[i + 2].author}}</span>
             <h5 class="card-title">{{shareRecipes.recipes[i + 2].name}}</h5>
             <p class="card-text">
-              <span>Главный ингридиент: {{shareRecipes.recipes[i + 2].ingredient}}</span>
+              <span>Главный ингридиент: {{shareRecipes.recipes[i + 2].mainIngredient}}</span>
               <br />
               <span>Национальность: {{shareRecipes.recipes[i + 2].nationality}}</span>
             </p>
-            <p class="duration">
+            <p class="duration" *ngIf="!role || role!='admin'">
+              <span *ngIf="shareRecipes.recipes[i + 2].duration.value.hours">{{shareRecipes.recipes[i + 2].duration.value.hours}} час.</span>
+              {{shareRecipes.recipes[i + 2].duration.value.minutes}} минут</p>
+            <button *ngIf="!role || role!='admin'" class="btn btn-primary btn-go" (click)="seeRecipe(shareRecipes.recipes[i + 2].idRecipe)">Просмотр</button>
+            <div class="buttons" *ngIf="role=='admin'">
+              <button class="btn btn-primary col-sm-12" (click)="seeRecipe(shareRecipes.recipes[i + 2].idRecipe)">Просмотр</button>
+              <button class="btn btn-warning col-sm-12 mt-2" (click)="changeRecipe(shareRecipes.recipes[i + 2].idRecipe)">Редактировать</button>
+              <button class="btn btn-danger col-sm-12 mt-2" (click)="deleteRecipe(shareRecipes.recipes[i + 2].idRecipe)">Удалить</button>
+            </div>
+            <p class="duration-admin" *ngIf="role=='admin'">
               <span *ngIf="tempRecipe.duration.value.hours">{{tempRecipe.duration.value.hours}} час.</span>
               {{tempRecipe.duration.value.minutes}} минут</p>
-            <button class="btn btn-primary btn-go" (click)="seeRecipe(tempRecipe.idRecipe)">Просмотр</button>
           </div>
         </div>
         </div>

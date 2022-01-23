@@ -8,4 +8,5 @@ import {Filter} from '../models/Filter';
 export class ShareService {
   recipes: Recipe[] = [];
   filter: Filter = new Filter();
+  randomRecipe: Recipe;
 }
